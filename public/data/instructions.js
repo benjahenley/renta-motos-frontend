@@ -5,15 +5,15 @@ import { InstructionIconFour } from '@/components/icons/instruction/instruction-
 
 export const instructions = [
   {
-    title: 'Find the perfect boat',
+    title: 'Find the perfect Jet Ski',
     description:
-      'Browse our 5,000 designer dresses and accessories online or at our Melbourne warehouse.',
+      'Browse our 500 jet skis and select the one you like.',
     icon: (
       <InstructionIconOne />
     ),
   },
   {
-    title: 'Select a captain',
+    title: 'Select an instructor',
     description:
       'Find your perfect look among thousands of fashion pieces, here available for rent and purchase',
     icon: (

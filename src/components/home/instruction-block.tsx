@@ -93,8 +93,8 @@ export default function InstructionBlock() {
   return (
     <Section
       className="group/section instruction-section lg:container-fluid mt-12 pl-4 sm:pl-6 lg:mt-16"
-      title="How to rent a boat"
-      description="Unsatiable it considered invitation he traveling insensible."
+      title="How to rent a jet ski"
+      description="A detailed guide of steps to follow to rent your jet ski."
       headerClassName="mb-4 md:mb-5 xl:mb-6"
     >
       {!state && <BlockLoader />}

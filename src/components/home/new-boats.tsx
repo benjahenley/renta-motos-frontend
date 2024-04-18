@@ -36,7 +36,7 @@ export default function NewBoats() {
   return (
     <Section
       className="container-fluid mt-12 overflow-hidden lg:mt-16"
-      title="New boat rentals"
+      title="New Jets ski rentals"
       description="Unsatiable it considered invitation he traveling insensible."
       headerClassName="items-end mb-4 lg:mb-5 xl:mb-6 gap-5"
       rightElement={<SeeMore />}

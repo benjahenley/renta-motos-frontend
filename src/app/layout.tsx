@@ -19,9 +19,9 @@ const satisfy = Satisfy({
 });
 
 export const metadata: Metadata = {
-  title: 'Boat Rental',
+  title: 'Ibijet Rent',
   description: 'Find your boat with the best experience.',
-  icons: ['/images/logo.svg'],
+  icons: ['/images/logito.jpeg'],
   viewport: { width: 'device-width', initialScale: 1, maximumScale: 1 },
 };
 

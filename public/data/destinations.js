@@ -6,6 +6,12 @@ export const destinations = [
     thumbnail: "/images/destinations/miami.png"
   },
   {
+    name: "Cara salada",
+    slug: "/explore?location=CaraSalada",
+    location: "Cara Salada Tour",
+    thumbnail: "/images/destinations/carasalada.jpeg"
+  },
+  {
     name: "Seattle Beach",
     slug: "/explore?location=Long-Island",
     location: "Long Island city",

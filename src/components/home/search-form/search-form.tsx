@@ -58,18 +58,17 @@ export default function FindTripForm() {
     >
       <div className="mb-3 sm:mb-0">
         <span className="mb-2 hidden font-satisfy text-xl leading-7 text-gray-dark sm:block 4xl:text-[28px] 4xl:leading-[44px]">
-          Enjoy your trip
+          Enjoy your ride in a unique way
         </span>
         <Text
           tag="h1"
           className="leading-12 mb-2 !text-xl !font-black uppercase text-gray-dark sm:!text-[28px] sm:!leading-9  4xl:!text-4xl 4xl:!leading-[52px]"
         >
-          Discover the <br className="hidden sm:block" />
-          new world
+          Experience  <br className="hidden sm:block" />
+          our aquatic bikes 
         </Text>
         <Text className="mb-5 hidden leading-6 !text-secondary sm:block 3xl:leading-8 4xl:mb-6 4xl:text-lg">
-          Compare prices from 200+ booking sites to help you find the lowest
-          price on the right hotel for you.
+        Compare prices on our wide range of motorcycles to help you find the right one for you.
         </Text>
       </div>
       <SearchAutocomplete
