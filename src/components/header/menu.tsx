@@ -14,16 +14,16 @@ const menuItems = [
     label: 'Home',
     path: Routes.public.home,
   },
-  {
-    id: 2,
-    label: 'Explore',
-    path: Routes.public.explore,
-  },
-  {
-    id: 3,
-    label: 'Pricing',
-    path: Routes.public.pricing,
-  },
+  // {
+  //   id: 2,
+  //   label: 'Explore',
+  //   path: Routes.public.explore,
+  // },
+  // {
+  //   id: 3,
+  //   label: 'Pricing',
+  //   path: Routes.public.pricing,
+  // },
   {
     id: 4,
     label: 'Help',

@@ -20,6 +20,9 @@ export default function GallaryBlock({ images }: GallaryBlockProps) {
       placement: 'bottom',
       view: 'PHOTO_GALLERY',
       customSize: '100%',
+      params: {
+        gallary: images, // Pasar la gallary como parte de los parámetros aca toquetie
+      },
     });
   }
 
@@ -31,7 +34,7 @@ export default function GallaryBlock({ images }: GallaryBlockProps) {
           onClick={handleClick}
         >
           <Image
-            src={images[0]}
+            src={images[6]}
             alt="pic"
             fill
             priority

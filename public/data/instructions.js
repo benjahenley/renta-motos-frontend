@@ -7,7 +7,7 @@ export const instructions = [
   {
     title: 'Find the perfect Jet Ski',
     description:
-      'Browse our 500 jet skis and select the one you like.',
+      'Browse our 10 jet skis and select the one you like.',
     icon: (
       <InstructionIconOne />
     ),
@@ -15,7 +15,7 @@ export const instructions = [
   {
     title: 'Select an instructor',
     description:
-      'Find your perfect look among thousands of fashion pieces, here available for rent and purchase',
+      'Little talk about safety instructions, principal things to consider and other stuff',
     icon: (
       <InstructionIconTwo />
     ),
@@ -23,7 +23,7 @@ export const instructions = [
   {
     title: 'Many Pickup Locations',
     description:
-      'Enjoy wearing it at your special event for a few days, or purchase it to make it part of your wardrobe',
+      'Choose the location thats suits perfectly for you',
     icon: (
       <InstructionIconThree />
     ),
@@ -31,7 +31,7 @@ export const instructions = [
   {
     title: 'Satisfied Customers',
     description:
-      'Simply pop your dress back in the free prepaid satchel provided. We now handle all the dry cleaning.',
+      'Simply pop your feedback in our survey, describing how your experience has been.',
     icon: (
       <InstructionIconFour />
     ),

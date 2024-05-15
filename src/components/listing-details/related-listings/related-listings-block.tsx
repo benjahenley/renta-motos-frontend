@@ -8,7 +8,7 @@ import Section from '@/components/ui/section';
 export default function RelatedListingBlock() {
   return (
     <Section
-      className="pt-5 xl:pt-7"
+      className="pt-5 xl:pt-7"      
       headerClassName="items-end gap-5"
       title="Similar yachts you may like"
       titleClassName="text-xl md:!text-[22px] 2xl:!text-2xl"

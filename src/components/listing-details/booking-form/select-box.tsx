@@ -81,7 +81,7 @@ export default function SelectBox({
               />
             </div>
             <div className="flex items-center justify-between">
-              <h5 className="  text-base font-bold text-gray-dark">Pets</h5>
+              <h5 className="  text-base font-bold text-gray-dark">Full day (10-18hs)</h5>
               <div className="flex items-center gap-3 xl:gap-7">
                 <Radio
                   readOnly

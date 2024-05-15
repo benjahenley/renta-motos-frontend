@@ -10,6 +10,7 @@ import clsx from 'clsx';
 const PhotoGallery = dynamic(
   () => import('@/components/ui/drawers/photo-gallery')
 );
+
 const SideMenu = dynamic(() => import('@/components/ui/drawers/side-menu'));
 const Filter = dynamic(() => import('@/components/explore/filter'));
 const BookingFormModal = dynamic(
@@ -23,10 +24,11 @@ export type DRAWER_VIEW =
   | 'FILTER_MENU';
 
 // render drawer contents
-function renderDrawerContent(view: DRAWER_VIEW | string) {
+function renderDrawerContent(view: DRAWER_VIEW | string, params?: any) {
   switch (view) {
     case 'PHOTO_GALLERY':
-      return <PhotoGallery />;
+      console.log('Params en renderDrawerContent:', params); // Verifica si params está llegando correctamente
+      return params ? <PhotoGallery gallary={params.gallary} /> : null;//aca toquetie
     case 'SIDE_MENU':
       return <SideMenu />;
     case 'FILTER_MENU':
@@ -43,12 +45,14 @@ type DrawerPropsType = {
   placement?: 'top' | 'right' | 'bottom' | 'left';
   view: string;
   customSize?: string;
+  params?: Record<string, any>; // Agregar un campo para los parámetros aca toquetie
 };
 
 export const drawerStateAtom = atom<DrawerPropsType>({
   isOpen: false,
   placement: 'left',
   view: 'SIDE_MENU',
+  params: {},//aca toquetie
 });
 
 export default function DrawerContainer() {
@@ -71,7 +75,7 @@ export default function DrawerContainer() {
         )}
         onClose={() => setDrawerState({ ...drawerSate, isOpen: false })}
       >
-        {renderDrawerContent(drawerSate.view)}
+        {renderDrawerContent(drawerSate.view, drawerSate.params)}
       </Drawer>
     </>
   );

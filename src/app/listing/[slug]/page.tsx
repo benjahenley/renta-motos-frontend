@@ -11,11 +11,39 @@ export default function ListingDetailsPage({
 }) {
   const { slug } = params;
 
+  console.log(params)
+
+    // Buscar el vendor cuyo slug coincide con el recibido por parámetro
+    const selectedVendor = vendorData[slug]
+  
+    if (!selectedVendor) {
+      return <div>No se encontró el vendedor con el slug proporcionado</div>;
+    }
+    
+     // Función para buscar el vendedor por su slug
+  // const findVendorBySlug = (slug: string) => {
+  //   for (const key in vendorData) {
+  //     if (vendorData.hasOwnProperty(key) && vendorData[key].slug === slug) {
+  //       return vendorData[key];
+  //     }
+  //   }
+  //   return null;
+  // };
+
+  // // Capturar el vendor cuyo slug coincide con el recibido por parámetro
+  // const selectedVendor = findVendorBySlug(slug);
+
+  // if (!selectedVendor) {
+  //   return <div>No se encontró el vendedor con el slug proporcionado</div>;
+  // }
+
+
+
   return (
     <>
       <div className="container-fluid w-full 3xl:!px-12">
-        <GallaryBlock images={vendorData.gallary} />
-        <ListingDetails />
+        <GallaryBlock images={selectedVendor.gallary} />
+          <ListingDetails vendor={selectedVendor}/>
         <RelatedListingBlock />
       </div>
       <SubscriptionBlock sectionClassName="3xl:!px-12 4xl:!px-12" />

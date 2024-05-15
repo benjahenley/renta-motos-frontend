@@ -81,13 +81,13 @@ export default function ListingDetailsHeroBlock({
         >
           {vendor.boatName}
         </Text>
-        <div className="mt-3 flex items-center gap-2 leading-4 text-gray-dark md:mt-4">
+        {/* <div className="mt-3 flex items-center gap-2 leading-4 text-gray-dark md:mt-4">
           <p>{vendor.boatGuests} guests</p>
           <span className="mt-1 block h-1.5 w-1.5 rounded-full bg-gray-dark"></span>
           <p>{vendor.boatCabins} cabins</p>
           <span className="mt-1 block h-1.5 w-1.5 rounded-full bg-gray-dark"></span>
           <p>{vendor.boatBathrooms} bathrooms</p>
-        </div>
+        </div> */}
       </div>
       <div className="relative">
         <ShareMenu />

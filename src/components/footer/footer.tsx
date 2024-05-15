@@ -13,10 +13,10 @@ const menuItems = [
     label: 'Explore',
     path: Routes.public.explore,
   },
-  {
-    label: 'Pricing',
-    path: Routes.public.pricing,
-  },
+  // {
+  //   label: 'Pricing',
+  //   path: Routes.public.pricing,
+  // },
   {
     label: 'Help',
     path: Routes.public.help,

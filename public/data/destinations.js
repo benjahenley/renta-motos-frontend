@@ -1,39 +1,39 @@
 export const destinations = [
   {
-    name: "Miami",
-    slug: "/explore?location=Miami",
-    location: "Long Island city",
-    thumbnail: "/images/destinations/miami.png"
+    name: "Portixol",
+    slug: "/listing/Portixol",
+    location: "Ibiza city",
+    thumbnail: "/images/destinations/portixol.jpeg"
   },
   {
-    name: "Cara salada",
-    slug: "/explore?location=CaraSalada",
-    location: "Cara Salada Tour",
+    name: "Cala salada",
+    slug: "/explore?location=CalaSalada",
+    location: "Ibiza city",
     thumbnail: "/images/destinations/carasalada.jpeg"
   },
   {
-    name: "Seattle Beach",
-    slug: "/explore?location=Long-Island",
-    location: "Long Island city",
-    thumbnail: "/images/destinations/longIsland.png"
+    name: "Cala Ubarca",
+    slug: "/explore?location=Cala-Ubarca",
+    location: "Ibiza city",
+    thumbnail: "/images/destinations/calaubarca.jpeg"
   },
   {
-    name: "Atlantis Dubai",
-    slug: "/explore?location=Dubai",
-    location: "Long Island city",
-    thumbnail: "/images/destinations/dubai.png"
+    name: "Cala Comte",
+    slug: "/explore?location=Cara-Comte",
+    location: "Ibiza city",
+    thumbnail: "/images/destinations/caracomte.jpeg"
   },
   {
-    name: "Australian Beach",
-    slug: "/explore?location=Australia",
-    location: "Long Island city",
-    thumbnail: "/images/destinations/australia.png"
+    name: "Margaritas Island",
+    slug: "/explore?location=Margaritas-Island",
+    location: "Ibiza city",
+    thumbnail: "/images/destinations/islamargaritas.jpeg"
   },
   {
-    name: "Bol Croatia",
-    slug: "/explore?location=croatia",
-    location: "Long Island city",
-    thumbnail: "/images/destinations/croatia.jpg"
+    name: "Esvedra Island",
+    slug: "/explore?location=Esvedra Island",
+    location: "Ibiza city",
+    thumbnail: "/images/destinations/islaesvedra.jpeg"
   },
   {
     name: "Atoll Maldives",

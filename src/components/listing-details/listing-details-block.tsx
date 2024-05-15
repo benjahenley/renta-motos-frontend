@@ -7,34 +7,36 @@ import BookingForm from '@/components/listing-details/booking-form/booking-form'
 import CalenderBlock from '@/components/listing-details/calendar/calender-block';
 import ListingDetailsHeroBlock from '@/components/listing-details/hero-block';
 import DescriptionBlock from '@/components/listing-details/descripton-block';
-import EquipmentBlock from '@/components/listing-details/equipment-block';
+// import EquipmentBlock from '@/components/listing-details/equipment-block';
 import LocationBlock from '@/components/listing-details/location-block';
-import ReviewBlock from '@/components/listing-details/review-block';
+// import ReviewBlock from '@/components/listing-details/review-block';
 import VendorBlock from '@/components/listing-details/vendor-block';
-import ChatBlock from '@/components/listing-details/chat-block';
+// import ChatBlock from '@/components/listing-details/chat-block';
 import { useModal } from '@/components/modals/context';
 import Button from '@/components/ui/button';
 
-export default function ListingDetails() {
+export default function ListingDetails({vendor} : {vendor: any}) {
   const { openModal } = useModal();
+
+
   return (
     <>
       <div className="flex justify-between gap-5 lg:gap-8 xl:gap-12 4xl:gap-16">
         <div className="w-full">
-          <ListingDetailsHeroBlock vendor={vendorData.vendor} />
-          <DescriptionBlock description={vendorData.description} />
-          <EquipmentBlock equipment={vendorData.equipment} />
-          <SpecificationBlock specifications={vendorData.specifications} />
-          <VendorBlock stats={reviewsData.stats} vendor={vendorData.vendor} />
+          <ListingDetailsHeroBlock vendor={vendor.vendor} />
+          <DescriptionBlock description={vendor.description} />
+          {/* <EquipmentBlock equipment={vendor.equipment} /> */}
+          <SpecificationBlock specifications={vendor.specifications} />
+          <VendorBlock stats={reviewsData.stats} vendor={vendor.vendor} />
           <LocationBlock />
           <CalenderBlock />
-          <ReviewBlock reviewsData={reviewsData} />
-          <ChatBlock />
+          {/* <ReviewBlock reviewsData={reviewsData} /> */}
+          {/* <ChatBlock /> */}
         </div>
         <div className="hidden w-full max-w-sm pb-11 lg:block xl:max-w-md 3xl:max-w-lg">
           <div className="sticky top-32 4xl:top-40">
             <BookingForm
-              price={vendorData.price}
+              price={vendor.price}
               averageRating={reviewsData.stats.averageRating}
               totalReviews={reviewsData.stats.totalReview}
             />

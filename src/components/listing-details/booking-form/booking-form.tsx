@@ -132,11 +132,11 @@ export default function BookingForm({
           )}
         ></span>
         <span className="absolute left-4 top-3 inline-block -translate-x-3 scale-75 text-sm font-semibold uppercase text-gray-dark">
-          Trip Start
+          Day Trip
         </span>
-        <span className="absolute right-4 top-3 inline-block translate-x-2 scale-75 text-sm font-semibold uppercase text-gray-dark">
+        {/* <span className="absolute right-4 top-3 inline-block translate-x-2 scale-75 text-sm font-semibold uppercase text-gray-dark">
           Trip End
-        </span>
+        </span> */}
         <Controller
           name="startDate"
           control={control}
@@ -163,7 +163,7 @@ export default function BookingForm({
             />
           )}
         />
-        <Controller
+        {/* <Controller
           name="endDate"
           control={control}
           render={({ field: { onChange, value } }) => (
@@ -185,7 +185,7 @@ export default function BookingForm({
               inputClassName="border-0 !text-base text-gray-dark text-end !h-16 pt-5"
             />
           )}
-        />
+        /> */}
       </div>
       <Controller
         name="selected"

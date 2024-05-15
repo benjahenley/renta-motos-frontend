@@ -9,7 +9,7 @@ export default function LocationBlock() {
       className="py-5 xl:py-7"
       title="location"
       titleClassName="text-xl md:!text-[22px] 2xl:!text-2xl mb-2"
-      description="Santa Maria Maggiore, Milazzo"
+      description="Ibiza, España"
       descriptionClassName="!text-gray !text-base"
     >
       <div className="mt-6 overflow-hidden rounded-xl">

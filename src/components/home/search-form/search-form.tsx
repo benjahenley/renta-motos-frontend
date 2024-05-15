@@ -40,6 +40,13 @@ export default function FindTripForm() {
 
   const handleFormSubmit = (e: any) => {
     e.preventDefault();
+
+      // Supongamos que tienes un slug específico
+  const specificSlug = 'listing/listing-1';
+
+  // Construye la URL con el slug
+  const slugUrl = `${specificSlug}`;
+
     let queryString = '';
     const queryObj: QueryStringType = {
       location: locationInput.searchedLocation,
@@ -47,7 +54,8 @@ export default function FindTripForm() {
       returnDate: format(endDate, 'yyyy-MM-dd'),
     };
     queryString = makeQueryString(queryObj);
-    router.push(`${Routes.public.explore}?${queryString}`);
+    // router.push(`${Routes.public.explore}?${queryString}`);
+    router.push(slugUrl);
   };
 
   return (
@@ -125,7 +133,7 @@ export default function FindTripForm() {
         rounded="lg"
         size="xl"
       >
-        Submit
+        Go check avaibility
       </Button>
     </form>
   );
