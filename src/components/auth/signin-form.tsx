@@ -10,6 +10,7 @@ import Button from '@/components/ui/button';
 import Checkbox from '@/components/ui/form-fields/checkbox';
 import useAuth from '@/hooks/use-auth';
 import { useModal } from '@/components/modals/context';
+import { signIn } from '@/api/sign-in/useSignIn';
 
 const loginInfoSchema = z.object({
   email: z
@@ -25,7 +26,7 @@ const loginInfoSchema = z.object({
 type SignInType = z.infer<typeof loginInfoSchema>;
 
 export default function SigninForm() {
-  const { authorize } = useAuth();
+  const { authorize, unauthorize } = useAuth();
   const { closeModal } = useModal();
 
   const {
@@ -37,10 +38,18 @@ export default function SigninForm() {
   });
 
   // TO-DO: Send data to API onSubmit.
-  function handleFormSubmit(data: SignInType) {
-    console.log('Submitted data', data);
-    authorize();
-    closeModal();
+  async function handleFormSubmit(data: SignInType) {
+    try {
+      const apiResponse = await signIn(data);
+      console.log({ apiResponse });
+
+      authorize();
+      closeModal();
+    } catch (e: any) {
+      alert(e.message);
+      unauthorize();
+      closeModal();
+    }
   }
 
   return (

@@ -9,17 +9,11 @@ interface UserType {
   role: string;
 }
 
-const demoUser = {
-  name: 'Jhon Doe',
-  avatar:
-    'http://s3.amazonaws.com/redqteam.com/isomorphic-reloaded-image/profilepic.png',
-  role: 'admin',
-};
-
 const isLoggedIn =
   typeof window !== 'undefined'
     ? localStorage.getItem('isAuthorized')
     : 'false';
+
 const userAtom = atomWithStorage<Partial<UserType>>('loggedUser', {});
 const authorizationAtom = atomWithStorage('isAuthorized', Boolean(isLoggedIn));
 
@@ -30,11 +24,11 @@ export default function useAuth() {
   return {
     isAuthorized,
     user,
-    authorize() {
+    authorize(user: UserType) {
       setAuthorized(true);
-      setUser(demoUser);
+      setUser(user);
     },
-    unauthorize() {
+    unauthorize(user: UserType) {
       setAuthorized(false);
       setUser({});
     },

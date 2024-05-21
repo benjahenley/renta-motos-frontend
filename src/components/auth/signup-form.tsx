@@ -8,6 +8,7 @@ import { Routes } from '@/config/routes';
 import Input from '@/components/ui/form-fields/input';
 import Button from '@/components/ui/button';
 import Checkbox from '@/components/ui/form-fields/checkbox';
+import { signUp } from '@/api/sign-up/useSignUp';
 
 const signUpSchema = z
   .object({
@@ -28,6 +29,10 @@ const signUpSchema = z
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match.",
     path: ['confirmPassword'],
+  })
+  .refine((data) => data.acceptPolicy === true, {
+    message: 'You must accept the terms and conditions to sign up.',
+    path: ['acceptPolicy'],
   });
 
 type SignUpType = z.infer<typeof signUpSchema>;
@@ -41,9 +46,14 @@ export default function SignUpForm() {
     resolver: zodResolver(signUpSchema),
   });
 
-  // TO-DO: Send data to API onSubmit.
-  function handleFormSubmit(data: SignUpType) {
-    console.log('Submitted data', data);
+  async function handleFormSubmit(data: SignUpType) {
+    // console.log('Submitted data', data);
+    try {
+      const signUpCall = await signUp(data);
+      localStorage.setItem('token', signUpCall.token);
+    } catch (e: any) {
+      alert(e.message);
+    }
   }
 
   return (
