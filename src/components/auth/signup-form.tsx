@@ -8,12 +8,18 @@ import { Routes } from '@/config/routes';
 import Input from '@/components/ui/form-fields/input';
 import Button from '@/components/ui/button';
 import Checkbox from '@/components/ui/form-fields/checkbox';
-import { signUp } from '@/api/sign-up/useSignUp';
+import { signUp } from '@/hooks/sign-up';
+import { redirect } from 'next/navigation';
+import { useState } from 'react';
 
 const signUpSchema = z
   .object({
-    firstName: z.string(),
-    lastName: z.string(),
+    firstName: z
+      .string()
+      .min(2, 'First name must be at least 2 characters long.'),
+    lastName: z
+      .string()
+      .min(2, 'Last name must be at least 2 characters long.'),
     email: z
       .string()
       .min(1, 'The email is required.')
@@ -45,13 +51,30 @@ export default function SignUpForm() {
   } = useForm<SignUpType>({
     resolver: zodResolver(signUpSchema),
   });
+  const [error, setError] = useState(null);
 
   async function handleFormSubmit(data: SignUpType) {
-    // console.log('Submitted data', data);
     try {
-      const signUpCall = await signUp(data);
-      localStorage.setItem('token', signUpCall.token);
+      const user = await signUp({
+        email: data.email,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      });
+
+      console.log(
+        'Welcome ' +
+          (user.displayName || 'user') +
+          '. Please confirm your email',
+      );
+      alert(
+        `Successfully signed up, ${user.displayName}! Please confirm your email.`,
+      );
+
+      redirect('/');
     } catch (e: any) {
+      setError(e.message);
+      console.log(e.message);
       alert(e.message);
     }
   }
@@ -117,6 +140,8 @@ export default function SignUpForm() {
         inputClassName="!text-gray-dark"
         {...register('acceptPolicy')}
       />
+      {error && <p className="text-red-500 text-center">{error}</p>}
+
       <Button type="submit" className="mb-2 w-full" size="xl">
         Sign Up
       </Button>

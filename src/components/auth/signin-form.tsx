@@ -10,7 +10,8 @@ import Button from '@/components/ui/button';
 import Checkbox from '@/components/ui/form-fields/checkbox';
 import useAuth from '@/hooks/use-auth';
 import { useModal } from '@/components/modals/context';
-import { signIn } from '@/api/sign-in/useSignIn';
+import { useState } from 'react';
+import { signIn } from '@/hooks/sign-in';
 
 const loginInfoSchema = z.object({
   email: z
@@ -28,6 +29,7 @@ type SignInType = z.infer<typeof loginInfoSchema>;
 export default function SigninForm() {
   const { authorize, unauthorize } = useAuth();
   const { closeModal } = useModal();
+  const [error, setError] = useState(null);
 
   const {
     register,
@@ -37,18 +39,19 @@ export default function SigninForm() {
     resolver: zodResolver(loginInfoSchema),
   });
 
-  // TO-DO: Send data to API onSubmit.
   async function handleFormSubmit(data: SignInType) {
     try {
-      const apiResponse = await signIn(data);
-      console.log({ apiResponse });
+      const user = await signIn(data.email, data.password, data.remember);
 
-      authorize();
+      console.log('User signed in:', user);
+      authorize(user);
       closeModal();
-    } catch (e: any) {
-      alert(e.message);
+    } catch (error: any) {
+      setError(error.message);
+      console.log(error.message);
+
       unauthorize();
-      closeModal();
+      // closeModal();
     }
   }
 
@@ -70,6 +73,12 @@ export default function SigninForm() {
         required
         {...register('password')}
       />
+      <div
+        style={{ marginTop: '-10px', marginBottom: '20px' }}
+        className={`${error ? 'initial' : 'hidden'} text-red-600`}
+      >
+        {error}
+      </div>
       <div className="mb-7 flex items-center justify-between">
         <Checkbox
           size="sm"

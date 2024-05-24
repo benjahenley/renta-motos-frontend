@@ -1,4 +1,4 @@
-export const signUp = async (data: object) => {
+export const signUpApi = async (data: object) => {
   const url = 'http://localhost:3001/api/sign-up';
   try {
     const response = await fetch(url, {

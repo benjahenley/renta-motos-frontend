@@ -24,6 +24,7 @@
     "core-js-pure": "^3.36.1",
     "eslint": "8.53.0",
     "eslint-config-next": "14.0.1",
+    "firebase": "^10.12.1",
     "framer-motion": "^10.16.4",
     "heroicons": "^2.0.18",
     "jotai": "^2.5.1",
