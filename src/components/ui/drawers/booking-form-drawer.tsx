@@ -8,7 +8,9 @@ import BookingForm from '@/components/listing-details/booking-form/booking-form'
 import { drawerStateAtom } from '@/components/drawers/view';
 import ActionIcon from '@/components/ui/action-icon';
 
-export default function BookingFormModal() {
+
+
+export default function BookingFormModal({vendor} : {vendor: any}) {
   const [drawerSate, setDrawerState] = useAtom(drawerStateAtom);
   return (
     <div className="w-full bg-white">
@@ -29,7 +31,8 @@ export default function BookingFormModal() {
         </ActionIcon>
       </div>
       <BookingForm
-        price={vendorData.price}
+        listing={vendor}
+        price={vendor.price}
         averageRating={reviewsData.stats.averageRating}
         totalReviews={reviewsData.stats.totalReview}
         className="mx-auto mt-5 w-full max-w-lg !border-none !shadow-none"

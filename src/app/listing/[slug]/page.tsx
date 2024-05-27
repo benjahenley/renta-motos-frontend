@@ -1,49 +1,36 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useVendor } from '../../../components/vendorContext';
 import { vendorData } from 'public/data/listing-details';
 import RelatedListingBlock from '@/components/listing-details/related-listings/related-listings-block';
 import ListingDetails from '@/components/listing-details/listing-details-block';
 import SubscriptionBlock from '@/components/subscription/subscription-block';
 import GallaryBlock from '@/components/listing-details/gallary-block';
+import { VendorTypes } from '@/types'; // Importa VendorTypes
 
-export default function ListingDetailsPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default function ListingDetailsPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
+  const { setSelectedVendor } = useVendor();
+  const vendorsArray = Object.values(vendorData); // Convertir el objeto en un array
+  const selectedVendor = vendorsArray.find(v => v.slug === slug) as VendorTypes; // Encontrar el vendor correcto y asegurar el tipo
 
-  console.log(params)
-
-    // Buscar el vendor cuyo slug coincide con el recibido por parámetro
-    const selectedVendor = vendorData[slug]
-  
-    if (!selectedVendor) {
-      return <div>No se encontró el vendedor con el slug proporcionado</div>;
+  useEffect(() => {
+    if (selectedVendor) {
+      setSelectedVendor(selectedVendor);
     }
-    
-     // Función para buscar el vendedor por su slug
-  // const findVendorBySlug = (slug: string) => {
-  //   for (const key in vendorData) {
-  //     if (vendorData.hasOwnProperty(key) && vendorData[key].slug === slug) {
-  //       return vendorData[key];
-  //     }
-  //   }
-  //   return null;
-  // };
+    console.log(selectedVendor)
+  }, [selectedVendor, setSelectedVendor]);
 
-  // // Capturar el vendor cuyo slug coincide con el recibido por parámetro
-  // const selectedVendor = findVendorBySlug(slug);
-
-  // if (!selectedVendor) {
-  //   return <div>No se encontró el vendedor con el slug proporcionado</div>;
-  // }
-
-
+  if (!selectedVendor) {
+    return <div>No se encontró el vendedor con el slug proporcionado</div>;
+  }
 
   return (
     <>
       <div className="container-fluid w-full 3xl:!px-12">
         <GallaryBlock images={selectedVendor.gallary} />
-          <ListingDetails vendor={selectedVendor}/>
+        <ListingDetails vendor={selectedVendor} />
         <RelatedListingBlock />
       </div>
       <SubscriptionBlock sectionClassName="3xl:!px-12 4xl:!px-12" />

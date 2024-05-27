@@ -76,7 +76,7 @@ export default function FindTripForm() {
           our aquatic bikes 
         </Text>
         <Text className="mb-5 hidden leading-6 !text-secondary sm:block 3xl:leading-8 4xl:mb-6 4xl:text-lg">
-        Compare prices on our wide range of motorcycles to help you find the right one for you.
+        Go check our equipment and do your reservation.
         </Text>
       </div>
       <SearchAutocomplete

@@ -28,7 +28,7 @@ export default function ListingDetails({vendor} : {vendor: any}) {
           {/* <EquipmentBlock equipment={vendor.equipment} /> */}
           <SpecificationBlock specifications={vendor.specifications} />
           <VendorBlock stats={reviewsData.stats} vendor={vendor.vendor} />
-          <LocationBlock />
+          {/* <LocationBlock /> */}
           <CalenderBlock />
           {/* <ReviewBlock reviewsData={reviewsData} /> */}
           {/* <ChatBlock /> */}
@@ -36,6 +36,7 @@ export default function ListingDetails({vendor} : {vendor: any}) {
         <div className="hidden w-full max-w-sm pb-11 lg:block xl:max-w-md 3xl:max-w-lg">
           <div className="sticky top-32 4xl:top-40">
             <BookingForm
+              listing={vendor}
               price={vendor.price}
               averageRating={reviewsData.stats.averageRating}
               totalReviews={reviewsData.stats.totalReview}

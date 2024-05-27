@@ -138,7 +138,7 @@
 export const vendorData = {
   "listing-1": {
     slug: "listing-1",
-    price: 215,
+    price: 310,
     gallary: [
       "/images/top-boats/1.jpeg",
       "/images/top-boats/2.jpeg",
@@ -189,13 +189,58 @@ export const vendorData = {
         name: ' Tipo de motor',
         details: '4 cilindros;1.8 Liter High Output;4 tiempos;DOHC;4 válvulas',
       },
+      {
+        name: 'Cilindrada',
+        details: '1,812cc',
+      },
+      {
+        name: 'Diámetro x carrera',
+        details: '86.0 mm x 78.0 mm',
+      },
+      {
+        name: 'Relación de compresión',
+        details: ' 11.0 : 1',
+      },
+      {
+        name: 'Tipo de bomba',
+        details: '155 mm Axial Flow',
+      },
+      {
+        name: 'Combustible',
+        details: 'Gasolina normal sin plomo',
+      },
+      {
+        name: 'Fuel supply system',
+        details: 'Inyección electrónica de combustible',
+      },
+      {
+        name: 'Capacidad de combustible',
+        details: ' 70.0litros',
+      },
+      {
+        name: ' Cap. depósito aceite',
+        details: '5.3litros',
+      },
+      {
+        name: ' Capacidad de carga',
+        details: ' 93.2litros',
+      },
+      {
+        name: 'Capacidad de pasajeros',
+        details: '1-3 personas',
+      },
+      {
+        name: 'Peso en seco (kg)',
+        details: '348kg',
+      }
       // Otras especificaciones...
     ],
   },
   // Agregar otro vendedor aquí
   "listing-2": {
     slug: "listing-2",
-    price: 250,
+    price: 300,
+
     gallary: [
       "/images/top-boats/boat-forteen.png",
       "/images/top-boats/boat-two.jpg",
@@ -253,6 +298,7 @@ export const vendorData = {
   "Portixol": {
     slug: "Portixol",
     price: 250,
+    triptime: '2h',
     gallary: [
       "/images/destinations/portixol.jpeg",
       "/images/destinations/portixol.jpeg",
@@ -284,7 +330,7 @@ export const vendorData = {
       twitterUserName: "@marialopez",
     },
     description:
-    "Embárcate en una emocionante aventura hacia la encantadora bahía de Portixol, donde la brisa marina acaricia tu rostro y el murmullo de las olas te invita a explorar un paraíso costero. Desde el momento en que zarpas, te sumerges en un viaje lleno de descubrimientos y belleza natural. A medida que el barco se desliza suavemente por las aguas cristalinas, podrás disfrutar de impresionantes vistas panorámicas de la costa, con acantilados escarpados y pintorescas calas escondidas. El sol brilla sobre las aguas turquesas, creando destellos brillantes que danzan a lo largo del horizonte.A lo lejos, la silueta de Portixol comienza a tomar forma, un pueblo pesquero pintoresco y pintoresco que parece haber salido directamente de una postal. Al acercarte, el aroma a salitre y pescado fresco llena el aire, preparándote para una experiencia culinaria auténtica en los restaurantes locales.Una vez que desembarques, tendrás la oportunidad de explorar las estrechas calles empedradas de Portixol, donde las coloridas casas de pescadores y los barcos tradicionales crean un ambiente pintoresco y acogedor. Puedes pasear por el puerto, disfrutar de un refrescante baño en las aguas tranquilas o simplemente relajarte en la playa mientras el tiempo se detiene.Después de un día lleno de aventuras y momentos memorables, regresarás al barco con el corazón lleno de gratitud y la mente llena de recuerdos inolvidables. La excursión a Portixol en barco no solo es un viaje, sino una experiencia que te conecta con la belleza atemporal del Mediterráneo y la magia de la costa española.",
+      "Embárcate en una emocionante aventura hacia la encantadora bahía de Portixol, donde la brisa marina acaricia tu rostro y el murmullo de las olas te invita a explorar un paraíso costero. Desde el momento en que zarpas, te sumerges en un viaje lleno de descubrimientos y belleza natural. A medida que el barco se desliza suavemente por las aguas cristalinas, podrás disfrutar de impresionantes vistas panorámicas de la costa, con acantilados escarpados y pintorescas calas escondidas. El sol brilla sobre las aguas turquesas, creando destellos brillantes que danzan a lo largo del horizonte.A lo lejos, la silueta de Portixol comienza a tomar forma, un pueblo pesquero pintoresco y pintoresco que parece haber salido directamente de una postal. Al acercarte, el aroma a salitre y pescado fresco llena el aire, preparándote para una experiencia culinaria auténtica en los restaurantes locales.Una vez que desembarques, tendrás la oportunidad de explorar las estrechas calles empedradas de Portixol, donde las coloridas casas de pescadores y los barcos tradicionales crean un ambiente pintoresco y acogedor. Puedes pasear por el puerto, disfrutar de un refrescante baño en las aguas tranquilas o simplemente relajarte en la playa mientras el tiempo se detiene.Después de un día lleno de aventuras y momentos memorables, regresarás al barco con el corazón lleno de gratitud y la mente llena de recuerdos inolvidables. La excursión a Portixol en barco no solo es un viaje, sino una experiencia que te conecta con la belleza atemporal del Mediterráneo y la magia de la costa española.",
     equipment: [
       {
         img: '/images/listing-details/pilot.svg',

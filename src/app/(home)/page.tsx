@@ -13,7 +13,7 @@ export default function HomePage() {
       <HeroBanner />
       <DestinationBlock />
       <InstructionBlock />
-      <TopBoats />
+      {/* <TopBoats /> */}
       <PromotionalBlock />
       {/* <NewBoats /> */}
       <TestimonialBlock />

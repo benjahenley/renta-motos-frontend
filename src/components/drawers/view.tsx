@@ -23,6 +23,8 @@ export type DRAWER_VIEW =
   | 'BOOKING_FORM'
   | 'FILTER_MENU';
 
+
+
 // render drawer contents
 function renderDrawerContent(view: DRAWER_VIEW | string, params?: any) {
   switch (view) {
@@ -34,7 +36,7 @@ function renderDrawerContent(view: DRAWER_VIEW | string, params?: any) {
     case 'FILTER_MENU':
       return <Filter />;
     case 'BOOKING_FORM':
-      return <BookingFormModal />;
+      return <BookingFormModal vendor={params} />;
     default:
       return null;
   }
