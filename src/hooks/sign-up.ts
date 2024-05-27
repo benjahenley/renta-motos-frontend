@@ -23,21 +23,22 @@ export const signUp = async ({
   lastName,
 }: Props) => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(
+    const { user } = await createUserWithEmailAndPassword(
       auth,
       email,
       password,
     );
 
-    const user = userCredential.user;
-    await updateProfile(user, { displayName: `${firstName} ${lastName}` });
+    await updateProfile(user, {
+      displayName: `${firstName} ${lastName}`,
+    });
     await sendEmailVerification(user);
-    await signUpApi({ email, password, firstName, lastName });
+
+    await signUpApi({ email, password, firstName, lastName, uid: user.uid });
 
     return user;
   } catch (error: any) {
-    console.log(error.code);
-
+    console.error('Signup error:', error);
     if (
       error.code === 'auth/wrong-password' ||
       error.code === 'auth/invalid-credential'

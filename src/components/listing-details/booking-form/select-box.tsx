@@ -11,7 +11,6 @@ import Button from '@/components/ui/button';
 interface selectedProps {
   adults: number;
   child: number;
-  pets: boolean;
 }
 
 interface SelecBoxProps {
@@ -29,7 +28,6 @@ export default function SelectBox({
 }: SelecBoxProps) {
   const [adults, setAdults] = useState(defaultSelected.adults);
   const [child, setChild] = useState(defaultSelected.child);
-  const [pets, setPets] = useState(defaultSelected.pets);
 
   return (
     <div className={className}>
@@ -40,7 +38,7 @@ export default function SelectBox({
               <button
                 className={clsx(
                   'flex h-16 w-full cursor-pointer items-center justify-between rounded-b-lg border border-gray-lighter bg-white px-4 py-2.5 text-left uppercase text-gray-dark focus:outline-none xl:py-3',
-                  open && 'border-gray-dark ring-[1px] ring-gray-900/20'
+                  open && 'border-gray-dark ring-[1px] ring-gray-900/20',
                 )}
               >
                 <span className="block">
@@ -49,7 +47,7 @@ export default function SelectBox({
                 <span
                   className={clsx(
                     'transition-transform duration-200',
-                    open ? '-rotate-180' : 'rotate-0'
+                    open ? '-rotate-180' : 'rotate-0',
                   )}
                 >
                   <ArrowDownIcon className="h-4 w-4 font-bold text-gray" />
@@ -81,33 +79,10 @@ export default function SelectBox({
               />
             </div>
             <div className="flex items-center justify-between">
-              <h5 className="  text-base font-bold text-gray-dark">Full day (10-18hs)</h5>
-              <div className="flex items-center gap-3 xl:gap-7">
-                <Radio
-                  readOnly
-                  label="Yes"
-                  checked={pets}
-                  onChange={() => setPets(!pets)}
-                  className="[&>div>div]:!p-0"
-                  labelClassName="!text-sm xl:!text-base"
-                  inputClassName={clsx(
-                    pets &&
-                      '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark'
-                  )}
-                />
-                <Radio
-                  readOnly
-                  label="No"
-                  checked={!pets}
-                  onChange={() => setPets(!pets)}
-                  className="[&>div>div]:!p-0"
-                  labelClassName="!text-sm xl:!text-base"
-                  inputClassName={clsx(
-                    !pets &&
-                      '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark'
-                  )}
-                />
-              </div>
+              <h5 className="  text-base font-bold text-gray-dark">
+                Full day (10-18hs)
+              </h5>
+              <div className="flex items-center gap-3 xl:gap-7"></div>
             </div>
             <Listbox.Option className="mt-4" value={0}>
               <Button
@@ -117,7 +92,6 @@ export default function SelectBox({
                   onChange({
                     adults: adults,
                     child: child,
-                    pets: pets,
                   })
                 }
               >

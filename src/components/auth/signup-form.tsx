@@ -9,8 +9,8 @@ import Input from '@/components/ui/form-fields/input';
 import Button from '@/components/ui/button';
 import Checkbox from '@/components/ui/form-fields/checkbox';
 import { signUp } from '@/hooks/sign-up';
-import { redirect } from 'next/navigation';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const signUpSchema = z
   .object({
@@ -30,15 +30,13 @@ const signUpSchema = z
     confirmPassword: z
       .string()
       .min(8, { message: 'Password must be 8 character long.' }),
-    acceptPolicy: z.boolean(),
+    acceptPolicy: z.boolean().refine((value) => value === true, {
+      message: 'You must accept the terms and conditions to sign up.',
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match.",
     path: ['confirmPassword'],
-  })
-  .refine((data) => data.acceptPolicy === true, {
-    message: 'You must accept the terms and conditions to sign up.',
-    path: ['acceptPolicy'],
   });
 
 type SignUpType = z.infer<typeof signUpSchema>;
@@ -52,6 +50,8 @@ export default function SignUpForm() {
     resolver: zodResolver(signUpSchema),
   });
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const router = useRouter();
 
   async function handleFormSubmit(data: SignUpType) {
     try {
@@ -62,16 +62,19 @@ export default function SignUpForm() {
         lastName: data.lastName,
       });
 
+      console.log(data, user);
+
       console.log(
         'Welcome ' +
           (user.displayName || 'user') +
           '. Please confirm your email',
       );
-      alert(
-        `Successfully signed up, ${user.displayName}! Please confirm your email.`,
-      );
+      setError(null);
+      setSuccess('Successfully signed up! Confirm email');
 
-      redirect('/');
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
     } catch (e: any) {
       setError(e.message);
       console.log(e.message);
@@ -134,6 +137,7 @@ export default function SignUpForm() {
           </>
         }
         size="sm"
+        error={errors?.acceptPolicy?.message}
         className="mb-7"
         labelClassName="ml-3"
         containerClassName="!items-start"
@@ -141,6 +145,7 @@ export default function SignUpForm() {
         {...register('acceptPolicy')}
       />
       {error && <p className="text-red-500 text-center">{error}</p>}
+      {success && <p className="text-green-500 text-center">{success}</p>}
 
       <Button type="submit" className="mb-2 w-full" size="xl">
         Sign Up

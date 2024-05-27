@@ -45,20 +45,21 @@ const list = [
   },
 ];
 
-const BookingSchema = z
-  .object({
-    startDate: z.date().min(new Date(), { message: 'Invalid Start Date!' }),
-    endDate: z.date().min(new Date(), { message: 'Invalid End Date!' }),
-    selected: z.object({
-      adults: z.number().min(1, 'Minimum 1 Adult required!'),
-      child: z.number(),
-      pets: z.boolean(),
-    }),
-  })
-  .refine(({ startDate, endDate }) => startDate < endDate, {
-    message: 'End Date must be greater then Start Date.',
-    path: ['startDate'],
-  });
+const generateTimeIntervals = () => {
+  const intervals = [];
+  for (let hour = 10; hour <= 20; hour += 3) {
+    intervals.push(`${hour}:00`);
+  }
+  return intervals;
+};
+
+const BookingSchema = z.object({
+  startDate: z.date().min(new Date(), { message: 'Invalid Start Date!' }),
+  selected: z.object({
+    adults: z.number().min(1, 'Minimum 1 Adult required!'),
+    child: z.number(),
+  }),
+});
 
 type BookingSchemaType = z.infer<typeof BookingSchema>;
 
@@ -78,7 +79,6 @@ export default function BookingForm({
       selected: {
         adults: 0,
         child: 0,
-        pets: false,
       },
     },
     resolver: zodResolver(BookingSchema),
@@ -88,6 +88,7 @@ export default function BookingForm({
   const [focus, setFocus] = useState<boolean>(false);
 
   function handleBooking(data: any) {
+    console.log(generateTimeIntervals());
     console.log(data);
   }
 
@@ -97,14 +98,14 @@ export default function BookingForm({
       onSubmit={handleSubmit((data) => handleBooking(data))}
       className={clsx(
         'rounded-xl border border-gray-lighter bg-white p-8 shadow-card',
-        className
+        className,
       )}
     >
       <div className="flex items-center justify-between gap-3  ">
-        <p className="text-xl font-bold text-gray-dark xl:text-[22px]">
+        <p className="text-xl font-bold text-gray-dark xl:text-[22px] text-right">
           ${price} <span className="text-base">/ night</span>
         </p>
-        <p className="inline-flex flex-shrink-0 items-center gap-2">
+        {/* <p className="inline-flex flex-shrink-0 items-center gap-2">
           <Staricon className="xl:w-h-5 h-4 w-4 xl:h-5" />
           <span className="text-base font-bold text-gray-dark">
             {averageRating}
@@ -116,19 +117,19 @@ export default function BookingForm({
             </a>{' '}
             )
           </span>
-        </p>
+        </p> */}
       </div>
       <div
         className={clsx(
           'relative mt-6 grid grid-cols-2 gap-3 rounded-t-lg border border-b-0 border-gray-lighter',
-          focus && '!border-b !border-gray-dark ring-[1px] ring-gray-900/20'
+          focus && '!border-b !border-gray-dark ring-[1px] ring-gray-900/20',
         )}
         onBlur={() => setFocus(false)}
       >
         <span
           className={clsx(
             'absolute inset-y-0 left-1/2 translate-x-1/2 border-r border-gray-lighter',
-            focus && '!border-gray-dark'
+            focus && '!border-gray-dark',
           )}
         ></span>
         <span className="absolute left-4 top-3 inline-block -translate-x-3 scale-75 text-sm font-semibold uppercase text-gray-dark">
@@ -156,13 +157,13 @@ export default function BookingForm({
               }}
               selectsStart
               startDate={getValues('startDate')}
-              endDate={getValues('endDate')}
               dateFormat="eee dd / LL / yy"
               popperClassName="!translate-x-0 !right-0 !top-full booking-form-calendar"
               inputClassName="border-0 !text-base text-gray-dark !h-16 pt-5"
             />
           )}
         />
+
         {/* <Controller
           name="endDate"
           control={control}
@@ -196,7 +197,6 @@ export default function BookingForm({
       />
       <p className="flex items-center justify-between text-xs text-red">
         <span>{errors.startDate?.message}</span>
-        <span>{errors.endDate?.message}</span>
         <span>{errors.selected?.adults?.message}</span>
       </p>
       <Button
