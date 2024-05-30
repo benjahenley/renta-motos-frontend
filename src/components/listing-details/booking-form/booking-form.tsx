@@ -1,10 +1,8 @@
-'use client';
-
-import { z } from 'zod';
-import clsx from 'clsx';
-import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState, useEffect } from 'react';
+import clsx from 'clsx';
+import { z } from 'zod';
 import SelectBox from '@/components/listing-details/booking-form/select-box';
 import DateTime from '@/components/ui/form-fields/date-time-picker';
 import { Staricon } from '@/components/icons/star-icon';
@@ -14,17 +12,13 @@ interface BookingFormProps {
   price: number;
   averageRating: number;
   totalReviews: number;
+  listing: any; // Añadido para recibir el objeto listado
   className?: string;
 }
 
 const list = [
   {
-    title: '$215 * 3 nights',
-    money: 762,
-    type: 'price',
-  },
-  {
-    title: 'Weekly discount',
+    title: 'Weekly discount?',
     money: 117,
     type: 'discount',
   },
@@ -38,28 +32,25 @@ const list = [
     money: 65,
     type: 'servicefee',
   },
-  {
-    title: 'Total fee',
-    money: 702,
-    type: 'total',
-  },
 ];
 
-const generateTimeIntervals = () => {
-  const intervals = [];
-  for (let hour = 10; hour <= 20; hour += 3) {
-    intervals.push(`${hour}:00`);
-  }
-  return intervals;
-};
+const rentTimeOptions = ['2h', '4h', 'fullDay'] as const;
+type RentTime = (typeof rentTimeOptions)[number];
 
-const BookingSchema = z.object({
-  startDate: z.date().min(new Date(), { message: 'Invalid Start Date!' }),
-  selected: z.object({
-    adults: z.number().min(1, 'Minimum 1 Adult required!'),
-    child: z.number(),
-  }),
-});
+const BookingSchema = z
+  .object({
+    startDate: z.date().min(new Date(), { message: 'Invalid Start Date!' }),
+    endDate: z.date().min(new Date(), { message: 'Invalid End Date!' }),
+    selected: z.object({
+      adults: z.number().min(1, 'Minimum 1 Adult required!'),
+      child: z.number(),
+      rentTime: z.enum(rentTimeOptions), // Asegúrate de que esto esté en el esquema
+    }),
+  })
+  .refine(({ startDate, endDate }) => startDate < endDate, {
+    message: 'End Date must be greater than Start Date.',
+    path: ['startDate'],
+  });
 
 type BookingSchemaType = z.infer<typeof BookingSchema>;
 
@@ -68,17 +59,20 @@ export default function BookingForm({
   averageRating,
   totalReviews,
   className,
+  listing,
 }: BookingFormProps) {
   const {
     control,
     getValues,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<BookingSchemaType>({
     defaultValues: {
       selected: {
         adults: 0,
         child: 0,
+        rentTime: 'fullDay', // Cambiar aquí
       },
     },
     resolver: zodResolver(BookingSchema),
@@ -86,6 +80,18 @@ export default function BookingForm({
 
   const [minEndDate, setMinEndDate] = useState(getValues('startDate'));
   const [focus, setFocus] = useState<boolean>(false);
+  const [calculatedPrice, setCalculatedPrice] = useState<number>(450); // Valor inicial basado en 'fullDay'
+
+  const rentTime = watch('selected.rentTime');
+  const rentPrices: Record<RentTime, number> = {
+    '2h': 250,
+    '4h': 300,
+    fullDay: 450,
+  };
+
+  useEffect(() => {
+    setCalculatedPrice(rentPrices[rentTime]);
+  }, [rentTime]);
 
   function handleBooking(data: any) {
     console.log(generateTimeIntervals());
@@ -101,9 +107,9 @@ export default function BookingForm({
         className,
       )}
     >
-      <div className="flex items-center justify-between gap-3  ">
-        <p className="text-xl font-bold text-gray-dark xl:text-[22px] text-right">
-          ${price} <span className="text-base">/ night</span>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-xl font-bold text-gray-dark xl:text-[22px]">
+          ${price} Euro <span className="text-base"></span>
         </p>
         {/* <p className="inline-flex flex-shrink-0 items-center gap-2">
           <Staricon className="xl:w-h-5 h-4 w-4 xl:h-5" />
@@ -115,9 +121,9 @@ export default function BookingForm({
             <a href="#reviews" rel="noopener noreferer" className="underline">
               {totalReviews} reviews
             </a>{' '}
-            )
-          </span>
-        </p> */}
+            ) */}
+        {/* </span> */}
+        {/* </p> */}
       </div>
       <div
         className={clsx(
@@ -126,12 +132,12 @@ export default function BookingForm({
         )}
         onBlur={() => setFocus(false)}
       >
-        <span
+        {/* <span
           className={clsx(
             'absolute inset-y-0 left-1/2 translate-x-1/2 border-r border-gray-lighter',
             focus && '!border-gray-dark',
           )}
-        ></span>
+        ></span> */}
         <span className="absolute left-4 top-3 inline-block -translate-x-3 scale-75 text-sm font-semibold uppercase text-gray-dark">
           Day Trip
         </span>
@@ -192,11 +198,16 @@ export default function BookingForm({
         name="selected"
         control={control}
         render={({ field: { onChange, value } }) => (
-          <SelectBox defaultSelected={value} onChange={onChange} />
+          <SelectBox
+            defaultSelected={value}
+            onChange={onChange}
+            rentTimeDisabled={listing.triptime !== undefined}
+          />
         )}
       />
       <p className="flex items-center justify-between text-xs text-red">
         <span>{errors.startDate?.message}</span>
+        {/* <span>{errors.endDate?.message}</span> */}
         <span>{errors.selected?.adults?.message}</span>
       </p>
       <Button
@@ -209,6 +220,10 @@ export default function BookingForm({
         reserve
       </Button>
       <ul className="mt-3 xl:mt-5">
+        <li className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0">
+          <span className="font-normal"> {rentTime} Rent Time</span>
+          <span className="font-bold">${calculatedPrice}</span>
+        </li>
         {list.map((item) => (
           <li
             key={item.title}

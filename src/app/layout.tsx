@@ -5,6 +5,7 @@ import ModalContainer from '@/components/modals/view';
 import DrawerContainer from '@/components/drawers/view';
 import GalleryCarouselView from '@/components/gallery/view';
 import '@/styles/globals.css';
+import { VendorProvider } from '../components/vendorContext'; 
 
 const lato = Lato({
   subsets: ['latin'],
@@ -37,10 +38,12 @@ export default function RootLayout({ children }: React.PropsWithChildren<{}>) {
     >
       <head />
       <body className="flex min-h-full flex-col">
-        {children}
-        <ModalContainer />
-        <DrawerContainer />
-        <GalleryCarouselView />
+      <VendorProvider> {/* Envuelve tus componentes hijos con el VendorProvider */}
+          {children}
+          <ModalContainer />
+          <DrawerContainer />
+          <GalleryCarouselView />
+        </VendorProvider>
       </body>
     </html>
   );

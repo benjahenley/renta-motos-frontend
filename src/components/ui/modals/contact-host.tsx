@@ -1,6 +1,6 @@
 'use client';
 
-import { vendorData } from 'public/data/listing-details';
+import { useVendor } from '../../vendorContext';
 import { reviewsData } from 'public/data/reviews';
 import { z } from 'zod';
 import Link from 'next/link';
@@ -36,11 +36,14 @@ const ContactHostSchema = z.object({
   message: z.string().min(1, { message: 'Message field is required!' }),
 });
 
+
 type ContactHostModalType = z.infer<typeof ContactHostSchema>;
+
 
 export default function ContactHost() {
   const { closeModal } = useModal();
-  const { vendor } = vendorData;
+  const { selectedVendor } = useVendor()
+
   const { stats } = reviewsData;
   const [state, setState] = useState(false);
   const [stateTwo, setStateTwo] = useState(false);
@@ -57,6 +60,11 @@ export default function ContactHost() {
     console.log('Data:', data);
     closeModal();
   }
+  if (!selectedVendor) {
+    return <div>Vendor not found</div>;
+  }
+
+  const vendorInfo = selectedVendor.vendor; // Simplificar el acceso a vendor info
 
   return (
     <div className="mx-auto w-full max-w-full rounded-lg bg-white p-4 xs:w-[480px] sm:w-[600px] sm:p-6 md:w-[648px] md:rounded-xl md:p-8 xl:p-12">
@@ -76,20 +84,20 @@ export default function ContactHost() {
       <div className="mt-3 flex items-center justify-between border-b border-gray-lighter pb-3 md:mt-7 md:pb-7">
         <div>
           <Text tag="h6" className="text-sm uppercase md:!text-base">
-            <Link href={Routes.private.inbox}>{vendor.name}</Link>
+            <Link href={Routes.private.inbox}>{vendorInfo.name}</Link>
           </Text>
           <div className="mt-1 flex items-center md:mt-2">
             <Rate allowHalf allowClear defaultValue={stats.averageRating} />
-            <p className="ml-3   text-sm text-gray-dark md:text-base">
+            {/* <p className="ml-3   text-sm text-gray-dark md:text-base">
               <span>(</span> {vendor.totalReview} <span>)</span>
-            </p>
+            </p> */}
           </div>
         </div>
         <Link href={Routes.public.userID('user1')}>
           <div className="relative h-12 w-12 overflow-hidden rounded-full md:h-[60px] md:w-[60px]">
             <Image
-              src={vendor.img}
-              alt={vendor.name}
+              src={vendorInfo.img}
+              alt={vendorInfo.name}
               fill
               className="absolute object-cover"
             />
@@ -161,14 +169,14 @@ export default function ContactHost() {
         <div className="grid grid-cols-1 gap-x-3 gap-y-3 sm:grid-cols-2 md:mt-6 md:gap-y-4">
           <Input
             label="First name"
-            placeholder="Fabio"
+            placeholder="Name"
             labelClassName="!text-sm md:!text-base"
             {...register('firstName')}
             error={errors?.firstName?.message}
           />
           <Input
             label="Last name"
-            placeholder="Jaction"
+            placeholder="Last Name"
             labelClassName="!text-sm md:!text-base"
             {...register('lastName')}
             error={errors?.lastName?.message}
@@ -176,7 +184,7 @@ export default function ContactHost() {
           <Input
             type="email"
             label="Email"
-            placeholder="dummy@dummy.com"
+            placeholder="someone@gmail.com"
             labelClassName="!text-sm md:!text-base"
             {...register('email')}
             error={errors?.email?.message}

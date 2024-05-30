@@ -37,19 +37,56 @@ export type ListingItemTypes = {
 };
 
 export type VendorTypes = {
-  name: string;
-  img: string;
-  memberSince: string;
-  languages: string[];
-  responseRate: number;
-  responseTime: string;
-  location: string;
-  boatName: string;
-  boatGuests: number;
-  boatCabins: number;
-  boatBathrooms: number;
-  totalReview: number;
+  slug: string;
+  price: number;
+  gallary: string[];
+  vendor: {
+    name: string;
+    img: string;
+    coverImage: string;
+    memberSince: string;
+    languages: string[];
+    responseRate: number;
+    responseTime: string;
+    location: string;
+    boatName: string;
+    boatGuests: number;
+    boatCabins: number;
+    boatBathrooms: number;
+    totalReview: number;
+    username: string;
+    instagramUserName: string;
+    twitterUserName: string;
+  };
+  description: string;
+  equipment: {
+    img: string;
+    name: string;
+  }[];
+  specifications: {
+    name: string;
+    details: string;
+  }[];
 };
+
+
+// export type VendorTypes = {
+//   name: string;
+//   img: string;
+//   memberSince: string;
+//   languages: string[];
+//   responseRate: number;
+//   responseTime: string;
+//   location: string;
+//   boatName: string;
+//   boatGuests: number;
+//   boatCabins: number;
+//   boatBathrooms: number;
+//   totalReview: number;
+// };
+
+export type VendorWithSlug = VendorTypes & { slug: string };
+
 
 export type EquipmentsTypes = {
   img: string;

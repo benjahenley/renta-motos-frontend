@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { Listbox } from '@headlessui/react';
@@ -8,26 +9,51 @@ import Radio from '@/components/ui/form-fields/radio';
 import Counter from '@/components/ui/counter';
 import Button from '@/components/ui/button';
 
-interface selectedProps {
+interface SelectedProps {
   adults: number;
   child: number;
+  rentTime: string;
 }
 
-interface SelecBoxProps {
+interface SelectBoxProps {
   className?: string;
   label?: string;
-  defaultSelected: selectedProps;
+  defaultSelected: SelectedProps;
   labelClassName?: string;
-  onChange: ({}: selectedProps) => void;
+  onChange: (selected: SelectedProps) => void;
+  listing?: any; // Propiedad que contiene el objeto listing
+  rentTimeDisabled?: boolean; // Nuevo prop para deshabilitar rentTime
 }
 
 export default function SelectBox({
   className,
   defaultSelected,
   onChange,
-}: SelecBoxProps) {
+  listing,
+  rentTimeDisabled = false, // Valor predeterminado
+}: SelectBoxProps) {
   const [adults, setAdults] = useState(defaultSelected.adults);
   const [child, setChild] = useState(defaultSelected.child);
+  const [rentTime, setRentTime] = useState(defaultSelected.rentTime); // Estado para controlar el tiempo de alquiler
+
+  // // Propagate changes to parent when any state changes
+  useEffect(() => {
+    onChange({
+      adults,
+      child,
+      rentTime,
+    });
+  }, [adults, child, rentTime, onChange]);
+
+  // const handleApply = () => {
+  //   onChange({
+  //     adults,
+  //     child,
+  //     rentTime,
+  //   });
+  // };
+
+  // const isRentTimeDisabled = listing && listing.triptime; // Verificar si triptime está presente en listing
 
   return (
     <div className={className}>
@@ -57,7 +83,7 @@ export default function SelectBox({
           </Listbox.Button>
           <Listbox.Options className="absolute left-0 mt-1 grid w-full grid-cols-1 gap-3 rounded-lg border border-gray-lighter bg-white p-6 text-base shadow-lg ring-1 ring-gray-lightest">
             <div className="flex w-full items-center justify-between">
-              <div className="  text-sm xl:text-base">
+              <div className="text-sm xl:text-base">
                 <h5 className="font-bold text-gray-dark">Adults</h5>
                 <p className="font-normal text-gray xl:mt-1">Age 18+</p>
               </div>
@@ -68,7 +94,7 @@ export default function SelectBox({
               />
             </div>
             <div className="flex w-full items-center justify-between">
-              <div className="  text-sm xl:text-base">
+              <div className="text-sm xl:text-base">
                 <h5 className="font-bold text-gray-dark">Children</h5>
                 <p className="font-normal text-gray xl:mt-1">Age 1-7</p>
               </div>
@@ -78,12 +104,51 @@ export default function SelectBox({
                 onCount={(val) => setChild(val)}
               />
             </div>
-            <div className="flex items-center justify-between">
-              <h5 className="  text-base font-bold text-gray-dark">
-                Full day (10-18hs)
-              </h5>
-              <div className="flex items-center gap-3 xl:gap-7"></div>
-            </div>
+            {!rentTimeDisabled && ( // Solo mostrar si no está deshabilitado rentTime
+              <div className="flex items-center justify-between">
+                <h5 className="text-base font-bold text-gray-dark">
+                  Rent time
+                </h5>
+                <div className="flex items-center gap-3 xl:gap-7">
+                  <Radio
+                    readOnly
+                    label="full day"
+                    checked={rentTime === 'fullDay'}
+                    onChange={() => setRentTime('fullDay')}
+                    className="[&>div>div]:!p-0"
+                    labelClassName="!text-sm xl:!text-base"
+                    inputClassName={clsx(
+                      rentTime === 'fullDay' &&
+                        '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
+                    )}
+                  />
+                  <Radio
+                    readOnly
+                    label="2h"
+                    checked={rentTime === '2h'}
+                    onChange={() => setRentTime('2h')}
+                    className="[&>div>div]:!p-0"
+                    labelClassName="!text-sm xl:!text-base"
+                    inputClassName={clsx(
+                      rentTime === '2h' &&
+                        '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
+                    )}
+                  />
+                  <Radio
+                    readOnly
+                    label="4h"
+                    checked={rentTime === '4h'}
+                    onChange={() => setRentTime('4h')}
+                    className="[&>div>div]:!p-0"
+                    labelClassName="!text-sm xl:!text-base"
+                    inputClassName={clsx(
+                      rentTime === '4h' &&
+                        '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
+                    )}
+                  />
+                </div>
+              </div>
+            )}
             <Listbox.Option className="mt-4" value={0}>
               <Button
                 variant="solid"
@@ -92,6 +157,7 @@ export default function SelectBox({
                   onChange({
                     adults: adults,
                     child: child,
+                    rentTime: rentTime,
                   })
                 }
               >
