@@ -10,13 +10,16 @@ import Button from '@/components/ui/button';
 
 // dynamic imports
 const SignIn = dynamic(() => import('@/components/auth/sign-in'));
+const SelectCalendar = dynamic(
+  () => import('@/components/auth/selectCalendar'),
+);
 const SignUp = dynamic(() => import('@/components/auth/sign-up'));
 const AddReview = dynamic(() => import('@/components/ui/modals/add-review'));
 const ReportListing = dynamic(
-  () => import('@/components/ui/modals/report-listing')
+  () => import('@/components/ui/modals/report-listing'),
 );
 const ContactHost = dynamic(
-  () => import('@/components/ui/modals/contact-host')
+  () => import('@/components/ui/modals/contact-host'),
 );
 const ShareModal = dynamic(() => import('@/components/ui/modals/share-modal'));
 const Searchbox = dynamic(() => import('@/components/ui/search-box'));
@@ -25,6 +28,8 @@ function renderModalContent(view: MODAL_VIEW | string) {
   switch (view) {
     case 'SIGN_IN':
       return <SignIn className="!m-0 !p-0" />;
+    case 'SELECT_CALENDAR':
+      return <SelectCalendar />;
     case 'SIGN_UP':
       return <SignUp className="!m-0 !p-0" />;
     case 'ADD_REVIEW':
@@ -47,7 +52,6 @@ export default function ModalContainer() {
   const pathName = usePathname();
   useEffect(() => {
     closeModal();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathName]);
   return (
     <Transition appear show={open} as={Fragment}>
@@ -55,7 +59,7 @@ export default function ModalContainer() {
         as="div"
         className={clsx(
           'fixed inset-0 z-[9999] h-full w-full overflow-y-auto overflow-x-hidden bg-gray-dark bg-opacity-40 p-4 text-center',
-          view === 'LIGHT_GALLERY' && '!bg-opacity-100'
+          view === 'LIGHT_GALLERY' && '!bg-opacity-100',
         )}
         onClose={closeModal}
       >
@@ -106,4 +110,3 @@ export default function ModalContainer() {
     </Transition>
   );
 }
-

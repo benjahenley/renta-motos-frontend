@@ -8,10 +8,10 @@ import { ArrowDownIcon } from '@/components/icons/arrow-down';
 import Radio from '@/components/ui/form-fields/radio';
 import Counter from '@/components/ui/counter';
 import Button from '@/components/ui/button';
+import { register } from 'module';
 
 interface SelectedProps {
   adults: number;
-  child: number;
   rentTime: string;
 }
 
@@ -30,30 +30,17 @@ export default function SelectBox({
   defaultSelected,
   onChange,
   listing,
-  rentTimeDisabled = false, // Valor predeterminado
+  rentTimeDisabled = false,
 }: SelectBoxProps) {
   const [adults, setAdults] = useState(defaultSelected.adults);
-  const [child, setChild] = useState(defaultSelected.child);
-  const [rentTime, setRentTime] = useState(defaultSelected.rentTime); // Estado para controlar el tiempo de alquiler
+  const [rentTime, setRentTime] = useState(defaultSelected.rentTime);
 
-  // // Propagate changes to parent when any state changes
   useEffect(() => {
     onChange({
       adults,
-      child,
       rentTime,
     });
-  }, [adults, child, rentTime, onChange]);
-
-  // const handleApply = () => {
-  //   onChange({
-  //     adults,
-  //     child,
-  //     rentTime,
-  //   });
-  // };
-
-  // const isRentTimeDisabled = listing && listing.triptime; // Verificar si triptime está presente en listing
+  }, [adults, rentTime]);
 
   return (
     <div className={className}>
@@ -68,7 +55,7 @@ export default function SelectBox({
                 )}
               >
                 <span className="block">
-                  {adults + child} <span className="ml-2">Guests</span>
+                  {adults} <span className="ml-2">Guests</span>
                 </span>
                 <span
                   className={clsx(
@@ -93,17 +80,7 @@ export default function SelectBox({
                 onCount={(val) => setAdults(val)}
               />
             </div>
-            <div className="flex w-full items-center justify-between">
-              <div className="text-sm xl:text-base">
-                <h5 className="font-bold text-gray-dark">Children</h5>
-                <p className="font-normal text-gray xl:mt-1">Age 1-7</p>
-              </div>
-              <Counter
-                count={child}
-                countBy={1}
-                onCount={(val) => setChild(val)}
-              />
-            </div>
+
             {!rentTimeDisabled && ( // Solo mostrar si no está deshabilitado rentTime
               <div className="flex items-center justify-between">
                 <h5 className="text-base font-bold text-gray-dark">
@@ -156,7 +133,6 @@ export default function SelectBox({
                 onClick={() =>
                   onChange({
                     adults: adults,
-                    child: child,
                     rentTime: rentTime,
                   })
                 }

@@ -18,7 +18,6 @@ const authorizationAtom = atomWithStorage('isAuthorized', Boolean(isLoggedIn));
 
 export default function useAuth() {
   // const storageValue: any = createJSONStorage(() => localStorage);
-  const [storage, setStorage] = useState(createJSONStorage(() => localStorage));
 
   const [isAuthorized, setAuthorized] = useAtom(authorizationAtom);
   const [user, setUser] = useAtom(userAtom);
@@ -26,7 +25,7 @@ export default function useAuth() {
   return {
     isAuthorized,
     user,
-    authorize(user: User, storageType: boolean) {
+    authorize(user: User) {
       // if (storageType) {
       //   setStorage(createJSONStorage(() => localStorage));
       // } else {

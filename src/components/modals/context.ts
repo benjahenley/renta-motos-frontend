@@ -3,6 +3,7 @@
 import { atom, useSetAtom, useAtomValue } from 'jotai';
 
 export type MODAL_VIEW =
+  | 'SELECT_CALENDAR'
   | 'SIGN_IN'
   | 'SIGN_UP'
   | 'ADD_REVIEW'
@@ -24,6 +25,7 @@ export function useModal() {
     setModal({
       ...modal,
       view,
+
       open: true,
     });
   }
@@ -41,4 +43,3 @@ export function useModal() {
     closeModal,
   };
 }
-
