@@ -1,5 +1,5 @@
 export const signIn = async (data: object) => {
-  const url = 'http://localhost:3001/api/sign-in';
+  const url = 'https://renta-motos-backend.vercel.app/api/sign-in';
   try {
     const response = await fetch(url, {
       method: 'post',
@@ -19,7 +19,7 @@ export const signIn = async (data: object) => {
 };
 
 export const signInGoogle = async (email: string, uid: string) => {
-  const url = 'http://localhost:3001/api/sign-in';
+  const url = 'https://renta-motos-backend.vercel.app/api/sign-in';
   try {
     const response = await fetch(url, {
       method: 'post',

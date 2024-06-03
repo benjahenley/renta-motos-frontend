@@ -1,5 +1,5 @@
 export const signUpApi = async (data: object) => {
-  const url = 'http://localhost:3001/api/sign-up';
+  const url = 'https://renta-motos-backend.vercel.app/api/sign-up';
   try {
     const response = await fetch(url, {
       method: 'post',

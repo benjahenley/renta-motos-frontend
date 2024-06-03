@@ -159,7 +159,7 @@ export default function SelectCalendar() {
             Type: {reservation.selected?.rentTime}
           </p>
         </div>
-        <div>Select {reservation.selected?.adults}</div>
+        <div>Select for{reservation.selected?.adults} adult </div>
         {/* table */}
         <div className="overflow-x-auto">
           <table className="min-w-full border-collapse border border-gray-400">

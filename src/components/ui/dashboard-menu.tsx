@@ -11,10 +11,10 @@ const menuData = [
     text: 'overview',
     path: Routes.private.dashboard,
   },
-  {
-    text: 'inbox',
-    path: Routes.private.inbox,
-  },
+  // {
+  //   text: 'inbox',
+  //   path: Routes.private.inbox,
+  // },
   {
     text: 'reservation',
     path: Routes.private.reservations,

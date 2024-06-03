@@ -32,11 +32,11 @@ const tabData = [
     path: 2,
     icon: <CreditCardIcon className="h-auto w-5" />,
   },
-  {
-    label: 'Notifications',
-    path: 3,
-    icon: <BellIcon className="h-auto w-5" />,
-  },
+  // {
+  //   label: 'Notifications',
+  //   path: 3,
+  //   icon: <BellIcon className="h-auto w-5" />,
+  // },
 ];
 
 export default function AccountSettingsPage() {

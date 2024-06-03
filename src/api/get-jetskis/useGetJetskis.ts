@@ -1,5 +1,5 @@
 export const getJetskis = async () => {
-  const url = 'http://localhost:3001/api/jetskis';
+  const url = 'https://renta-motos-backend.vercel.app/api/jetskis';
   try {
     const response = await fetch(url, {
       method: 'GET',
