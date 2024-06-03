@@ -8,61 +8,63 @@ import Input from '@/components/ui/form-fields/input';
 import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
+import { getReservations } from '@/helpers/getReservationList';
 
-export default function ReservationsPage() {
+async function getData(start: number, offset: number) {
+  const data = await getReservations();
+  const filteredData = data.slice(start, offset);
+  return filteredData;
+}
+
+export default function reservationsPage() {
   const [order, setOrder] = useState<string>('desc');
   const [column, setColumn] = useState<string>('');
-  const [data, setData] = useState<typeof reservationData>([]);
+  const [data, setData] = useState<any[]>([]);
   const [searchfilter, setSearchFilter] = useState('');
   const [current, setCurrent] = useState(1);
 
   // filter data in table
   useEffect(() => {
-    let fArr = [...data];
-    if (searchfilter) {
-      setData(
-        fArr.filter((item) =>
-          item.customer.name.toLowerCase().includes(searchfilter.toLowerCase())
-        )
-      );
-    } else {
-      let start = (current - 1) * 10;
-      let offset = current * 10;
-      const getData = () => reservationData?.slice(start, offset);
-      setData(getData());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const filterData = async () => {
+      let fArr = [...data];
+      if (searchfilter) {
+        setData(
+          fArr.filter((item) =>
+            item.name.toLowerCase().includes(searchfilter.toLowerCase()),
+          ),
+        );
+      } else {
+        let start = (current - 1) * 10;
+        let offset = current * 10;
+        const newData = await getData(start, offset);
+        console.log({ newData });
+        setData(newData);
+      }
+    };
+    filterData();
   }, [searchfilter]);
 
   // table current change
   useEffect(() => {
-    let start = (current - 1) * 10;
-    let offset = current * 10;
-    const getData = () => reservationData?.slice(start, offset);
-    setData(getData());
+    const fetchData = async () => {
+      let start = (current - 1) * 10;
+      let offset = current * 10;
+      const fetchedData = await getData(start, offset);
+      setData(fetchedData);
+    };
+    fetchData();
   }, [current]);
 
   // select all checkbox function
   const onSelectAll = useCallback(
     (checked: boolean) => {
-      let fArr = [...data];
-      let cArr: any = [];
-      if (checked) {
-        fArr.forEach((item) => {
-          item.checked = true;
-          cArr.push(item);
-        });
-        setData(cArr);
-      } else {
-        fArr.forEach((item) => {
-          item.checked = false;
-          cArr.push(item);
-        });
-        setData(fArr);
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      let updatedData = data.map((item) => ({
+        ...item,
+        checked,
+      }));
+      setData(updatedData);
     },
-    [data]
+    [data],
   );
 
   // single select checkbox function
@@ -75,9 +77,8 @@ export default function ReservationsPage() {
         cArr.push(item);
       });
       setData(cArr);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [data]
+    [data],
   );
 
   // handle more button with edit, preview, delete
@@ -101,7 +102,7 @@ export default function ReservationsPage() {
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data]
+    [data],
   );
 
   // gets the columns of table
@@ -113,9 +114,9 @@ export default function ReservationsPage() {
         onSelectAll,
         onChange,
         onMore,
-        onHeaderClick
+        onHeaderClick,
       ),
-    [order, column, onSelectAll, onChange, onMore, onHeaderClick]
+    [order, column, onSelectAll, onChange, onMore, onHeaderClick],
   );
 
   return (
