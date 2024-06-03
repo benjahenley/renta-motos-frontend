@@ -7,9 +7,9 @@ import Avatar from '@/components/ui/avatar';
 import Badge from '@/components/ui/badge';
 
 export enum STATUS {
-  Received = 'Received',
-  Pending = 'Pending',
-  Refund = 'Refund',
+  Received = 'received',
+  Pending = 'pending',
+  Cancelled = 'cancelled',
 }
 
 export function getStatus(status: string) {
@@ -19,7 +19,7 @@ export function getStatus(status: string) {
   if (status === STATUS.Pending) {
     return 'warning';
   }
-  if (status === STATUS.Refund) {
+  if (status === STATUS.Cancelled) {
     return 'danger';
   }
 }
@@ -30,7 +30,7 @@ export const reservationColumn = (
   onSelectAll: (key: boolean) => any,
   onChange: (row: any) => any,
   onMore: (e: any, row: any) => any,
-  onHeaderClick: (value: string) => any
+  onHeaderClick: (value: string) => any,
 ) => [
   {
     title: (
@@ -82,6 +82,38 @@ export const reservationColumn = (
     render: (date: any) => <p className="whitespace-nowrap">{date}</p>,
   },
   {
+    title: <HeaderCell title={'Start Time'} />,
+    dataIndex: 'startTime',
+    key: 'startTime',
+    width: 120,
+    render: (startTime: string) => (
+      <p className="whitespace-nowrap">{startTime}</p>
+    ),
+  },
+  {
+    title: <HeaderCell title={'End Time'} />,
+    dataIndex: 'endTime',
+    key: 'endTime',
+    width: 120,
+    render: (endTime: string) => <p className="whitespace-nowrap">{endTime}</p>,
+  },
+  {
+    title: <HeaderCell title={'Customer'} />,
+    dataIndex: 'name',
+    key: 'name',
+    width: 250,
+    render: (name: any) => <p className="whitespace-nowrap">{name}</p>,
+  },
+  {
+    title: <HeaderCell title={'Jetski ID'} />,
+    dataIndex: 'jetskiId',
+    key: 'jetskiId',
+    width: 150,
+    render: (jetskiId: string) => (
+      <p className="whitespace-nowrap">{jetskiId}</p>
+    ),
+  },
+  {
     title: <HeaderCell title={'Status'} />,
     dataIndex: 'status',
     key: 'status',
@@ -96,34 +128,7 @@ export const reservationColumn = (
       );
     },
   },
-  {
-    title: <HeaderCell title={'Customer'} />,
-    dataIndex: 'customer',
-    key: 'customer',
-    width: 200,
-    render: (customer: any) => (
-      <div className="flex items-center gap-3">
-        <Avatar src={customer.avatar} size="40" />
-        <p className="whitespace-nowrap">{customer.name}</p>
-      </div>
-    ),
-  },
-  {
-    title: <HeaderCell title={'Purchased'} />,
-    dataIndex: 'purchased',
-    key: 'purchased',
-    width: 200,
-    render: (purchased: string) => (
-      <p className="whitespace-nowrap">{purchased}</p>
-    ),
-  },
-  {
-    title: <HeaderCell title={'Revenue'} />,
-    dataIndex: 'revenue',
-    key: 'revenue',
-    width: 100,
-    render: (value: string) => <p className="font-bold">${value}</p>,
-  },
+
   {
     title: '',
     dataIndex: 'action',
