@@ -1,8 +1,8 @@
 export const signIn = async (data: object) => {
-  const url = 'https://renta-motos-backend.vercel.app/api/sign-in';
+  const url = process.env.URL_API_SERVER + '/sign-in';
   try {
     const response = await fetch(url, {
-      method: 'post',
+      method: 'POST',
       body: JSON.stringify(data),
     });
 

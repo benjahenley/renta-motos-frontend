@@ -1,5 +1,5 @@
 export const getReservationsByDate = async (date: string) => {
-  const url = `https://renta-motos-backend.vercel.app/api/reservations?date=${date}`;
+  const url = `${process.env.URL_API_SERVER}/reservations?date=${date}`;
   try {
     const response = await fetch(url, {
       method: 'GET',
