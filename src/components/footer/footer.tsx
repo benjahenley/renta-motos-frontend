@@ -9,10 +9,10 @@ const menuItems = [
     label: 'Home',
     path: Routes.public.home,
   },
-  {
-    label: 'Explore',
-    path: Routes.public.explore,
-  },
+  // {
+  //   label: 'Explore',
+  //   path: Routes.public.explore,
+  // },
   // {
   //   label: 'Pricing',
   //   path: Routes.public.pricing,

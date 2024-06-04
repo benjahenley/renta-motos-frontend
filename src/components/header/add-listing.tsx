@@ -28,13 +28,13 @@ export default function AddListingHeader() {
       <div className="container-fluid flex w-full items-center justify-between">
         <Logo className="!text-gray-dark" />
         <div className="flex items-center gap-2">
-          <Button
+          {/* <Button
             size="sm"
             variant="outline"
             className="!px-3 !py-[6px] text-xs !font-semibold capitalize text-gray md:!px-4 md:!py-2 md:text-sm 2xl:!px-6 2xl:!py-[10px] 2xl:text-base"
           >
             Questions
-          </Button>
+          </Button> */}
           <Button
             size="sm"
             variant="outline"

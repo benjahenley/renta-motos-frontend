@@ -8,38 +8,51 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { getReservations } from '@/helpers/getReservationList';
+
+async function getData(start: number, offset: number) {
+  const data = await getReservations();
+  const filteredData = data.slice(start, offset);
+  return filteredData;
+}
 
 export default function LIstingPage() {
   const [order, setOrder] = useState<string>('desc');
   const [column, setColumn] = useState<string>('');
-  const [data, setData] = useState<typeof reservationData>([]);
+  const [data, setData] = useState<any[]>([]);
   const [searchfilter, setSearchFilter] = useState('');
   const [current, setCurrent] = useState(1);
-
+  
   // filter data in table
   useEffect(() => {
-    let fArr = [...data];
-    if (searchfilter) {
-      setData(
-        fArr.filter((item) =>
-          item.customer.name.toLowerCase().includes(searchfilter.toLowerCase())
-        )
-      );
-    } else {
-      let start = (current - 1) * 10;
-      let offset = current * 10;
-      const getData = () => reservationData?.slice(start, offset);
-      setData(getData());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const filterData = async () => {
+      let fArr = [...data];
+      if (searchfilter) {
+        setData(
+          fArr.filter((item) =>
+            item.name.toLowerCase().includes(searchfilter.toLowerCase()),
+          ),
+        );
+      } else {
+        let start = (current - 1) * 10;
+        let offset = current * 10;
+        const newData = await getData(start, offset);
+        console.log({ newData });
+        setData(newData);
+      }
+    };
+    filterData();
   }, [searchfilter]);
 
   // table current change
   useEffect(() => {
-    let start = (current - 1) * 10;
-    let offset = current * 10;
-    const getData = () => reservationData?.slice(start, offset);
-    setData(getData());
+    const fetchData = async () => {
+      let start = (current - 1) * 10;
+      let offset = current * 10;
+      const fetchedData = await getData(start, offset);
+      setData(fetchedData);
+    };
+    fetchData();
   }, [current]);
 
   // select all checkbox function
