@@ -1,8 +1,12 @@
-export const getJetskis = async () => {
-  const url = process.env.URL_API_SERVER + '/api/jetskis';
+export const checkRole = async (token: string) => {
+  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/user';
+
   try {
     const response = await fetch(url, {
       method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     if (!response.ok) {

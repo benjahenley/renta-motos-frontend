@@ -1,9 +1,12 @@
 import { getAllReservations } from '@/api/reservations/getAllReservations';
 import { extractTime } from '@/helpers/extract-time';
+import { getToken } from './getToken';
 
 export async function getReservations() {
   try {
-    const reservationData = await getAllReservations();
+    const token = getToken();
+
+    const reservationData = await getAllReservations(token);
     const reservations: object[] = reservationData.reservations.map(
       (item: any) => {
         const endTime = extractTime(item.endTime);

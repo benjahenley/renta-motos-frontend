@@ -9,6 +9,10 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { getReservations } from '@/helpers/getReservationList';
+import { checkRole } from '@/api/user/isAuthorized';
+import { getToken } from '@/helpers/getToken';
+import LoadingScreen from '@/components/loading-screen';
+import { useRouter } from 'next/navigation';
 
 async function getData(start: number, offset: number) {
   const data = await getReservations();
@@ -17,11 +21,33 @@ async function getData(start: number, offset: number) {
 }
 
 export default function reservationsPage() {
+  const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState<string>('desc');
   const [column, setColumn] = useState<string>('');
   const [data, setData] = useState<any[]>([]);
   const [searchfilter, setSearchFilter] = useState('');
   const [current, setCurrent] = useState(1);
+  const router = useRouter();
+
+  useEffect(() => {
+    async function checkUserRole() {
+      try {
+        const token = getToken();
+        const data = await checkRole(token);
+        console.log({ data });
+        setLoading(false);
+      } catch (e: any) {
+        console.log(e.message);
+        router.push('/');
+      }
+    }
+
+    checkUserRole();
+  }, [router]);
+
+  // if (loading) {
+  //   return
+  // }
 
   // filter data in table
   useEffect(() => {
@@ -119,7 +145,9 @@ export default function reservationsPage() {
     [order, column, onSelectAll, onChange, onMore, onHeaderClick],
   );
 
-  return (
+  return loading ? (
+    <LoadingScreen />
+  ) : (
     <div className="container-fluid mb-12 lg:mb-16">
       <div className="mb-6 mt-8 grid grid-cols-1 items-center gap-3 sm:grid-cols-[1fr_262px] md:mt-10 md:gap-5 lg:mt-12 xl:mt-16 xl:gap-10">
         <Text tag="h4" className="text-xl">

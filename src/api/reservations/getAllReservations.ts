@@ -1,8 +1,13 @@
-export const getAllReservations = async () => {
-  const url = `https://renta-motos-backend.vercel.app/api/reservations/all`;
+export const getAllReservations = async (token: string) => {
+  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservations/all';
+  console.log(url);
+
   try {
     const response = await fetch(url, {
       method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     if (!response.ok) {
