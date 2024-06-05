@@ -4,11 +4,6 @@ import clsx from 'clsx';
 import Input from '@/components/ui/form-fields/input';
 import Button from '@/components/ui/button';
 
-
-import { Routes } from '@/config/routes';
-import Link from 'next/link';
-
-
 interface SubscriptionFormProps {
   className?: string;
 }
@@ -28,7 +23,6 @@ export default function SubscriptionForm({ className }: SubscriptionFormProps) {
           placeholder="Your email address"
           className="mb-3 rounded-none border-none md:mb-0 lg:!rounded-xl"
         />
-        <Link href={Routes.public.payment}>
         <Button
           type="submit"
           variant="solid"
@@ -36,7 +30,7 @@ export default function SubscriptionForm({ className }: SubscriptionFormProps) {
           className="right-[5px] block w-full py-4 text-sm tracking-wide md:absolute md:top-[5px] md:h-[46px] md:w-auto md:px-7 lg:!rounded-lg 3xl:h-[50px]"
         >
           Subscribe
-        </Button></Link>
+        </Button>
       </div>
     </form>
   );

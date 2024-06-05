@@ -71,14 +71,14 @@ export default function PaymentsPayouts() {
                   {/* {item.default ? 'Default card' : 'Set as default'} */}
                 </Button>
               </div>
-              <Checkbox
+              {/* <Checkbox
                 checked={state === item.cardType ? true : false}
                 onChange={() => setState(item.cardType)}
                 variant="outline"
                 className="self-start"
                 inputClassName="lg:h-6 lg:w-6 border-gray-dark"
                 iconClassName="bg-gray-dark rounded-lg lg:h-6 lg:w-6"
-              />
+              /> */}
             </div>
           </AdvancedCheckbox>
         ))}

@@ -8,6 +8,10 @@ import { getToken } from '@/helpers/getToken';
 import { getReservationsByDate } from '@/api/reservations/getReservationsByDate';
 import { formatDateToISOWithoutTime as removeTime } from '@/helpers/formatDate';
 import { useModal } from '../modals/context';
+import { Routes } from '@/config/routes';
+import { useRouter } from 'next/navigation';
+
+
 
 interface SelectedCell {
   motorboatId: string;
@@ -21,6 +25,8 @@ interface Jetski {
 }
 
 export default function SelectCalendar() {
+  const router = useRouter();
+
   const [reservation, setReservation] =
     useAtom<Partial<reservation>>(reservationAtom);
 
@@ -138,6 +144,7 @@ export default function SelectCalendar() {
   function handleSubmit() {
     try {
       const token = getToken();
+      router.push(Routes.public.payment)
     } catch (e) {
       closeModal();
       openModal('SIGN_IN');
