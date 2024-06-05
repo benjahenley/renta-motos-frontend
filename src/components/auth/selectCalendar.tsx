@@ -8,6 +8,8 @@ import { getToken } from '@/helpers/getToken';
 import { getReservationsByDate } from '@/api/reservations/getReservationsByDate';
 import { formatDateToISOWithoutTime as removeTime } from '@/helpers/formatDate';
 import { useModal } from '../modals/context';
+import { redirect } from 'next/dist/server/api-utils';
+import { createOrder } from '@/api/order/createOrder';
 
 interface SelectedCell {
   motorboatId: string;
@@ -135,9 +137,15 @@ export default function SelectCalendar() {
   const timeSlots = generateTimeSlots();
   console.log(timeSlots);
 
-  function handleSubmit() {
+  async function handleSubmit(e: any) {
     try {
       const token = getToken();
+      const orderData = {
+        price: e.target.price,
+        // todo: adults, reservations
+      };
+      const orderId = await createOrder(token, orderData);
+      // redirigir a la pag de carrito pasandole en el url el orderID
     } catch (e) {
       closeModal();
       openModal('SIGN_IN');
