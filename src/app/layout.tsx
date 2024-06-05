@@ -1,3 +1,5 @@
+import React from "react";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import clsx from 'clsx';
 import type { Metadata } from 'next';
 import { Satisfy, Lato } from 'next/font/google';
@@ -6,7 +8,6 @@ import DrawerContainer from '@/components/drawers/view';
 import GalleryCarouselView from '@/components/gallery/view';
 import '@/styles/globals.css';
 import { VendorProvider } from '../components/vendorContext'; 
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 
 const lato = Lato({

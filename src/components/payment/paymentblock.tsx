@@ -1,4 +1,3 @@
-import { PayPalScriptProvider,  } from "@paypal/react-paypal-js";
 import  PaypalButton  from '@/components/paypal/paypalButton'
 import React from 'react';
 import PaymentForm from '@/components/payment/paymentform';

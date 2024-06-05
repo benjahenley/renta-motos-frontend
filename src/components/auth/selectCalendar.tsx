@@ -146,12 +146,16 @@ export default function SelectCalendar() {
   async function handleSubmit(e: any) {
     try {
       const token = getToken();
-      router.push(Routes.public.payment)
+
       const orderData = {
         price: e.target.price,
-        // todo: adults, reservations
+        adults: e.target.adults,
+        reservations: e.target.reservations,
+
       };
-      const orderId = await createOrder(token, orderData);
+      const orderId = await createOrder(token, orderData);     
+      router.push(`${Routes.public.payment}?orderId=${orderId}`);
+
       // redirigir a la pag de carrito pasandole en el url el orderID
     } catch (e) {
       closeModal();

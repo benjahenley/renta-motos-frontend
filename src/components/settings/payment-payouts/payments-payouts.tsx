@@ -22,21 +22,18 @@ const paymentMethods = [
     cardType: 'bizum',
     label: 'Bizum',
     icon: <BizumIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
-    // default: true,
 
   },
   {
     cardType: 'mastercard',
     label: 'Mastercard',
     icon: <MasterCardIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
-    // default: false,
 
   },
   {
     cardType: 'paypal',
     label: 'PayPal',
     icon: <PaypalIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
-    // default: false,
 
   },
 ];
@@ -68,17 +65,9 @@ export default function PaymentsPayouts() {
                   variant="text"
                   className="!p-0 text-xs leading-5 text-gray focus:!ring-0 md:text-sm md:leading-6"
                 >
-                  {/* {item.default ? 'Default card' : 'Set as default'} */}
                 </Button>
               </div>
-              {/* <Checkbox
-                checked={state === item.cardType ? true : false}
-                onChange={() => setState(item.cardType)}
-                variant="outline"
-                className="self-start"
-                inputClassName="lg:h-6 lg:w-6 border-gray-dark"
-                iconClassName="bg-gray-dark rounded-lg lg:h-6 lg:w-6"
-              /> */}
+
             </div>
           </AdvancedCheckbox>
         ))}
