@@ -6,6 +6,8 @@ import DrawerContainer from '@/components/drawers/view';
 import GalleryCarouselView from '@/components/gallery/view';
 import '@/styles/globals.css';
 import { VendorProvider } from '../components/vendorContext'; 
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+
 
 const lato = Lato({
   subsets: ['latin'],
@@ -38,12 +40,14 @@ export default function RootLayout({ children }: React.PropsWithChildren<{}>) {
     >
       <head />
       <body className="flex min-h-full flex-col">
+      <PayPalScriptProvider options={{'clientId': 'id del cliente'}}>
       <VendorProvider> {/* Envuelve tus componentes hijos con el VendorProvider */}
           {children}
           <ModalContainer />
           <DrawerContainer />
           <GalleryCarouselView />
         </VendorProvider>
+        </PayPalScriptProvider>
       </body>
     </html>
   );
