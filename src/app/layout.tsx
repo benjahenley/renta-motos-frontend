@@ -1,14 +1,10 @@
-import React from "react";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import React, { createContext, useContext, useState } from 'react';
+
 import clsx from 'clsx';
 import type { Metadata } from 'next';
 import { Satisfy, Lato } from 'next/font/google';
-import ModalContainer from '@/components/modals/view';
-import DrawerContainer from '@/components/drawers/view';
-import GalleryCarouselView from '@/components/gallery/view';
 import '@/styles/globals.css';
-import { VendorProvider } from '../components/vendorContext'; 
-
+import { Providers } from '@/components/providers/providers';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -30,25 +26,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: React.PropsWithChildren<{}>) {
+  console.log(process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID);
   return (
     <html
       lang="en"
       className={clsx(
         'h-full font-lato antialiased',
         satisfy.variable,
-        lato.variable
+        lato.variable,
       )}
     >
       <head />
       <body className="flex min-h-full flex-col">
-      <PayPalScriptProvider options={{'clientId': 'id del cliente'}}>
-      <VendorProvider> {/* Envuelve tus componentes hijos con el VendorProvider */}
-          {children}
-          <ModalContainer />
-          <DrawerContainer />
-          <GalleryCarouselView />
-        </VendorProvider>
-        </PayPalScriptProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
