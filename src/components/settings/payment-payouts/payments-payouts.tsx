@@ -45,12 +45,7 @@ export default function PaymentsPayouts() {
   const [state, setState] = useState(paymentMethods[0].cardType);
   return (
     <div>
-      <Text
-        tag="h3"
-        className="mb-4 border-b border-b-gray-lighter pb-4 text-xl capitalize lg:mb-6"
-      >
-        Payment Methods
-      </Text>
+
       <div className="grid grid-cols-1 gap-4 lg:gap-6">
         {paymentMethods.map((item, index) => (
           <AdvancedCheckbox

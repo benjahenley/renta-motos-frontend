@@ -1,6 +1,6 @@
 'use-client'
 
-
+ import { reservation } from "@/atoms/reservation";
 
 const list = [
   {
@@ -24,6 +24,7 @@ const list = [
 export default function Carrito() {
   return (
     <form className='rounded-xl border border-gray-lighter bg-white p-8 shadow-card'>
+      <h1 className="cartitle">Cart</h1>
       <div className="grid grid-cols-1 gap-8 lg:gap-12">
   <ul className="mt-3 xl:mt-5">
     <li className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0">
