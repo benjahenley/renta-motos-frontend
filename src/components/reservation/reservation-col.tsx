@@ -64,7 +64,7 @@ export const reservationColumn = (
   {
     title: (
       <HeaderCell
-        title={'SL.'}
+        title={'ID'}
         sortable={true}
         ascending={order === 'asc' && column === 'id'}
       />

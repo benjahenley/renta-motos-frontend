@@ -1,5 +1,5 @@
 export const getJetskis = async () => {
-  const url = process.env.URL_API_SERVER + '/api/jetskis';
+  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetskis';
   try {
     const response = await fetch(url, {
       method: 'GET',
