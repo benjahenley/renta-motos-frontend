@@ -72,7 +72,7 @@ export default function TransactionActivity() {
           cArr.push(item);
         });
         setData(fArr);
-      }
+      } 
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
     [data]

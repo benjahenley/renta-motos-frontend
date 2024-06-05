@@ -42,7 +42,7 @@ export default function ListingDetailsPage({
       <div className="container-fluid w-full 3xl:!px-12">
         <GallaryBlock images={selectedVendor.gallary} />
         <ListingDetails vendor={selectedVendor} />
-        <RelatedListingBlock />
+        {/* <RelatedListingBlock /> */}
       </div>
       <SubscriptionBlock sectionClassName="3xl:!px-12 4xl:!px-12" />
     </>

@@ -184,7 +184,7 @@ export default function BookingForm({
         <li className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0">
           <span className="font-normal"> {rentTime} Rent Time</span>
           <span className="font-bold">${calculatedPrice}</span>
-        </li>
+        </li> 
         {list.map((item) => (
           <li
             key={item.title}
@@ -202,3 +202,4 @@ export default function BookingForm({
     </form>
   );
 }
+

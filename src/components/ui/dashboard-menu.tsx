@@ -19,10 +19,10 @@ const menuData = [
     text: 'reservation',
     path: Routes.private.reservations,
   },
-  {
-    text: 'listings',
-    path: Routes.private.listings,
-  },
+  // {
+  //   text: 'listings',
+  //   path: Routes.private.listings,
+  // },
 ];
 
 export default function DashboardMenu() {

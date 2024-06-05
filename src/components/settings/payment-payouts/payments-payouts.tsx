@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { MasterCardIcon } from '@/components/icons/payment-methods/mastercard';
+import { BizumIcon } from '@/components/icons/payment-methods/bizum';
 import AdvancedCheckbox from '@/components/ui/form-fields/advanced-checkbox';
 import { PaypalIcon } from '@/components/icons/payment-methods/paypal';
 import { VisaIcon } from '@/components/icons/payment-methods/visa';
@@ -12,24 +13,31 @@ import Button from '@/components/ui/button';
 const paymentMethods = [
   {
     cardType: 'visa',
-    label: 'Visa ending in 1234',
+    label: 'Visa',
     icon: <VisaIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
-    default: true,
-    validity: '16/11/25',
+    // default: true,
+
+  },
+  {
+    cardType: 'bizum',
+    label: 'Bizum',
+    icon: <BizumIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
+    // default: true,
+
   },
   {
     cardType: 'mastercard',
-    label: 'Mastercard ending in 1234',
+    label: 'Mastercard',
     icon: <MasterCardIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
-    default: false,
-    validity: '16/11/25',
+    // default: false,
+
   },
   {
     cardType: 'paypal',
-    label: 'PayPal ending in 1234',
+    label: 'PayPal',
     icon: <PaypalIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
-    default: false,
-    validity: '16/11/25',
+    // default: false,
+
   },
 ];
 
@@ -60,15 +68,12 @@ export default function PaymentsPayouts() {
                 <Text tag="h6" className="mb-1">
                   {item.label}
                 </Text>
-                <Text className="mb-2 text-xs leading-5 text-gray md:!text-sm md:leading-6">
-                  {item.validity}
-                </Text>
                 <Button
                   type="button"
                   variant="text"
                   className="!p-0 text-xs leading-5 text-gray focus:!ring-0 md:text-sm md:leading-6"
                 >
-                  {item.default ? 'Default card' : 'Set as default'}
+                  {/* {item.default ? 'Default card' : 'Set as default'} */}
                 </Button>
               </div>
               <Checkbox

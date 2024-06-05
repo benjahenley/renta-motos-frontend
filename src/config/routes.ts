@@ -7,6 +7,7 @@ export const Routes = {
   public: {
     home: '/',
     about: '/about',
+    payment: '/payment',
     explore: '/explore',
     pricing: '/pricing',
     contact: '/contact',

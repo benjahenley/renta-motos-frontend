@@ -29,7 +29,7 @@ export default function ListingDetails({vendor} : {vendor: any}) {
           <SpecificationBlock specifications={vendor.specifications} />
           <VendorBlock stats={reviewsData.stats} vendor={vendor.vendor} />
           {/* <LocationBlock /> */}
-          <CalenderBlock />
+          {/* <CalenderBlock /> */}
           {/* <ReviewBlock reviewsData={reviewsData} /> */}
           {/* <ChatBlock /> */}
         </div>

@@ -13,11 +13,11 @@ const AddnewPaymentMethodSchema = z.object({
     .string()
     .min(12, { message: 'This number is not valid!' })
     .max(12, { message: 'This number is not valid!' }),
-  email: z
+  expary: z
     .string()
-    .min(1, { message: 'The email is required!' })
-    .email({ message: 'The email is invalid!' }),
-  ccv: z.string().min(4, { message: 'This field is required!' }),
+    .min(1, { message: 'The expiry date is required!' })
+    // .expary({ message: 'The expiry date is invalid!' }),
+ , cvv: z.string().min(4, { message: 'This field is required!' }),
 });
 
 type AddnewPaymentMethodType = z.infer<typeof AddnewPaymentMethodSchema>;
@@ -67,19 +67,19 @@ export default function AddnewPaymentMethod() {
           />
           <Input
             type="text"
-            label="Expiy date"
-            placeholder="Your email"
+            label="Expiry date"
+            placeholder="Expiry date"
             labelClassName="!font-normal lg:text-base"
-            {...register('email')}
-            error={errors.email?.message}
+            {...register('expary')}
+            error={errors.expary?.message}
           />
           <Input
             type="text"
-            label="CCV"
+            label="CVV"
             placeholder="Your number"
             labelClassName="!font-normal lg:text-base"
-            {...register('ccv')}
-            error={errors.ccv?.message}
+            {...register('cvv')}
+            error={errors.cvv?.message}
           />
         </div>
         <div className="mt-8 flex items-center justify-between gap-3 xl:mt-12">
@@ -89,8 +89,8 @@ export default function AddnewPaymentMethod() {
             variant="outline"
             className="w-full border-gray-dark hover:bg-gray-dark hover:text-white md:w-auto"
           >
-            Cancle
-          </Button>
+            Cancel        
+              </Button>
           <Button type="submit" size="xl" className="w-full md:w-auto">
             Save
           </Button>

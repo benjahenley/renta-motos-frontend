@@ -79,7 +79,7 @@ export default function FindTripForm() {
         Go check our equipment and do your reservation.
         </Text>
       </div>
-      <SearchAutocomplete
+      {/* <SearchAutocomplete
         onLoad={onLoad}
         onPlacesChanged={onPlacesChanged}
         loader={
@@ -126,7 +126,7 @@ export default function FindTripForm() {
         minDate={endDate}
         containerClass="mb-3"
         popperClassName="homepage-datepicker"
-      />
+      /> */}
       <Button
         type="submit"
         className="w-full !py-[14px] text-sm !font-bold uppercase leading-6 md:!py-[17px] md:text-base lg:!rounded-xl 3xl:!py-[22px]"
