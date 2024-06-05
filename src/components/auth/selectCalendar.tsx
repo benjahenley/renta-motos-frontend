@@ -12,6 +12,8 @@ import { Routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
 
 
+import { redirect } from 'next/dist/server/api-utils';
+import { createOrder } from '@/api/order/createOrder';
 
 interface SelectedCell {
   motorboatId: string;
@@ -141,10 +143,16 @@ export default function SelectCalendar() {
   const timeSlots = generateTimeSlots();
   console.log(timeSlots);
 
-  function handleSubmit() {
+  async function handleSubmit(e: any) {
     try {
       const token = getToken();
       router.push(Routes.public.payment)
+      const orderData = {
+        price: e.target.price,
+        // todo: adults, reservations
+      };
+      const orderId = await createOrder(token, orderData);
+      // redirigir a la pag de carrito pasandole en el url el orderID
     } catch (e) {
       closeModal();
       openModal('SIGN_IN');
