@@ -14,11 +14,11 @@ export default function ListingDetailsPage({
   console.log(params);
 
   // Buscar el vendor cuyo slug coincide con el recibido por parámetro
-  const selectedVendor = vendorData[slug];
+  const selectedVendor = (vendorData as any)[slug];
 
-  if (!selectedVendor) {
-    return <div>No se encontró el vendedor con el slug proporcionado</div>;
-  }
+  // if (!selectedVendor) {
+  // return <div>No se encontró el vendedor con el slug proporcionado</div>;
+  // }
 
   // Función para buscar el vendedor por su slug
   // const findVendorBySlug = (slug: string) => {
