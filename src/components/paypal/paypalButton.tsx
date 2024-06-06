@@ -11,7 +11,7 @@ const PaypalButton : React.FC<PaypalButtonInterface> = (props) => {
         <PayPalButtons
         createOrder={(data, actions) => {
           return actions.order.create({
-            intent: "CAPTURE", // Asegúrate de incluir 'intent' aquí
+            intent: "CAPTURE", 
             purchase_units: [{
               amount: {
                 value: 'YOUR_ORDER_AMOUNT',
@@ -21,7 +21,7 @@ const PaypalButton : React.FC<PaypalButtonInterface> = (props) => {
           });
         }}
         onApprove={async (data, actions) => {
-          const order = await actions.order.capture();
+          const order = await actions.order?.capture();
           // Handle successful transaction here
           await updateOrder(orderId);
 
@@ -30,26 +30,7 @@ const PaypalButton : React.FC<PaypalButtonInterface> = (props) => {
           console.error('PayPal Checkout onError', err);
         }}
       />
-        //   <PayPalButtons
-        //   createOrder={(data, actions) => {
-        //       return actions.order.create({
-        //           intent: "CAPTURE", // Asegúrate de incluir 'intent' aquí
-        //           purchase_units: [
-        //               {
-        //                   description: props.invoice,
-        //                   amount: {
-        //                       currency_code: 'USD', // Ajusta la moneda según sea necesario
-        //                       value: props.totalValue
-        //                   }
-                          
-        //               },
-        //           ],
-        //       });
-        //   }}
-        //   onApprove={async (data, actions)=>{
-        //       const order = await actions.order?.capture()
-        //       console.log('order', order)
-        //   }}/>
+
 
 
        
