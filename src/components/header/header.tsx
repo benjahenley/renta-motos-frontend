@@ -11,6 +11,7 @@ import Button from '@/components/ui/button';
 import Logo from '@/components/ui/logo';
 import useAuth from '@/hooks/use-auth';
 import { useIsMounted } from '@/hooks/use-is-mounted';
+import LanguageSwitcher from '@/components/language/languageSwitcher'
 
 export default function Header() {
   const mounted = useIsMounted();
@@ -31,7 +32,7 @@ export default function Header() {
         </div>
         {/* <Searchbox className="hidden lg:block" /> */}
         <div className="flex items-center justify-end gap-5">
-          <SearchIconBtn />
+          {/* <SearchIconBtn /> */}
           {mounted ? (
             <>
               {isAuthorized ? (

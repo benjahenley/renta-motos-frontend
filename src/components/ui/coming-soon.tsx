@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import SubscriptionForm from '@/components/ui/form-fields/subscription-form';
+import HelpForm from '@/components/ui/form-fields/helpForm';
 import Text from '@/components/ui/typography/text';
 
 export default function ComingSoon() {
@@ -15,7 +15,7 @@ export default function ComingSoon() {
           In the meantime. Stay with us
         </Text>
         <div className="mt-10 md:mt-16">
-          <SubscriptionForm className="w-full max-w-lg" />
+          <HelpForm className="w-full max-w-lg" />
         </div>
       </div>
       <div className="relative hidden h-full w-full md:block">

@@ -5,33 +5,33 @@ import { InstructionIconFour } from '@/components/icons/instruction/instruction-
 
 export const instructions = [
   {
-    title: 'Find the perfect Jet Ski',
+    title: 'Go to chech avaibility',
     description:
-      'Browse our 10 jet skis and select the one you like.',
+      'Define Rentime and Daytrip.',
     icon: (
       <InstructionIconOne />
     ),
   },
   {
-    title: 'Select an instructor',
+    title: 'Select a schedule',
     description:
-      'Little talk about safety instructions, principal things to consider and other stuff',
+      'Choose between our three time slots',
     icon: (
       <InstructionIconTwo />
     ),
   },
   {
-    title: 'Many Pickup Locations',
+    title: 'Create your reservation',
     description:
-      'Choose the location thats suits perfectly for you',
+      'You must pay a deposit to confirm your reservation',
     icon: (
       <InstructionIconThree />
     ),
   },
   {
-    title: 'Satisfied Customers',
+    title: 'Attend the reserved day',
     description:
-      'Simply pop your feedback in our survey, describing how your experience has been.',
+      'Attend the reserved day with the remaining rent money and a desire to have fun',
     icon: (
       <InstructionIconFour />
     ),

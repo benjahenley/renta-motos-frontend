@@ -27,7 +27,7 @@ export default function ListingDetails({vendor} : {vendor: any}) {
           <DescriptionBlock description={vendor.description} />
           {/* <EquipmentBlock equipment={vendor.equipment} /> */}
           <SpecificationBlock specifications={vendor.specifications} />
-          <VendorBlock stats={reviewsData.stats} vendor={vendor.vendor} />
+          {/* <VendorBlock stats={reviewsData.stats} vendor={vendor.vendor} /> */}
           {/* <LocationBlock /> */}
           {/* <CalenderBlock /> */}
           {/* <ReviewBlock reviewsData={reviewsData} /> */}

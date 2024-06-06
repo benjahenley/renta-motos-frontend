@@ -92,11 +92,9 @@ export default function ProfileMenu({ className }: { className?: string }) {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-lighter rounded-md bg-white py-2 shadow-card focus:outline-none">
-            {/* <div className="pb-1">
-              {menu.top.map((item) => (
-                <MenuItem key={item.text} text={item.text} link={item.path} />
-              ))}
-            </div> */}
+            <div className="pb-3 pl-5">
+              {user.displayName}
+            </div>
             <div className="pt-1">
               {menu.bottom.map((item) => (
                 <MenuItem key={item.text} text={item.text} link={item.path} />

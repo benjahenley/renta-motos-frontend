@@ -21,7 +21,7 @@ export default function TestimonialBlock() {
     <Section
       className="group/section lg:container-fluid mt-12 overflow-hidden pl-4 sm:pl-6 lg:mt-16"
       title="Testimonial"
-      description="Unsatiable it considered invitation he travelling insensible."
+      description="Some testimonials of our clients"
       headerClassName="items-end mb-4 lg:mb-5 xl:mb-6"
     >
       {!state && <BlockLoader />}

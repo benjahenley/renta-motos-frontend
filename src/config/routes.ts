@@ -18,6 +18,7 @@ export const Routes = {
     listingDetails: (slug: string) => `/listing/${slug}`,
   },
   private: {
+    jetskys: '/account/jetskys',
     addListing: '/add-listing',
     dashboard: '/account',
     inbox: '/account/inbox',

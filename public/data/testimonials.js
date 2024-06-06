@@ -2,50 +2,50 @@ export const testimonials = [
   {
     name: 'Charles Patterson',
     description:
-      '“OMG! I cannot believe that I have got a brand new landing page after getting this template we are able to use our most used e-commerce for your branding site to make it cool.”',
-    location: 'from Duisbarg',
+      '“¡Increíble experiencia! Rentar una moto de agua en Ibiza fue lo mejor de nuestro viaje. Las vistas y la emoción fueron insuperables.”',
+    location: 'from New York',
     rating: 4.5,
   },
   {
     name: 'Bojoer',
     description:
-      '“I cannot believe we are able to use our most that I have got a brand new landing page after getting this template used e-commerce for your branding site to make it cool. OMG!',
-    location: 'from Duisbarg',
+      '“Rentar una moto de agua en Ibiza fue absolutamente fantástico. El equipo fue muy profesional y el paisaje impresionante.”',
+    location: 'from Berlin',
     rating: 4,
   },
   {
     name: 'Kay Stenschke',
     description:
-      '“This template used e-commerce for your branding site cannot believe we are able to use our most that I have got a brand new landing page after getting. I to make it cool. OMG!”',
-    location: 'from Duisbarg',
+      '“La mejor manera de explorar Ibiza es en moto de agua. Fue una aventura increíble llena de diversión y emoción.”',
+    location: 'from Paris',
     rating: 3,
   },
   {
     name: 'Lomm Patt.',
     description:
-      '“landing page after this template used e-commerce for your branding site cannot believe we are able to use our most that. OMG! I have got a brand new getting. I to make it cool.”',
-    location: 'from Duisbarg',
+      '“Nunca pensé que disfrutaría tanto rentando una moto de agua en Ibiza. La sensación de libertad en el mar es incomparable.”',
+    location: 'from London',
     rating: 5,
   },
   {
     name: 'Charles Jhon',
     description:
-      '“Use our most that I have got a brand this template used e-commerce for your branding site cannot we are able to  new landing page after getting. I believe to make it cool. OMG!”',
-    location: 'from Duisbarg',
+      '“Explorar la costa de Ibiza en moto de agua fue una experiencia inolvidable. Altamente recomendable para cualquiera que visite la isla.”',
+    location: 'from Sydney',
     rating: 3.5,
   },
   {
     name: 'Adam Osh',
     description:
-      '“Your branding site cannot we are able. Use our most that I have got a brand this template used e-commerce. I believe to make it cool. OMG! for to new landing page after getting.',
-    location: 'from Duisbarg',
+      '“Las motos de agua en Ibiza fueron lo mejor de nuestro viaje. El servicio fue excelente y las vistas, simplemente espectaculares.”',
+    location: 'from Toronto',
     rating: 5,
   },
   {
     name: 'Jhon Lee',
     description:
-      '“A brand this template used e-commerce for your branding. Use our most that I believe to make it cool. OMG!. I have got site cannot we are able to new landing page after getting.”',
-    location: 'from Duisbarg',
+      '“Rentar una moto de agua en Ibiza fue una experiencia increíble. Todo fue perfecto, desde el equipo hasta las rutas que nos recomendaron.”',
+    location: 'from Tokyo',
     rating: 3.5,
   },
 ];

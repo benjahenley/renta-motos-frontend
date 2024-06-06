@@ -12,12 +12,12 @@ export default function ReserveBottomMenu() {
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 flex w-full items-center justify-between bg-white px-4 py-3 shadow-menu-shadow sm:px-6 lg:hidden">
       <div>
-        <p className="font-bold text-gray-dark">$200 / night</p>
-        <p className="inline-flex items-center gap-2 text-sm text-gray-dark">
+        <p className="font-bold text-gray-dark">VX CRUISER HO</p>
+        {/* <p className="inline-flex items-center gap-2 text-sm text-gray-dark">
           <Staricon className="xl:w-h-5 h-4 w-4 xl:h-5" />
           <span>{reviewsData.stats.averageRating}</span>
           <span>( {reviewsData.stats.totalReview} reviews )</span>
-        </p>
+        </p> */}
       </div>
       <Button
         size="xl"

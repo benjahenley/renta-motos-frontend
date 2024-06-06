@@ -14,7 +14,7 @@ export default function SubscriptionBlock({
     <BannerBlock
       bgImg="/images/banner/3.jpg"
       title="Subscribe and get exclusive promotions & offer"
-      description="your dream experience"
+      description="Your dream experience"
       className={className}
       sectionClassName={sectionClassName}
       titleClassName="!text-primary md:!text-white text-2xl 3xl:text-[44px] 3xl:leading-[64px] mb-2 xl:mb-5"

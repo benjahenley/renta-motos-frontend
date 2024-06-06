@@ -22,20 +22,20 @@ export default function MobileNav() {
   const { openModal } = useModal();
   const [drawerSate, setDrawerState] = useAtom(drawerStateAtom);
   return (
-    <div className="sticky inset-x-0 bottom-0 z-30 grid h-16 w-full grid-cols-5 items-center justify-center gap-2 bg-white shadow-menu-shadow md:hidden">
+    <div className="sticky inset-x-0 bottom-0 z-30 grid h-16 w-full grid-cols-3 items-center justify-center gap-2 bg-white shadow-menu-shadow md:hidden">
       <div className="flex items-center justify-center">
         <Link href={Routes.public.home} className="inline-block hover:text-red">
           <HomeIcon className="h-6 w-6" />
         </Link>
       </div>
-      <div className="flex items-center justify-center">
+      {/* <div className="flex items-center justify-center">
         <Link
           href={Routes.public.explore}
           className="inline-block hover:text-red"
         >
           <MobileMenuSearchIcon className="h-5 w-5" />
         </Link>
-      </div>
+      </div> */}
       <div className="flex items-center justify-center">
         <button
           onClick={() =>
@@ -48,14 +48,14 @@ export default function MobileNav() {
           <UserCircleIcon className="h-6 w-6" />
         </button>
       </div>
-      <div className="flex items-center justify-center">
+      {/* <div className="flex items-center justify-center">
         <Link
           href={Routes.private.dashboard}
           className="inline-block hover:text-red"
         >
           <HeartIcon className="h-6 w-6" />
         </Link>
-      </div>
+      </div> */}
       <div className="flex items-center justify-center">
         <ActionIcon
           variant="text"

@@ -589,3 +589,49 @@ th.rc-table-cell {
 	font-size: x-large;
 	font-weight: 700;
 }
+
+.colormanage{
+	color: #111111;
+}
+/* @media (max-width: 600px) {
+	.extratable {
+	  width: 100%; 
+	  display: block;  
+	}
+}   */
+
+.extratable{
+	border-collapse: collapse;
+	border: none !important;
+	&__container{
+		overflow-x: auto;
+	}
+
+	&__th{
+		border: none;
+	}
+	}
+	.thead{
+		height: 3.5rem;
+		color: rgb(17, 17, 17);
+		text-align: left;
+		--tw-bg-opacity: 1;
+		text-transform: uppercase !important;
+		background-color: rgba(204, 204, 204, 0.31);
+	};
+
+.tth{
+	border: none !important;
+}
+
+.td{
+	border: none;
+}
+
+.tr{
+	text-align: left;
+	transition: background-color 0.1s ease;
+}
+.tr:hover{
+	 background-color: rgba(210, 210, 210, 0.136);;
+}

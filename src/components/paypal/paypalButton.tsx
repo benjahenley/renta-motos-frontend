@@ -11,9 +11,10 @@ const PaypalButton : React.FC<PaypalButtonInterface> = (props) => {
         <PayPalButtons
         createOrder={(data, actions) => {
           return actions.order.create({
-            intent: "CAPTURE", 
+            intent: "CAPTURE", // Asegúrate de incluir 'intent' aquí
             purchase_units: [{
               amount: {
+                currency_code: 'USD', 
                 value: 'YOUR_ORDER_AMOUNT',
               },
               reference_id: 'YOUR_ORDER_ID',
@@ -30,7 +31,7 @@ const PaypalButton : React.FC<PaypalButtonInterface> = (props) => {
           console.error('PayPal Checkout onError', err);
         }}
       />
-
+        
 
 
        

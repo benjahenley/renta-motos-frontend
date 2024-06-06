@@ -178,17 +178,17 @@ export default function SelectCalendar() {
             Type: {reservation.selected?.rentTime}
           </p>
         </div>
-        <div>Select for{reservation.selected?.adults} adult </div>
+        <div className='pb-3'>Select the time and jetski for {reservation.selected?.adults} adult </div>
         {/* table */}
         <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse border border-gray-400">
-            <thead>
+          <table className="extratable min-w-full border-collapse border border-gray-400">
+            <thead className='rc-table-thead thead'>
               <tr>
-                <th className="border border-gray-400 px-4 py-2">Times</th>
+                <th className="tth px-4 py-2">Times</th>
                 {jetskis.map((boat) => (
                   <th
                     key={boat.id}
-                    className="border border-gray-400 px-4 py-2"
+                    className="tth px-4 py-2"
                   >
                     {boat.name}
                   </th>
@@ -197,13 +197,13 @@ export default function SelectCalendar() {
             </thead>
             <tbody>
               {timeSlots.map((slot, index) => (
-                <tr key={index}>
-                  <td className="border border-gray-400 px-4 py-2">{slot}</td>
+                <tr className='tr' key={index}>
+                  <td className="td px-4 py-2">{slot}</td>
                   {jetskis.map((boat) => {
                     return (
                       <td
                         key={boat.id}
-                        className={`border border-gray-400 px-4 py-2 cursor-pointer ${
+                        className={`td px-4 py-2 cursor-pointer ${
                           isCellSelected(boat.id, slot) ? 'bg-green-500' : ''
                         } ${
                           isCellReserved(boat.id, slot)

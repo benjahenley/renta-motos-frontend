@@ -2,9 +2,11 @@
 
 import { useRef } from 'react';
 import { addScrollingClass } from '@/utils/add-scrolling-class';
-import SearchIconBtn from '@/components/ui/search-icon-btn';
+// import SearchIconBtn from '@/components/ui/search-icon-btn';
 import Menu from '@/components/header/menu';
 import Logo from '@/components/ui/logo';
+import LanguageSwitcher from '@/components/language/languageSwitcher'
+
 
 export default function TransparentHeader() {
   const headerRef = useRef(null);
@@ -17,7 +19,8 @@ export default function TransparentHeader() {
     >
       <Logo />
       <div className="flex items-center">
-        <SearchIconBtn className="md:hidden" />
+      {/* <LanguageSwitcher/> */}
+        {/* <SearchIconBtn className="md:hidden" /> */}
         <Menu />
       </div>
     </header>
