@@ -1,9 +1,8 @@
-import React, { createContext, useContext, useState } from 'react';
-
+import '@/styles/globals.css';
+import React from 'react';
 import clsx from 'clsx';
 import type { Metadata } from 'next';
 import { Satisfy, Lato } from 'next/font/google';
-import '@/styles/globals.css';
 import { Providers } from '@/components/providers/providers';
 
 const lato = Lato({

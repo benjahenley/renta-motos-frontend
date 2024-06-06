@@ -1,9 +1,9 @@
-import React from "react";
-import { PayPalButtons } from "@paypal/react-paypal-js";
+import React from 'react';
+import { PayPalButtons } from '@paypal/react-paypal-js';
 
 interface PaypalButtonInterface {
-    totalValue: string
-    invoice: string
+  totalValue: string;
+  invoice: string;
 }
 
 const PaypalButton : React.FC<PaypalButtonInterface> = (props) => {

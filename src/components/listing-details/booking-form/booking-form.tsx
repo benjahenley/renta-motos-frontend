@@ -2,7 +2,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { z } from 'zod';
+import { object, z } from 'zod';
 import SelectBox from '@/components/listing-details/booking-form/select-box';
 import DateTime from '@/components/ui/form-fields/date-time-picker';
 import { Staricon } from '@/components/icons/star-icon';
@@ -77,6 +77,7 @@ export default function BookingForm({
 
   const [minEndDate, setMinEndDate] = useState(getValues('startDate'));
   const { closeModal, openModal } = useModal();
+  const [error, setError] = useState();
 
   const [reservation, setReservation] = useAtom(reservationAtom);
 
@@ -85,6 +86,9 @@ export default function BookingForm({
 
   function onError(errors: any) {
     console.log('Form errors:', errors);
+    if (typeof errors === 'object') return;
+
+    setError(errors);
   }
 
   const rentTime = watch('selected.rentTime');
@@ -167,9 +171,10 @@ export default function BookingForm({
           />
         )}
       />
-      <p className="flex items-center justify-between text-xs text-red">
+      <p className="flex items-center justify-between text-xs text-danger">
         <span>{errors.startDate?.message}</span>
         <span>{errors.selected?.adults?.message}</span>
+        {error && <span>{error}</span>}
       </p>
       <Button
         size="xl"
@@ -184,7 +189,7 @@ export default function BookingForm({
         <li className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0">
           <span className="font-normal"> {rentTime} Rent Time</span>
           <span className="font-bold">${calculatedPrice}</span>
-        </li> 
+        </li>
         {list.map((item) => (
           <li
             key={item.title}
@@ -202,4 +207,3 @@ export default function BookingForm({
     </form>
   );
 }
-
