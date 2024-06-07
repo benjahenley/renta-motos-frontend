@@ -1,6 +1,9 @@
 'use client';
 
-import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import {
+  PayPalScriptProvider,
+  ReactPayPalScriptOptions,
+} from '@paypal/react-paypal-js';
 import { VendorProvider } from '../vendorContext';
 import ModalContainer from '../modals/view';
 import DrawerContainer from '../drawers/view';
@@ -11,14 +14,16 @@ interface Props {
 }
 
 export const Providers = ({ children }: Props) => {
+  const initialOptions: ReactPayPalScriptOptions = {
+    clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
+    intent: 'capture',
+    currency: 'EUR',
+    'data-sdk-integration-source': 'nextjs',
+    crossorigin: 'anonymous',
+  };
+
   return (
-    <PayPalScriptProvider
-      options={{
-        clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? '',
-        intent: 'capture',
-        currency: 'USD',
-      }}
-    >
+    <PayPalScriptProvider options={initialOptions}>
       <VendorProvider>
         {children}
         <ModalContainer />

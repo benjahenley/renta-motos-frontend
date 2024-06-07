@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   title: 'Ibijet Rent',
   description: 'Find your boat with the best experience.',
   icons: ['/images/logito.jpeg'],
-  viewport: { width: 'device-width', initialScale: 1, maximumScale: 1 },
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
 };
 
 export default function RootLayout({ children }: React.PropsWithChildren<{}>) {
@@ -42,5 +42,3 @@ export default function RootLayout({ children }: React.PropsWithChildren<{}>) {
     </html>
   );
 }
-
-

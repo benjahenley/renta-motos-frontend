@@ -1,51 +1,34 @@
-'use-client';
+type OrderProps = {
+  price: number;
+  adults: number;
+};
 
-import { reservationAtom } from '@/atoms/reservation';
-import { useAtom } from 'jotai';
+type Props = {
+  order: OrderProps;
+};
 
-const list = [
-  {
-    title: 'Weekly discount?',
-    money: 117,
-    type: 'discount',
-  },
-  {
-    title: 'Cleaning fee',
-    money: 52,
-    type: 'cleanfee',
-  },
-  {
-    title: 'TOTAL',
-    money: 65,
-    type: 'servicefee',
-  },
-];
-
-export default function Carrito() {
-  const [reservationState, setReservationState] = useAtom(reservationAtom);
-  console.log(reservationAtom);
+export default function Carrito({ order }: Props) {
   return (
     <form className="rounded-xl border border-gray-lighter bg-white p-8 shadow-card">
-      <h1 className="cartitle">Cart</h1>
+      <h1 className="cartitle">Checkout</h1>
       <div className="grid grid-cols-1 gap-8 lg:gap-12">
         <ul className="mt-3 xl:mt-5">
           <li className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0">
-            <span className="font-normal"> 500 Rent Time</span>
-            <span className="font-bold">$600</span>
+            <span className="font-normal">
+              {order.adults} Reservation{order.adults > 1 && 's'}
+            </span>
+            <span className="font-bold">${order.price}</span>
           </li>
-          {list.map((item) => (
-            <li
-              key={item.title}
-              className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0 last:border-t last:border-gray-lighter last:pb-0"
-            >
-              <span className="font-normal">{item.title}</span>
-              {item.type === 'discount' ? (
-                <span className="font-bold text-red">-${item.money}</span>
-              ) : (
-                <span className="font-bold">${item.money}</span>
-              )}
-            </li>
-          ))}
+          <li className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0">
+            <span className="font-normal"> 30% Reservation fee **</span>
+            <span className="font-bold">${order.price * 0.3}</span>
+          </li>
+
+          <li className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0 last:border-t last:border-gray-lighter last:pb-0">
+            <span className="font-normal">total</span>
+
+            <span className="font-bold">${order.price * 0.3}</span>
+          </li>
         </ul>
       </div>
     </form>

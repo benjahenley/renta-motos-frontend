@@ -47,6 +47,7 @@ export default function SelectCalendar() {
     const fetchItems = async () => {
       try {
         const { jetskis } = await getJetskis();
+        console.log(jetskis);
 
         const reservationsData = await getReservationsByDate(removeTime(date));
 
