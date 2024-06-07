@@ -15,7 +15,7 @@ const menuData = [
     path: Routes.private.dashboard,
   },
   {
-    text: 'jetskys',
+    text: 'jetskis',
     path: Routes.private.jetskys,
   },
   {
