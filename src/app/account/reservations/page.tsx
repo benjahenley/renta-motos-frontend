@@ -1,6 +1,5 @@
 'use client';
 
-import { reservationData } from 'public/data/orders';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { reservationColumn } from '@/components/reservation/reservation-col';
@@ -9,18 +8,40 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { getReservations } from '@/helpers/getReservationList';
+import { getOrdersByUserId } from '@/api/reservations/getReservationsByUserId';
 import { checkRole } from '@/api/user/isAuthorized';
 import { getToken } from '@/helpers/getToken';
 import LoadingScreen from '@/components/loading-screen';
 import { useRouter } from 'next/navigation';
 
-async function getData(start: number, offset: number) {
+// Función para obtener el userId del usuario logueado desde el localStorage
+function getUserId() {
+  const loggedUserString = localStorage.getItem('loggedUser');
+
+  if (!loggedUserString) {
+    throw new Error('User is not signed in');
+  }
+
+  let loggedUser;
+  try {
+    loggedUser = JSON.parse(loggedUserString);
+  } catch (e) {
+    throw new Error('Failed to parse logged user data');
+  }
+
+  const userId = loggedUser.uid; // Asumiendo que el userId está almacenado en la propiedad 'uid'
+  return userId;
+}
+
+// Función que obtiene las reservas y las filtra por userId
+async function getData(start: number, offset: number, userId: string) {
   const data = await getReservations();
-  const filteredData = data.slice(start, offset);
+  const userReservations = data.filter((reservation) => reservation.userId === userId);
+  const filteredData = userReservations.slice(start, offset);
   return filteredData;
 }
 
-export default function reservationsPage() {
+export default function ReservationsPage() {
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState<string>('desc');
   const [column, setColumn] = useState<string>('');
@@ -33,55 +54,45 @@ export default function reservationsPage() {
     async function checkUserRole() {
       try {
         const token = getToken();
-        const data = await checkRole(token);
-        console.log({ data });
+        await checkRole(token);  // Verificación de token, pero no redirigir por rol
         setLoading(false);
-      } catch (e: any) {
-        console.log(e.message);
-        router.push('/');
+        } catch (e: any) {
+          getOrdersByUserId
+          console.log(e.message);
+          setLoading(false);
+          // router.push('/');  // Redirigir solo si la verificación de token falla
       }
     }
 
     checkUserRole();
   }, [router]);
 
-  // if (loading) {
-  //   return
-  // }
-
-  // filter data in table
+  // Filtra los datos en la tabla según el searchfilter y el userId
   useEffect(() => {
     const filterData = async () => {
-      let fArr = [...data];
+      const userId = getUserId();
       if (searchfilter) {
         setData(
-          fArr.filter((item) =>
+          data.filter((item) =>
             item.name.toLowerCase().includes(searchfilter.toLowerCase()),
           ),
         );
       } else {
         let start = (current - 1) * 10;
         let offset = current * 10;
-        const newData = await getData(start, offset);
-        console.log({ newData });
-        setData(newData);
+        try {
+          const newData = await getData(start, offset, userId);
+          console.log({ newData });
+          setData(newData);
+        } catch (e: any) {
+          console.error(e.message);
+        }
       }
     };
     filterData();
-  }, [searchfilter]);
+  }, [searchfilter, current]);
 
-  // table current change
-  useEffect(() => {
-    const fetchData = async () => {
-      let start = (current - 1) * 10;
-      let offset = current * 10;
-      const fetchedData = await getData(start, offset);
-      setData(fetchedData);
-    };
-    fetchData();
-  }, [current]);
-
-  // select all checkbox function
+  // Función para seleccionar todos los checkboxes
   const onSelectAll = useCallback(
     (checked: boolean) => {
       let updatedData = data.map((item) => ({
@@ -93,45 +104,38 @@ export default function reservationsPage() {
     [data],
   );
 
-  // single select checkbox function
+  // Función para seleccionar un único checkbox
   const onChange = useCallback(
     (row: any) => {
-      let fArr = [...data];
-      let cArr: any = [];
-      fArr.forEach((item) => {
-        if (item.id === row.id) item.checked = !item.checked;
-        cArr.push(item);
-      });
-      setData(cArr);
+      let updatedData = data.map((item) =>
+        item.id === row.id ? { ...item, checked: !item.checked } : item
+      );
+      setData(updatedData);
     },
     [data],
   );
 
-  // handle more button with edit, preview, delete
+  // Función para manejar el botón "more"
   const onMore = useCallback((e: any, row: any) => {
     console.log(e.target.id);
   }, []);
 
-  // on header click sort table by ascending or descending order
+  // Función para manejar el click en los headers de la tabla
   const onHeaderClick = useCallback(
     (value: string) => ({
       onClick: () => {
         setColumn(value);
         setOrder(order === 'desc' ? 'asc' : 'desc');
         if (order === 'desc') {
-          //@ts-ignore
           setData([...data.sort((a, b) => (a[value] > b[value] ? -1 : 1))]);
         } else {
-          //@ts-ignore
           setData([...data.sort((a, b) => (a[value] > b[value] ? 1 : -1))]);
         }
       },
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data],
+    [data, order],
   );
 
-  // gets the columns of table
   const columns: any = useMemo(
     () =>
       reservationColumn(
@@ -172,7 +176,7 @@ export default function reservationsPage() {
       <div className="mt-8 text-center">
         <Pagination
           current={current}
-          total={reservationData.length}
+          total={data.length} // Usa data.length en lugar de reservationData.length
           pageSize={10}
           nextIcon="Next"
           prevIcon="Previous"
