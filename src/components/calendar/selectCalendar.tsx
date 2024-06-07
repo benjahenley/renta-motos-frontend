@@ -1,3 +1,4 @@
+// src/components/SelectCalendar.tsx
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
@@ -6,34 +7,29 @@ import Button from '@/components/ui/button';
 import { getJetskis } from '@/api/get-jetskis/useGetJetskis';
 import { getToken } from '@/helpers/getToken';
 import { getReservationsByDate } from '@/api/reservations/getReservationsByDate';
-import {
-  formatDateToISOWithoutTime,
-  formatDateToISOWithoutTime as removeTime,
-} from '@/helpers/formatDate';
+import { formatDateToISOWithoutTime, formatDateToISOWithoutTime as removeTime } from '@/helpers/formatDate';
 import { useModal } from '../modals/context';
 import { Routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
-
-import { redirect } from 'next/dist/server/api-utils';
 import { createOrder } from '@/api/order/createOrder';
 import { orderAtom } from '@/atoms/order';
 
 interface SelectedCell {
-  jetskiId: string;
+  jetskiId: number;
   timeSlot: string;
 }
 
 interface Jetski {
-  id: string;
+  id: number;
   name: string;
+  status: 'available' | 'maintenance';
   reservations: any[];
 }
 
 export default function SelectCalendar() {
   const router = useRouter();
 
-  const [reservation, setReservation] =
-    useAtom<Partial<reservation>>(reservationAtom);
+  const [reservation, setReservation] = useAtom<Partial<reservation>>(reservationAtom);
 
   const { openModal, closeModal } = useModal();
   const [date, setDate] = useState(new Date(reservation.startDate!));
@@ -47,9 +43,7 @@ export default function SelectCalendar() {
     const fetchItems = async () => {
       try {
         const { jetskis } = await getJetskis();
-
         const reservationsData = await getReservationsByDate(removeTime(date));
-
         setReservations(reservationsData.reservations);
         setJetskis(jetskis);
       } catch (error) {
@@ -65,9 +59,7 @@ export default function SelectCalendar() {
     const fetchItems = async () => {
       try {
         const { jetskis } = await getJetskis();
-
         const reservationsData = await getReservationsByDate(removeTime(date));
-
         setReservations(reservationsData.reservations);
         setJetskis(jetskis);
       } catch (error) {
@@ -86,8 +78,7 @@ export default function SelectCalendar() {
     if (isSelected) {
       setSelectedCells((prevSelectedCells) =>
         prevSelectedCells.filter(
-          (cell) =>
-            cell.jetskiId !== motorboat.id || cell.timeSlot !== timeSlot,
+          (cell) => cell.jetskiId !== motorboat.id || cell.timeSlot !== timeSlot,
         ),
       );
     } else {
@@ -105,16 +96,17 @@ export default function SelectCalendar() {
     }
   };
 
-  const isCellSelected = (jetskiId: string, timeSlot: string) =>
+  const isCellSelected = (jetskiId: number, timeSlot: string) =>
     selectedCells.some(
       (cell) => cell.jetskiId === jetskiId && cell.timeSlot === timeSlot,
     );
 
-  const isCellReserved = (jetskiId: string, timeSlot: string) => {
+  const isCellReserved = (jetskiId: number, timeSlot: string) => {
     return reservations.some(
       (reservationItem) =>
         reservationItem.jetskiId === jetskiId &&
         reservationItem.timeSlot === timeSlot,
+      console.log(jetskiId, timeSlot)
     );
   };
 
@@ -157,7 +149,6 @@ export default function SelectCalendar() {
       }
 
       console.log(selectedCells);
-      // console.log(reservations);
 
       const reservationsArray: any[] = [];
 
@@ -194,7 +185,6 @@ export default function SelectCalendar() {
     } catch (e: any) {
       closeModal();
       alert(e.message);
-      // openModal('SIGN_IN');
     }
   }
 
@@ -207,8 +197,7 @@ export default function SelectCalendar() {
           <>
             <div className="mb-8">
               <h2 className="mb-3 text-3xl font-bold uppercase leading-[48px] text-primary text-center">
-                DATE: {date.getDate()}/{date.getMonth() + 1}/
-                {date.getFullYear()}
+                DATE: {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}
               </h2>
               <p className="text-base leading-5 text-gray"></p>
               <p className="text-base leading-5 text-gray">
@@ -218,18 +207,14 @@ export default function SelectCalendar() {
                 Type: {reservation.selected?.rentTime}
               </p>
             </div>
-            <div>Select for{reservation.selected?.adults} adult </div>
-            {/* table */}
+            <div>Select for {reservation.selected?.adults} adult </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full border-collapse border border-gray-400">
-                <thead>
+              <table className="extratable min-w-full border-collapse border border-gray-400">
+                <thead className='thead'>
                   <tr>
-                    <th className="border border-gray-400 px-4 py-2">Times</th>
+                    <th className="thh px-4 py-2">Times</th>
                     {jetskis.map((boat) => (
-                      <th
-                        key={boat.id}
-                        className="border border-gray-400 px-4 py-2"
-                      >
+                      <th key={boat.id} className="thh px-4 py-2">
                         {boat.name}
                       </th>
                     ))}
@@ -237,15 +222,15 @@ export default function SelectCalendar() {
                 </thead>
                 <tbody>
                   {timeSlots.map((slot, index) => (
-                    <tr key={index}>
-                      <td className="border border-gray-400 px-4 py-2">
+                    <tr className='tr' key={index}>
+                      <td className="td px-4 py-2">
                         {slot}
                       </td>
                       {jetskis.map((boat) => {
                         return (
                           <td
                             key={boat.id}
-                            className={`border border-gray-400 px-4 py-2 cursor-pointer ${
+                            className={`td px-4 py-2 cursor-pointer ${
                               isCellSelected(boat.id, slot)
                                 ? 'bg-green-500'
                                 : ''
