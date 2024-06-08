@@ -15,7 +15,7 @@ type QueryStringType = {
 };
 
 export default function FindTripForm() {
-  const { t } = useTranslation('common');
+  // const { t } = useTranslation('common');
   const router = useRouter();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -62,7 +62,8 @@ export default function FindTripForm() {
     >
       <div className="mb-3 sm:mb-0 flex-grow">
         <span className="mb-2 hidden font-satisfy text-xl leading-7 text-gray-dark sm:block 4xl:text-[28px] 4xl:leading-[44px]">
-        {t('searchform1')}
+        Enjoy your ride in a unique way
+        {/* {t('searchform1')} */}
         </span>
         <Text
           tag="h1"

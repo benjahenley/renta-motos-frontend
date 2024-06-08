@@ -19,7 +19,6 @@ export async function getReservations() {
         status: item.status,
         endTime,
         startTime,
-        userId: item.userId,
         jetskiId: item.jetskiId,
       };
     });
