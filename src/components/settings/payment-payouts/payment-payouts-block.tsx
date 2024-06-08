@@ -6,8 +6,8 @@ import PaymentsPayouts from '@/components/settings/payment-payouts/payments-payo
 export default function PaymentPayoutsBlock() {
   return (
     <div className="grid grid-cols-1 gap-8 lg:gap-12">
-      <PaymentsPayouts />
-      <AddnewPaymentMethod />
+      {/* <PaymentsPayouts /> */}
+      {/* <AddnewPaymentMethod /> */}
     </div>
   );
 }

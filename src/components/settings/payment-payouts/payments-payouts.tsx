@@ -9,42 +9,38 @@ import { VisaIcon } from '@/components/icons/payment-methods/visa';
 import Checkbox from '@/components/ui/form-fields/checkbox';
 import Text from '@/components/ui/typography/text';
 import Button from '@/components/ui/button';
+import PaypalButton from '@/components/paypal/paypalButton';
 
 const paymentMethods = [
-  {
-    cardType: 'visa',
-    label: 'Visa',
-    icon: <VisaIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
-    // default: true,
-
-  },
-  {
-    cardType: 'bizum',
-    label: 'Bizum',
-    icon: <BizumIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
-
-  },
-  {
-    cardType: 'mastercard',
-    label: 'Mastercard',
-    icon: <MasterCardIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
-
-  },
-  {
-    cardType: 'paypal',
-    label: 'PayPal',
-    icon: <PaypalIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
-
-  },
+  // {
+  //   cardType: 'visa',
+  //   label: 'Visa',
+  //   icon: <VisaIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
+  //   // default: true,
+  // },
+  // {
+  //   cardType: 'bizum',
+  //   label: 'Bizum',
+  //   icon: <BizumIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
+  // },
+  // {
+  //   cardType: 'mastercard',
+  //   label: 'Mastercard',
+  //   icon: <MasterCardIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
+  // },
+  // {
+  //   cardType: 'paypal',
+  //   label: 'PayPal',
+  //   icon: <PaypalIcon className="h-9 w-[60px] md:h-12 md:w-20" />,
+  // },
 ];
 
 export default function PaymentsPayouts() {
-  const [state, setState] = useState(paymentMethods[0].cardType);
+  // const [state, setState] = useState(paymentMethods[0].cardType);
   return (
     <div>
-
       <div className="grid grid-cols-1 gap-4 lg:gap-6">
-        {paymentMethods.map((item, index) => (
+        {/* {paymentMethods.map((item, index) => (
           <AdvancedCheckbox
             key={`payment-${index}`}
             name="payment-secondary"
@@ -64,13 +60,11 @@ export default function PaymentsPayouts() {
                   type="button"
                   variant="text"
                   className="!p-0 text-xs leading-5 text-gray focus:!ring-0 md:text-sm md:leading-6"
-                >
-                </Button>
+                ></Button>
               </div>
-
             </div>
-          </AdvancedCheckbox>
-        ))}
+          </AdvancedCheckbox> */}
+        {/* ))} */}
       </div>
     </div>
   );

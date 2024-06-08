@@ -5,12 +5,9 @@ import clsx from 'clsx';
 import { object, z } from 'zod';
 import SelectBox from '@/components/listing-details/booking-form/select-box';
 import DateTime from '@/components/ui/form-fields/date-time-picker';
-import { Staricon } from '@/components/icons/star-icon';
 import Button from '@/components/ui/button';
-import useAuth from '@/hooks/use-auth';
 import { useModal } from '@/components/modals/context';
 import { useAtom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
 import { reservationAtom } from '@/atoms/reservation';
 
 interface BookingFormProps {
@@ -78,11 +75,13 @@ export default function BookingForm({
   const [minEndDate, setMinEndDate] = useState(getValues('startDate'));
   const { closeModal, openModal } = useModal();
   const [error, setError] = useState();
+  const [rentTime, setRentTime] = useState<RentTime>('2h');
+  const [adults, setAdults] = useState<number>(1);
 
   const [reservation, setReservation] = useAtom(reservationAtom);
 
   const [focus, setFocus] = useState<boolean>(false);
-  const [calculatedPrice, setCalculatedPrice] = useState<number>(450); // Valor inicial basado en 'fullDay'
+  const [calculatedPrice, setCalculatedPrice] = useState<number>(450);
 
   function onError(errors: any) {
     console.log('Form errors:', errors);
@@ -91,7 +90,6 @@ export default function BookingForm({
     setError(errors);
   }
 
-  const rentTime = watch('selected.rentTime');
   const rentPrices: Record<RentTime, number> = {
     '2h': 250,
     '4h': 300,
@@ -99,11 +97,14 @@ export default function BookingForm({
   };
 
   useEffect(() => {
-    setCalculatedPrice(rentPrices[rentTime]);
-  }, [rentTime]);
+    const price = rentPrices[rentTime] * adults;
+    setCalculatedPrice(price);
+  }, [rentTime, adults]);
 
   function handleBooking(data: any) {
+    console.log(data);
     setReservation(data);
+    console.log(reservation);
     console.log(data);
     openModal('SELECT_CALENDAR');
   }
@@ -166,7 +167,11 @@ export default function BookingForm({
         render={({ field: { onChange, value } }) => (
           <SelectBox
             defaultSelected={value}
-            onChange={onChange}
+            onChange={({ rentTime, adults }) => {
+              setRentTime(rentTime as any);
+              setAdults(adults as any);
+              onChange({ rentTime, adults });
+            }}
             rentTimeDisabled={listing.triptime !== undefined}
           />
         )}
@@ -190,7 +195,7 @@ export default function BookingForm({
           <span className="font-normal"> {rentTime} Rent Time</span>
           <span className="font-bold">${calculatedPrice}</span>
         </li>
-        {list.map((item) => (
+        {/* {list.map((item) => (
           <li
             key={item.title}
             className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0 last:border-t last:border-gray-lighter last:pb-0"
@@ -202,7 +207,7 @@ export default function BookingForm({
               <span className="font-bold">${item.money}</span>
             )}
           </li>
-        ))}
+        ))} */}
       </ul>
     </form>
   );
