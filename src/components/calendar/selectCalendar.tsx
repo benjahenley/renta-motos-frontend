@@ -28,35 +28,27 @@ interface Jetski {
   reservations: any[];
 }
 
-export default function SelectCalendar() {
-  const router = useRouter();
+const timeSlots = [
+  '10:00 - 12:00',
+  '12:00 - 14:00',
+  '14:00 - 16:00',
+  '16:00 - 18:00',
+];
 
+const fullDayTimeSlots = ['10:00 - 18:00'];
+
+export default function SelectCalendar() {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const [reservation, setReservation] =
     useAtom<Partial<reservation>>(reservationAtom);
-
   const { openModal, closeModal } = useModal();
   const [date, setDate] = useState(new Date(reservation.startDate!));
   const [selectedCells, setSelectedCells] = useState<SelectedCell[]>([]);
   const [jetskis, setJetskis] = useState<Jetski[]>([]);
   const [reservations, setReservations] = useState<any[]>([]);
   const [order, setOrder] = useAtom(orderAtom);
-  const [times, setTimes] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const { jetskis } = await getJetskis();
-        const reservationsData = await getReservationsByDate(removeTime(date));
-        setReservations(reservationsData.reservations);
-        setJetskis(jetskis);
-      } catch (error) {
-        console.error('Error fetching items:', error);
-        closeModal();
-      }
-    };
-
-    fetchItems();
-  }, [reservation]);
+  const [selectionOrder, setSelectionOrder] = useState<SelectedCell[]>([]);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -71,37 +63,35 @@ export default function SelectCalendar() {
     };
 
     fetchItems();
-  }, [reservation]);
+  }, [reservation, date]);
 
   const handleCellClick = (motorboat: Jetski, timeSlot: string) => {
-    const [startTime, endTime] = timeSlot.split(' - ');
-    const slotStart = new Date(
-      `${formatDateToISOWithoutTime(date)}T${startTime}:00.000Z`,
-    ).getTime();
+    const maxSelections = reservation.selected?.adults || 1;
+    const rentTime = reservation.selected?.rentTime;
 
-    let slotsToSelect = 1;
-    switch (reservation.selected!.rentTime) {
-      case '2hs':
-        slotsToSelect = 1;
-      case '4hs':
-        slotsToSelect = 2;
-        break;
-      case 'fullDay':
-        slotsToSelect = 4;
-        break;
-      default:
-        slotsToSelect = 1;
+    const slotsToSelect = rentTime === '4h' ? 2 : 1;
+    const availableSlots =
+      rentTime === 'fullDay' ? fullDayTimeSlots : timeSlots;
+
+    const startIndex = availableSlots.indexOf(timeSlot);
+
+    if (
+      startIndex === -1 ||
+      startIndex + slotsToSelect > availableSlots.length
+    ) {
+      return;
     }
 
     const newSelectedCells: SelectedCell[] = [];
     for (let i = 0; i < slotsToSelect; i++) {
-      const slot = `${new Date(slotStart + i * 2 * 60 * 60 * 1000).toISOString().slice(11, 16)} - ${new Date(slotStart + (i + 1) * 2 * 60 * 60 * 1000).toISOString().slice(11, 16)}`;
+      const slot = availableSlots[startIndex + i];
       newSelectedCells.push({ jetskiId: motorboat.id, timeSlot: slot });
     }
 
     const isAnyReserved = newSelectedCells.some((cell) =>
       isCellReserved(cell.jetskiId, cell.timeSlot),
     );
+
     if (isAnyReserved) {
       return;
     }
@@ -114,20 +104,49 @@ export default function SelectCalendar() {
       ),
     );
 
+    let updatedSelectedCells = [...selectedCells];
+    let updatedSelectionOrder = [...selectionOrder];
+
     if (isAllSelected) {
-      setSelectedCells((prevSelectedCells) =>
-        prevSelectedCells.filter(
-          (cell) =>
-            !newSelectedCells.some(
-              (newCell) =>
-                newCell.jetskiId === cell.jetskiId &&
-                newCell.timeSlot === cell.timeSlot,
-            ),
-        ),
+      updatedSelectedCells = updatedSelectedCells.filter(
+        (cell) =>
+          !newSelectedCells.some(
+            (newCell) =>
+              newCell.jetskiId === cell.jetskiId &&
+              newCell.timeSlot === cell.timeSlot,
+          ),
+      );
+      updatedSelectionOrder = updatedSelectionOrder.filter(
+        (cell) =>
+          !newSelectedCells.some(
+            (newCell) =>
+              newCell.jetskiId === cell.jetskiId &&
+              newCell.timeSlot === cell.timeSlot,
+          ),
       );
     } else {
-      setSelectedCells(newSelectedCells);
+      if (selectionOrder.length >= maxSelections * slotsToSelect) {
+        const cellToRemove = updatedSelectionOrder.shift();
+        if (cellToRemove) {
+          updatedSelectedCells = updatedSelectedCells.filter(
+            (cell) =>
+              !(
+                cell.jetskiId === cellToRemove.jetskiId &&
+                cell.timeSlot === cellToRemove.timeSlot
+              ),
+          );
+        }
+      }
+      updatedSelectedCells.push(...newSelectedCells);
+      updatedSelectionOrder.push(...newSelectedCells);
     }
+
+    if (updatedSelectionOrder.length > maxSelections * slotsToSelect) {
+      return;
+    }
+
+    setSelectedCells(updatedSelectedCells);
+    setSelectionOrder(updatedSelectionOrder);
   };
 
   const isCellSelected = (jetskiId: number, timeSlot: string) =>
@@ -143,6 +162,7 @@ export default function SelectCalendar() {
 
       const reservationStart = new Date(reservationItem.startTime).getTime();
       const reservationEnd = new Date(reservationItem.endTime).getTime();
+
       const slotStart = new Date(
         `${formatDateToISOWithoutTime(date)}T${startTime}:00.000Z`,
       ).getTime();
@@ -158,39 +178,18 @@ export default function SelectCalendar() {
     });
   };
 
-  const generateTimeSlots = () => {
-    const timeSlots = [];
-    let slotDuration = 2;
-
-    switch (reservation.selected!.rentTime!) {
-      case '4hs':
-        slotDuration = 2;
-        break;
-      case 'fullDay':
-        slotDuration = 8;
-        break;
-      default:
-        slotDuration = 2;
-    }
-
-    for (let hour = 10; hour + slotDuration <= 18; hour += slotDuration) {
-      const startTime = `${hour.toString().padStart(2, '0')}:00`;
-      const endTime = `${(hour + slotDuration).toString().padStart(2, '0')}:00`;
-      timeSlots.push(`${startTime} - ${endTime}`);
-    }
-
-    return timeSlots;
-  };
-
-  const timeSlots = generateTimeSlots();
-
   async function handleSubmit(e: any) {
+    e.preventDefault(); // Prevent default form submission
+    setLoading(true); // Set loading state to true
+
     try {
       const token = getToken();
 
       if (!token) {
         closeModal();
         openModal('SIGN_IN');
+        setLoading(false); // Reset loading state
+        return;
       }
 
       const reservationsArray: any[] = [];
@@ -224,15 +223,18 @@ export default function SelectCalendar() {
       setOrder(orderId);
       router.push(`${Routes.public.payment}/${orderId}`);
     } catch (e: any) {
-      closeModal();
       alert(e.message);
+    } finally {
+      setLoading(false); // Reset loading state
     }
   }
+
+  // const timeSlots = generateTimeSlots(reservation.selected?.rentTime);
 
   return (
     <div className={clsx('container mb-12 mt-8 px-4 lg:mb-16')}>
       <div className="m-auto w-full max-w-[496px] rounded-lg border border-gray-200 bg-white p-6 pt-9 sm:p-12">
-        {jetskis.length === 0 ? (
+        {jetskis.length === 0 || timeSlots.length === 0 ? (
           <div>LOADING...</div>
         ) : (
           <>
@@ -249,7 +251,6 @@ export default function SelectCalendar() {
                 Type: {reservation.selected?.rentTime}
               </p>
             </div>
-            <div>Select for {reservation.selected?.adults} adult </div>
             <div className="overflow-x-auto">
               <table className="extratable min-w-full border-collapse border border-gray-400">
                 <thead className="thead">
@@ -263,18 +264,21 @@ export default function SelectCalendar() {
                   </tr>
                 </thead>
                 <tbody>
-                  {timeSlots.map((slot, index) => (
+                  {(reservation.selected?.rentTime === 'fullDay'
+                    ? fullDayTimeSlots
+                    : timeSlots
+                  ).map((slot, index) => (
                     <tr className="tr" key={index}>
                       <td className="td px-4 py-2">{slot}</td>
                       {jetskis.map((boat) => (
                         <td
                           key={boat.id}
-                          className={`td px-4 py-2 cursor-pointer ${
-                            isCellSelected(boat.id, slot) ? 'bg-green-500' : ''
+                          className={`td px-4 py-2 ${
+                            isCellSelected(boat.id, slot) && 'bg-green-500 '
                           } ${
                             isCellReserved(boat.id, slot)
-                              ? 'bg-red-500 cursor-not-allowed'
-                              : ''
+                              ? ' bg-gray-lighter cursor-not-allowed'
+                              : 'cursor-pointer'
                           }`}
                           onClick={() =>
                             !isCellReserved(boat.id, slot) &&
@@ -293,7 +297,7 @@ export default function SelectCalendar() {
                 disabled={
                   selectedCells.length !==
                   reservation.selected!.adults *
-                    (reservation.selected!.rentTime === '4hs'
+                    (reservation.selected!.rentTime === '4h'
                       ? 2
                       : reservation.selected!.rentTime === 'fullDay'
                         ? 4
@@ -306,12 +310,17 @@ export default function SelectCalendar() {
                 className="mt-4 w-full !py-[14px] text-base !font-bold uppercase tracking-widest"
                 onClick={handleSubmit}
               >
-                Create Reservation
+                {loading ? 'Processing...' : 'Create Reservation'}
               </Button>
             </div>
           </>
         )}
       </div>
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          Loading...
+        </div>
+      )}
     </div>
   );
 }
