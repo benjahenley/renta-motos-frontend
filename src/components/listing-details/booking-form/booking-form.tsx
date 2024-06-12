@@ -8,7 +8,7 @@ import DateTime from '@/components/ui/form-fields/date-time-picker';
 import Button from '@/components/ui/button';
 import { useModal } from '@/components/modals/context';
 import { useAtom } from 'jotai';
-import { reservationAtom } from '@/atoms/reservation';
+import { selectionAtom } from '@/atoms/reservation';
 
 interface BookingFormProps {
   price: number;
@@ -78,7 +78,7 @@ export default function BookingForm({
   const [rentTime, setRentTime] = useState<RentTime>('2h');
   const [adults, setAdults] = useState<number>(1);
 
-  const [reservation, setReservation] = useAtom(reservationAtom);
+  const [reservation, setReservation] = useAtom(selectionAtom);
 
   const [focus, setFocus] = useState<boolean>(false);
   const [calculatedPrice, setCalculatedPrice] = useState<number>(450);

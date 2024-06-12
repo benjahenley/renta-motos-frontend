@@ -1,4 +1,3 @@
-
 // export interface Jetski {
 //   id: number;
 //   name: string;
@@ -24,7 +23,6 @@
 //   }
 // };
 
-
 // export const updateJetskiStatus = async (id: number, status: 'available' | 'maintenance'): Promise<Jetski> => {
 //   const url = `${process.env.NEXT_PUBLIC_URL_API_SERVER}/jetskis/${id}`;
 //   try {
@@ -48,10 +46,9 @@
 //   }
 // };
 
-
 // src/api/get-jetskis/useGetJetskis.ts
 export interface Jetski {
-  id: number;
+  id: string;
   name: string;
   status: 'available' | 'maintenance';
   reservations: any[]; // Agregar esta propiedad
@@ -76,7 +73,10 @@ export const getJetskis = async (): Promise<{ jetskis: Jetski[] }> => {
   }
 };
 
-export const updateJetskiStatus = async (id: number, status: 'available' | 'maintenance'): Promise<Jetski> => {
+export const updateJetskiStatus = async (
+  id: number,
+  status: 'available' | 'maintenance',
+): Promise<Jetski> => {
   const url = `${process.env.NEXT_PUBLIC_URL_API_SERVER}/jetskis/${id}`;
   try {
     const response = await fetch(url, {

@@ -1,5 +1,6 @@
 'use client';
 
+import { reservationData } from 'public/data/orders';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { reservationColumn } from '@/components/reservation/reservation-col';
@@ -8,40 +9,18 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { getReservations } from '@/helpers/getReservationList';
-import { getOrdersByUserId } from '@/api/reservations/getReservationsByUserId';
 import { checkRole } from '@/api/user/isAuthorized';
 import { getToken } from '@/helpers/getToken';
 import LoadingScreen from '@/components/loading-screen';
 import { useRouter } from 'next/navigation';
 
-// Función para obtener el userId del usuario logueado desde el localStorage
-function getUserId() {
-  const loggedUserString = localStorage.getItem('loggedUser');
-
-  if (!loggedUserString) {
-    throw new Error('User is not signed in');
-  }
-
-  let loggedUser;
-  try {
-    loggedUser = JSON.parse(loggedUserString);
-  } catch (e) {
-    throw new Error('Failed to parse logged user data');
-  }
-
-  const userId = loggedUser.uid; // Asumiendo que el userId está almacenado en la propiedad 'uid'
-  return userId;
-}
-
-// Función que obtiene las reservas y las filtra por userId
-async function getData(start: number, offset: number, userId: string) {
+async function getData(start: number, offset: number) {
   const data = await getReservations();
-  const userReservations = data.filter((reservation) => reservation.userId === userId);
-  const filteredData = userReservations.slice(start, offset);
+  const filteredData = data.slice(start, offset);
   return filteredData;
 }
 
-export default function ReservationsPage() {
+export default function reservationsPage() {
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState<string>('desc');
   const [column, setColumn] = useState<string>('');
@@ -54,45 +33,56 @@ export default function ReservationsPage() {
     async function checkUserRole() {
       try {
         const token = getToken();
-        await checkRole(token);  // Verificación de token, pero no redirigir por rol
+        const data = await checkRole(token);
+        console.log({ data });
         setLoading(false);
-        } catch (e: any) {
-          getOrdersByUserId
-          console.log(e.message);
-          setLoading(false);
-          // router.push('/');  // Redirigir solo si la verificación de token falla
+      } catch (e: any) {
+        const data = await getReservationsByUserId(token);
+        console.log(e.message);
+        // router.push('/');
       }
     }
 
     checkUserRole();
   }, [router]);
 
-  // Filtra los datos en la tabla según el searchfilter y el userId
+  // if (loading) {
+  //   return
+  // }
+
+  // filter data in table
   useEffect(() => {
     const filterData = async () => {
-      const userId = getUserId();
+      let fArr = [...data];
       if (searchfilter) {
         setData(
-          data.filter((item) =>
+          fArr.filter((item) =>
             item.name.toLowerCase().includes(searchfilter.toLowerCase()),
           ),
         );
       } else {
         let start = (current - 1) * 10;
         let offset = current * 10;
-        try {
-          const newData = await getData(start, offset, userId);
-          console.log({ newData });
-          setData(newData);
-        } catch (e: any) {
-          console.error(e.message);
-        }
+        const newData = await getData(start, offset);
+        console.log({ newData });
+        setData(newData);
       }
     };
     filterData();
-  }, [searchfilter, current]);
+  }, [searchfilter]);
 
-  // Función para seleccionar todos los checkboxes
+  // table current change
+  useEffect(() => {
+    const fetchData = async () => {
+      let start = (current - 1) * 10;
+      let offset = current * 10;
+      const fetchedData = await getData(start, offset);
+      setData(fetchedData);
+    };
+    fetchData();
+  }, [current]);
+
+  // select all checkbox function
   const onSelectAll = useCallback(
     (checked: boolean) => {
       let updatedData = data.map((item) => ({
@@ -104,38 +94,45 @@ export default function ReservationsPage() {
     [data],
   );
 
-  // Función para seleccionar un único checkbox
+  // single select checkbox function
   const onChange = useCallback(
     (row: any) => {
-      let updatedData = data.map((item) =>
-        item.id === row.id ? { ...item, checked: !item.checked } : item
-      );
-      setData(updatedData);
+      let fArr = [...data];
+      let cArr: any = [];
+      fArr.forEach((item) => {
+        if (item.id === row.id) item.checked = !item.checked;
+        cArr.push(item);
+      });
+      setData(cArr);
     },
     [data],
   );
 
-  // Función para manejar el botón "more"
+  // handle more button with edit, preview, delete
   const onMore = useCallback((e: any, row: any) => {
     console.log(e.target.id);
   }, []);
 
-  // Función para manejar el click en los headers de la tabla
+  // on header click sort table by ascending or descending order
   const onHeaderClick = useCallback(
     (value: string) => ({
       onClick: () => {
         setColumn(value);
         setOrder(order === 'desc' ? 'asc' : 'desc');
         if (order === 'desc') {
+          //@ts-ignore
           setData([...data.sort((a, b) => (a[value] > b[value] ? -1 : 1))]);
         } else {
+          //@ts-ignore
           setData([...data.sort((a, b) => (a[value] > b[value] ? 1 : -1))]);
         }
       },
     }),
-    [data, order],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data],
   );
 
+  // gets the columns of table
   const columns: any = useMemo(
     () =>
       reservationColumn(
@@ -176,7 +173,7 @@ export default function ReservationsPage() {
       <div className="mt-8 text-center">
         <Pagination
           current={current}
-          total={data.length} // Usa data.length en lugar de reservationData.length
+          total={reservationData.length}
           pageSize={10}
           nextIcon="Next"
           prevIcon="Previous"

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import type { Metadata } from 'next';
 import { Satisfy, Lato } from 'next/font/google';
 import { Providers } from '@/components/providers/providers';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const lato = Lato({
   subsets: ['latin'],

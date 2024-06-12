@@ -1,5 +1,6 @@
 export const getReservationsByDate = async (date: string) => {
-  const url = `${process.env.NEXT_PUBLIC_URL_API_SERVER}/reservations?date=${date}`;
+  const url =
+    process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservations?date=' + date;
   try {
     const response = await fetch(url, {
       method: 'GET',
