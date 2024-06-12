@@ -71,6 +71,8 @@ export default function ProfileMenu({ className }: { className?: string }) {
       const isAdminUser = await isAdmin();
       if (isAdminUser) {
         router.push(Routes.private.dashboard);
+      } else {
+        router.push(Routes.private.reservations);
       }
     } catch (error) {
       console.error(error);

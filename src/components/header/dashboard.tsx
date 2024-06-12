@@ -13,7 +13,7 @@ export default function DashboardHeader() {
   return (
     <header
       ref={headerRef}
-      className="dashboard-header sticky top-0 z-50 flex h-16 w-full border-b border-b-gray-lighter bg-white md:flex md:items-center lg:h-[72px] 2xl:h-20 4xl:h-24"
+      className="dashboard-header sticky top-0 z-50 flex h-24 w-full border-b border-b-gray-lighter bg-white md:flex md:items-center lg:h-[72px] 2xl:h-32 4xl:h-24"
     >
       <div className="container-fluid flex w-full items-center justify-between">
         <Logo className="!text-gray-dark" />

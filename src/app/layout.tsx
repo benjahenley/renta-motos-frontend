@@ -20,7 +20,7 @@ const satisfy = Satisfy({
 export const metadata: Metadata = {
   title: 'Ibijet Rent',
   description: 'Find your boat with the best experience.',
-  icons: ['/images/logito.jpeg'],
+  icons: ['/images/probando.svg'],
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
 };
 
