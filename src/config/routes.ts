@@ -23,6 +23,7 @@ export const Routes = {
     dashboard: '/account',
     inbox: '/account/inbox',
     listings: '/account/listings',
+    selectCalendar: 'account/selectCalendar',
     reservations: '/account/reservations',
     accountSettings: '/account/settings',
     trips: '/trips',

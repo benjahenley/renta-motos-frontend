@@ -625,7 +625,7 @@ th.rc-table-cell {
 }
 
 .td{
-	border: none;
+	border-bottom: 3px solid rgba(210, 210, 210, 0.136);
 }
 
 .tr{
@@ -633,5 +633,5 @@ th.rc-table-cell {
 	transition: background-color 0.1s ease;
 }
 .tr:hover{
-	 background-color: rgba(210, 210, 210, 0.136);;
+	 background-color: rgba(210, 210, 210, 0.136);
 }
