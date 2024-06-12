@@ -19,7 +19,7 @@ import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
 async function getData(token: string, start: number, offset: number) {
   const data = await getOrdersByUserId(token);
   const reservations = data.orders.flatMap(
-    (order) =>
+    (order: any) =>
       order.reservations
         .map((item: any) => {
           if (!item) {

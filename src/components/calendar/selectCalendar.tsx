@@ -21,8 +21,6 @@ import {
   getCellsToSelect,
   getGuidesTemplate,
   getMatrixTemplate,
-  hasOverlappingOnes,
-  jetskiData,
   populateMatrix,
   timeSlots,
 } from '@/helpers/matrix-formation';
@@ -135,12 +133,9 @@ export default function SelectCalendar() {
       const rows = findTimezoneIndexes(startTime, endTime);
       console.log(col, rows);
 
-      // if (excursion){
-      //   setGuidesState((guides) =>
-      //      guidesPerShift = [...prevGuideState]
-
-      //   )
-      // }
+      if (excursion) {
+        setGuidesState((guides) => (guidesPerShift = [...prevGuideState]));
+      }
 
       updateMatrix(rows, col, null);
     }
