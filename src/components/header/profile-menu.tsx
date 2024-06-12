@@ -3,6 +3,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { Fragment } from 'react';
+import { useRouter } from 'next/navigation';
 import useAuth from '@/hooks/use-auth';
 import { Menu, Transition } from '@headlessui/react';
 import Avatar from '@/components/ui/avatar';
@@ -30,7 +31,6 @@ const menu = {
   ],
   bottom: [
     {
-      path: Routes.private.dashboard,
       text: 'Dashboard',
     },
     {
@@ -49,9 +49,9 @@ function MenuItem({ text, link }: MenuItemProps) {
     <Menu.Item>
       {({ active }) => (
         <Link
-          href={`${link}`}
+          href={link || ''}
           className={clsx(
-            'block rounded-sm px-5 py-2   text-base font-normal capitalize text-gray-dark',
+            'block rounded-sm px-5 py-2 text-base font-normal capitalize text-gray-dark',
             active && 'bg-gray-lightest'
           )}
         >
@@ -63,7 +63,22 @@ function MenuItem({ text, link }: MenuItemProps) {
 }
 
 export default function ProfileMenu({ className }: { className?: string }) {
-  const { user, unauthorize } = useAuth();
+  const { user, unauthorize, isAdmin } = useAuth();
+  const router = useRouter();
+
+  const handleDashboardClick = async () => {
+    try {
+      const isAdminUser = await isAdmin();
+      if (isAdminUser) {
+        router.push(Routes.private.dashboard);
+      } else {
+        router.push(Routes.private.reservations);
+      }
+    } catch (error) {
+      console.error(error);
+      router.push(Routes.private.reservations);
+    }
+  };
 
   return (
     <>
@@ -86,9 +101,9 @@ export default function ProfileMenu({ className }: { className?: string }) {
           as={Fragment}
           enter="transition ease-out duration-100"
           enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
+          enterTo="opacity-100 scale-100"
           leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
+          leaveFrom="opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-lighter rounded-md bg-white py-2 shadow-card focus:outline-none">
@@ -97,10 +112,26 @@ export default function ProfileMenu({ className }: { className?: string }) {
             </div>
             <div className="pt-1">
               {menu.bottom.map((item) => (
-                <MenuItem key={item.text} text={item.text} link={item.path} />
+                item.text === 'Dashboard' ? (
+                  <Menu.Item key={item.text}>
+                    {({ active }) => (
+                      <button
+                        onClick={handleDashboardClick}
+                        className={clsx(
+                          'block w-full rounded-sm px-5 py-2 text-left text-base font-normal text-gray-dark',
+                          active && 'bg-gray-lightest'
+                        )}
+                      >
+                        {item.text}
+                      </button>
+                    )}
+                  </Menu.Item>
+                ) : (
+                  <MenuItem key={item.text} text={item.text} link={item.path} />
+                )
               ))}
               <Menu.Item
-                className="block w-full rounded-sm px-5 py-2 text-left   text-base font-normal text-gray-dark hover:bg-gray-lightest"
+                className="block w-full rounded-sm px-5 py-2 text-left text-base font-normal text-gray-dark hover:bg-gray-lightest"
                 as="button"
                 onClick={() => unauthorize()}
               >

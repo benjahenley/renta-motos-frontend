@@ -8,15 +8,44 @@ import Input from '@/components/ui/form-fields/input';
 import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
-import { getReservations } from '@/helpers/getReservationList';
+import { getOrdersByUserId } from '@/api/reservations/getOrdersByUserId';
 import { checkRole } from '@/api/user/isAuthorized';
 import { getToken } from '@/helpers/getToken';
 import LoadingScreen from '@/components/loading-screen';
 import { useRouter } from 'next/navigation';
+import { extractTime } from '@/helpers/extract-time';
+import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
 
-async function getData(start: number, offset: number) {
-  const data = await getReservations();
-  const filteredData = data.slice(start, offset);
+async function getData(token: string, start: number, offset: number) {
+  const data = await getOrdersByUserId(token);
+  const reservations = data.orders.flatMap(
+    (order) =>
+      order.reservations
+        .map((item: any) => {
+          if (!item) {
+            return null;
+          }
+
+          const endTime = item.endTime ? extractTime(item.endTime) : 'N/A';
+          const startTime = item.startTime
+            ? extractTime(item.startTime)
+            : 'N/A';
+
+          return {
+            id: item.id,
+            date: formatDateToISOWithoutTime(new Date(item.date)),
+            name: item.userFullName,
+            status: item.status,
+            endTime,
+            startTime,
+            jetskiId: item.jetskiId,
+            checked: false,
+          };
+        })
+        .filter(Boolean), // Filtrar elementos nulos
+  );
+
+  const filteredData = reservations.slice(start, offset);
   return filteredData;
 }
 
@@ -28,61 +57,52 @@ export default function reservationsPage() {
   const [searchfilter, setSearchFilter] = useState('');
   const [current, setCurrent] = useState(1);
   const router = useRouter();
+  const token = getToken();
 
   useEffect(() => {
     async function checkUserRole() {
       try {
-        const token = getToken();
-        const data = await checkRole(token);
-        console.log({ data });
-        setLoading(false);
+        await checkRole(token);
       } catch (e: any) {
-        const data = await getReservationsByUserId(token);
         console.log(e.message);
-        // router.push('/');
+      } finally {
+        const reservations = await getData(token, 0, 10);
+        setData(reservations);
+        setLoading(false);
       }
     }
 
     checkUserRole();
-  }, [router]);
+  }, [router, token]);
 
-  // if (loading) {
-  //   return
-  // }
-
-  // filter data in table
   useEffect(() => {
     const filterData = async () => {
-      let fArr = [...data];
       if (searchfilter) {
-        setData(
-          fArr.filter((item) =>
+        setData((prevData) =>
+          prevData.filter((item) =>
             item.name.toLowerCase().includes(searchfilter.toLowerCase()),
           ),
         );
       } else {
         let start = (current - 1) * 10;
         let offset = current * 10;
-        const newData = await getData(start, offset);
-        console.log({ newData });
+        const newData = await getData(token, start, offset);
         setData(newData);
       }
     };
     filterData();
-  }, [searchfilter]);
+  }, [searchfilter, token, current]);
 
-  // table current change
   useEffect(() => {
     const fetchData = async () => {
       let start = (current - 1) * 10;
       let offset = current * 10;
-      const fetchedData = await getData(start, offset);
+      const fetchedData = await getData(token, start, offset);
       setData(fetchedData);
     };
     fetchData();
-  }, [current]);
+  }, [current, token]);
 
-  // select all checkbox function
   const onSelectAll = useCallback(
     (checked: boolean) => {
       let updatedData = data.map((item) => ({
@@ -94,7 +114,6 @@ export default function reservationsPage() {
     [data],
   );
 
-  // single select checkbox function
   const onChange = useCallback(
     (row: any) => {
       let fArr = [...data];
@@ -108,12 +127,10 @@ export default function reservationsPage() {
     [data],
   );
 
-  // handle more button with edit, preview, delete
   const onMore = useCallback((e: any, row: any) => {
     console.log(e.target.id);
   }, []);
 
-  // on header click sort table by ascending or descending order
   const onHeaderClick = useCallback(
     (value: string) => ({
       onClick: () => {
@@ -173,7 +190,7 @@ export default function reservationsPage() {
       <div className="mt-8 text-center">
         <Pagination
           current={current}
-          total={reservationData.length}
+          total={data.length}
           pageSize={10}
           nextIcon="Next"
           prevIcon="Previous"

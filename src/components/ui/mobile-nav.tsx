@@ -17,10 +17,25 @@ import { useModal } from '@/components/modals/context';
 import ActionIcon from '@/components/ui/action-icon';
 
 export default function MobileNav() {
-  const { isAuthorized } = useAuth();
+  const { isAuthorized, isAdmin } = useAuth();
   const router = useRouter();
   const { openModal } = useModal();
   const [drawerSate, setDrawerState] = useAtom(drawerStateAtom);
+
+
+  const handleNavigationClick = async () => {
+    try {
+      const isAdminUser = await isAdmin();
+      if (isAdminUser) {
+        router.push(Routes.private.dashboard);
+      } else {
+        router.push(Routes.private.reservations);
+      }
+    } catch (error) {
+      console.error(error);
+      router.push(Routes.private.reservations);
+    }
+  };
   return (
     <div className="sticky inset-x-0 bottom-0 z-30 grid h-16 w-full grid-cols-3 items-center justify-center gap-2 bg-white shadow-menu-shadow md:hidden">
       <div className="flex items-center justify-center">
@@ -37,12 +52,14 @@ export default function MobileNav() {
         </Link>
       </div> */}
       <div className="flex items-center justify-center">
-        <button
-          onClick={() =>
-            isAuthorized
-              ? router.push(Routes.private.dashboard)
-              : openModal('SIGN_IN')
-          }
+      <button
+          onClick={() => {
+            if (isAuthorized) {
+              handleNavigationClick();
+            } else {
+              openModal('SIGN_IN');
+            }
+          }}
           className="inline-block hover:text-red"
         >
           <UserCircleIcon className="h-6 w-6" />

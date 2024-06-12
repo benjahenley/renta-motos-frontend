@@ -1,40 +1,63 @@
 'use client';
 
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { usePathname, useRouter } from 'next/navigation';
 import { Routes } from '@/config/routes';
 import { Dialog, Transition } from '@headlessui/react';
+import { getToken } from '@/helpers/getToken';
+import { checkRole } from '@/api/user/isAuthorized';
+import useAuth from '@/hooks/use-auth';
 
-const menuData = [
+
+const menuDataAdmin = [
   {
-    text: 'overview',
+    text: 'Overview',
     path: Routes.private.dashboard,
   },
   {
-    text: 'jetskis',
+    text: 'Jetskis',
     path: Routes.private.jetskys,
   },
+
+];
+
+const menuDataUser = [
   {
-    text: 'reservation',
+    text: 'Reservation',
     path: Routes.private.reservations,
   },
-  // {
-  //   text: 'listings',
-  //   path: Routes.private.listings,
-  // },
 ];
 
 export default function DashboardMenu() {
   const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const { user, unauthorize } = useAuth();
+
+  
+  useEffect(() => {
+    async function checkUserRole() {
+      try {
+        const token = getToken();
+        const role = await checkRole(token);
+        setIsAdmin(true);
+        } catch (e: any) {
+          console.log(e.message);
+          setIsAdmin(false);
+      }
+    }
+
+    checkUserRole();
+  }, []);
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
+
+  const menuData = isAdmin === true ? menuDataAdmin : menuDataUser;
 
   return (
     <div>
@@ -118,6 +141,12 @@ export default function DashboardMenu() {
                       </button>
                     ))}
                   </div>
+                  <button
+                className="block w-full rounded-sm px-4 py-2 text-left text-base font-normal text-gray-dark hover:bg-gray-lightest"
+               
+                onClick={() => unauthorize()}
+              >Log out
+              </button>
                 </div>
               </Transition.Child>
             </div>

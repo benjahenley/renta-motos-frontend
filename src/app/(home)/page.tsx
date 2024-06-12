@@ -1,4 +1,4 @@
-// import DestinationBlock from '@/components/home/destination-block/destination-block';
+import DestinationBlock from '@/components/home/destination-block/destination-block';
 import SubscriptionBlock from '@/components/subscription/subscription-block';
 import InstructionBlock from '@/components/home/instruction-block';
 import PromotionalBlock from '@/components/home/promotional-block';
@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <>
       <HeroBanner />
-      {/* <DestinationBlock /> */}
+      <DestinationBlock />
       <InstructionBlock />
       {/* <TopBoats /> */}
       <PromotionalBlock />

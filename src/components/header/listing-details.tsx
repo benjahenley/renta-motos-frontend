@@ -22,7 +22,7 @@ export default function ListingDetailsHeader() {
   return (
     <header
       ref={headerRef}
-      className="dashboard-header sticky top-0 z-30 flex h-16 w-full bg-white md:flex md:items-center lg:h-[72px] 2xl:h-20 4xl:h-24"
+      className="dashboard-header sticky top-0 z-30 flex h-16 w-full bg-white md:flex md:items-center lg:h-[72px] 2xl:h-32 4xl:h-24"
     >
       <div className="container-fluid grid w-full grid-cols-2 items-center gap-0 lg:grid-cols-[auto_1fr] 3xl:!px-12">
         <div className="flex items-center gap-2 md:gap-4 2xl:gap-5">

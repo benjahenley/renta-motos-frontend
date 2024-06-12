@@ -1,11 +1,10 @@
 'use client';
 
-import { UserType } from '@/interfaces/user';
-import { User, UserInfo } from 'firebase/auth';
+import { UserInfo } from 'firebase/auth';
 import { useAtom } from 'jotai';
-import { atomWithStorage, createJSONStorage } from 'jotai/utils';
-import { AsyncStorage, SyncStorage } from 'jotai/vanilla/utils/atomWithStorage';
-import { useEffect, useState } from 'react';
+import { atomWithStorage } from 'jotai/utils';
+import { getToken } from '@/helpers/getToken';
+import { checkRole } from '@/api/user/isAuthorized';
 
 const isLoggedIn =
   typeof window !== 'undefined'
@@ -17,27 +16,35 @@ const userAtom = atomWithStorage<Partial<UserInfo>>('loggedUser', {});
 const authorizationAtom = atomWithStorage('isAuthorized', Boolean(isLoggedIn));
 
 export default function useAuth() {
-  // const storageValue: any = createJSONStorage(() => localStorage);
-
   const [isAuthorized, setAuthorized] = useAtom(authorizationAtom);
   const [user, setUser] = useAtom(userAtom);
+
+  const authorize = (user: UserInfo) => {
+    setAuthorized(true);
+    setUser(user);
+  };
+
+  const unauthorize = () => {
+    setAuthorized(false);
+    setUser({});
+  };
+
+  const isAdmin = async () => {
+    try {
+      const token = getToken();
+      const isAdminUser = await checkRole(token);
+      return isAdminUser;
+    } catch (error) {
+      console.error(error);
+      // throw new Error('User is not authorized');
+    }
+  };
 
   return {
     isAuthorized,
     user,
-    authorize(user: User) {
-      // if (storageType) {
-      //   setStorage(createJSONStorage(() => localStorage));
-      // } else {
-      //   setStorage(createJSONStorage(() => sessionStorage));
-      // }
-      setAuthorized(true);
-      setUser(user);
-    },
-
-    unauthorize() {
-      setAuthorized(false);
-      setUser({});
-    },
+    authorize,
+    unauthorize,
+    isAdmin,
   };
 }
