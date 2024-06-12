@@ -1,14 +1,19 @@
+'use client';
+
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { object, z } from 'zod';
+import { z } from 'zod';
 import SelectBox from '@/components/listing-details/booking-form/select-box';
 import DateTime from '@/components/ui/form-fields/date-time-picker';
 import Button from '@/components/ui/button';
 import { useModal } from '@/components/modals/context';
 import { useAtom } from 'jotai';
 import { selectionAtom } from '@/atoms/reservation';
+import { Routes } from '@/config/routes';
+import { useRouter } from 'next/navigation';
+import { getToken } from '@/helpers/getToken';
 
 interface BookingFormProps {
   price: number;
@@ -18,25 +23,7 @@ interface BookingFormProps {
   className?: string;
 }
 
-const list = [
-  {
-    title: 'Weekly discount?',
-    money: 117,
-    type: 'discount',
-  },
-  {
-    title: 'Cleaning fee',
-    money: 52,
-    type: 'cleanfee',
-  },
-  {
-    title: 'Service fee',
-    money: 65,
-    type: 'servicefee',
-  },
-];
-
-const rentTimeOptions = ['2h', '4h', 'fullDay'] as const;
+const rentTimeOptions = ['1h', '2h', '4h', 'fullDay'] as const;
 type RentTime = (typeof rentTimeOptions)[number];
 
 const BookingSchema = z.object({
@@ -60,37 +47,29 @@ export default function BookingForm({
     control,
     getValues,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<BookingSchemaType>({
     defaultValues: {
       selected: {
-        adults: 0,
+        adults: 1,
         rentTime: 'fullDay',
       },
     },
     resolver: zodResolver(BookingSchema),
   });
 
-  const [minEndDate, setMinEndDate] = useState(getValues('startDate'));
-  const { closeModal, openModal } = useModal();
-  const [error, setError] = useState();
+  const router = useRouter();
+  const { openModal } = useModal();
+  const [error, setError] = useState<string | undefined>();
   const [rentTime, setRentTime] = useState<RentTime>('2h');
   const [adults, setAdults] = useState<number>(1);
-
   const [reservation, setReservation] = useAtom(selectionAtom);
-
   const [focus, setFocus] = useState<boolean>(false);
   const [calculatedPrice, setCalculatedPrice] = useState<number>(450);
-
-  function onError(errors: any) {
-    console.log('Form errors:', errors);
-    if (typeof errors === 'object') return;
-
-    setError(errors);
-  }
+  const [minEndDate, setMinEndDate] = useState<Date | null>(null);
 
   const rentPrices: Record<RentTime, number> = {
+    '1h': 100,
     '2h': 250,
     '4h': 300,
     fullDay: 450,
@@ -104,9 +83,24 @@ export default function BookingForm({
   function handleBooking(data: any) {
     console.log(data);
     setReservation(data);
-    console.log(reservation);
-    console.log(data);
-    openModal('SELECT_CALENDAR');
+
+    try {
+      const token = getToken();
+      if (!token) {
+        openModal('SIGN_IN');
+        return;
+      }
+      router.push(Routes.private.selectCalendar);
+    } catch (e) {
+      console.error('Error checking token:', e);
+      openModal('SIGN_IN');
+    }
+  }
+
+  function onError(errors: any) {
+    console.log('Form errors:', errors);
+    if (typeof errors === 'object') return;
+    setError(errors);
   }
 
   return (

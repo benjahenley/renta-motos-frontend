@@ -42,7 +42,7 @@
     "rc-table": "^7.35.2",
     "react": "^18.3.1",
     "react-avatar": "^5.0.3",
-    "react-big-calendar": "^1.12.2",
+    "react-big-calendar": "^1.13.0",
     "react-confetti": "^6.1.0",
     "react-content-loader": "^6.2.1",
     "react-datepicker": "^4.21.0",

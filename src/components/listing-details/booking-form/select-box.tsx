@@ -1,14 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { useState } from 'react';
 import { Listbox } from '@headlessui/react';
 import { ArrowDownIcon } from '@/components/icons/arrow-down';
 import Radio from '@/components/ui/form-fields/radio';
 import Counter from '@/components/ui/counter';
 import Button from '@/components/ui/button';
-import { register } from 'module';
 
 interface SelectedProps {
   adults: number;
@@ -96,6 +94,18 @@ export default function SelectBox({
                     labelClassName="!text-sm xl:!text-base"
                     inputClassName={clsx(
                       rentTime === 'fullDay' &&
+                        '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
+                    )}
+                  />
+                  <Radio
+                    readOnly
+                    label="1h"
+                    checked={rentTime === '1h'}
+                    onChange={() => setRentTime('1h')}
+                    className="[&>div>div]:!p-0"
+                    labelClassName="!text-sm xl:!text-base"
+                    inputClassName={clsx(
+                      rentTime === '1h' &&
                         '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
                     )}
                   />
