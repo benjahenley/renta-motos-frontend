@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 export const LogoIcon: React.FC<React.ImgHTMLAttributes<{}>> = (props) => {
   return (
@@ -6,10 +7,7 @@ export const LogoIcon: React.FC<React.ImgHTMLAttributes<{}>> = (props) => {
       src="/images/logo.png"
       alt="Logo"
       {...props}
-      style={{
-
-        ...props.style, // Si quieres permitir el estilo personalizado
-      }}
+      className={clsx(props.className)} // Asegúrate de que las clases se pasen correctamente
     />
   );
 };

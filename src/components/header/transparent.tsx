@@ -7,7 +7,6 @@ import Menu from '@/components/header/menu';
 import Logo from '@/components/ui/logo';
 // import LanguageSwitcher from '@/components/language/languageSwitcher'
 
-
 export default function TransparentHeader() {
   const headerRef = useRef(null);
   addScrollingClass(headerRef);
@@ -15,11 +14,14 @@ export default function TransparentHeader() {
   return (
     <header
       ref={headerRef}
-      className="transparent-header fixed left-0 top-0 z-[100] flex w-full justify-between bg-white px-4 py-3.5 sm:bg-transparent sm:px-6 lg:py-2 2xl:px-7 3xl:px-8 4xl:px-16 4xl:py-9"
+      className="transparent-header fixed left-0 top-0 z-[100] flex w-full items-center justify-between bg-white sm:bg-transparent  2xl:px-3 3xl:px-7 4xl:px-14"
     >
-      <Logo />
-      <div className="flex items-center">
-      {/* <LanguageSwitcher/> */}
+
+      <div className="flex w-full justify-center sm:w-auto sm:justify-center">
+        <Logo />
+      </div>
+      <div className="hidden sm:flex items-center">
+        {/* <LanguageSwitcher/> */}
         {/* <SearchIconBtn className="md:hidden" /> */}
         <Menu />
       </div>

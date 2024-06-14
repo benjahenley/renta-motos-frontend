@@ -140,13 +140,13 @@ export const vendorData = {
     slug: "listing-1",
     price: 310,
     gallary: [
-      "/images/top-boats/1.jpeg",
+      "/images/top-boats/7.jpeg",
       "/images/top-boats/2.jpeg",
-      "/images/top-boats/3.jpeg",
+      "/images/top-boats/1.jpeg",
       "/images/top-boats/4.jpeg",
       "/images/top-boats/5.jpeg",
       "/images/top-boats/6.jpeg",
-      "/images/top-boats/7.jpeg",
+      "/images/top-boats/3.jpeg",
       "/images/top-boats/8.jpeg",
       "/images/top-boats/9.jpeg",
       "/images/top-boats/10.jpeg",
@@ -297,58 +297,78 @@ export const vendorData = {
   // Agregar otro vendedor aquí
   "Portixol": {
     slug: "Portixol",
-    price: 250,
+    price: 300,
     triptime: '2h',
     gallary: [
-      "/images/destinations/portixol.jpeg",
-      "/images/destinations/portixol.jpeg",
-      "/images/destinations/portixol.jpeg",
-      "/images/destinations/portixol.jpeg",
-      "/images/destinations/portixol.jpeg",
-      "/images/destinations/portixol.jpeg",
-      "/images/destinations/portixol.jpeg",
-      "/images/destinations/portixol.jpeg",
-      "/images/destinations/portixol.jpeg",
+      "/images/destinations/portixol.jpg",
+      "/images/destinations/portixol2.jpg",
+      "/images/destinations/portixol3.jpg",
 
     ],
-    vendor: {
-      name: 'María Lopez',
-      img: 'https://randomuser.me/api/portraits/women/12.jpg',
-      coverImage: "/images/listing-details/cover-image-2.png",
-      memberSince: 'Feb 2018',
-      languages: ['Spanish', 'English'],
-      responseRate: 90,
-      responseTime: 'Within 30 minutes',
-      location: 'Kraig Pike',
-      boatName: 'Portixol Tour',
-      boatGuests: 10,
-      boatCabins: 2,
-      boatBathrooms: 1,
-      totalReview: 42,
-      username: "@marialopez",
-      instagramUserName: "marialopez_travel",
-      twitterUserName: "@marialopez",
-    },
     description:
       "Embárcate en una emocionante aventura hacia la encantadora bahía de Portixol, donde la brisa marina acaricia tu rostro y el murmullo de las olas te invita a explorar un paraíso costero. Desde el momento en que zarpas, te sumerges en un viaje lleno de descubrimientos y belleza natural. A medida que el barco se desliza suavemente por las aguas cristalinas, podrás disfrutar de impresionantes vistas panorámicas de la costa, con acantilados escarpados y pintorescas calas escondidas. El sol brilla sobre las aguas turquesas, creando destellos brillantes que danzan a lo largo del horizonte.A lo lejos, la silueta de Portixol comienza a tomar forma, un pueblo pesquero pintoresco y pintoresco que parece haber salido directamente de una postal. Al acercarte, el aroma a salitre y pescado fresco llena el aire, preparándote para una experiencia culinaria auténtica en los restaurantes locales.Una vez que desembarques, tendrás la oportunidad de explorar las estrechas calles empedradas de Portixol, donde las coloridas casas de pescadores y los barcos tradicionales crean un ambiente pintoresco y acogedor. Puedes pasear por el puerto, disfrutar de un refrescante baño en las aguas tranquilas o simplemente relajarte en la playa mientras el tiempo se detiene.Después de un día lleno de aventuras y momentos memorables, regresarás al barco con el corazón lleno de gratitud y la mente llena de recuerdos inolvidables. La excursión a Portixol en barco no solo es un viaje, sino una experiencia que te conecta con la belleza atemporal del Mediterráneo y la magia de la costa española.",
-    equipment: [
-      {
-        img: '/images/listing-details/pilot.svg',
-        name: 'Automatic Pilot',
-      },
-      {
-        img: '/images/listing-details/shower.svg',
-        name: 'Deck Shower',
-      },
-      // Otros equipos...
+
+    // Otras especificaciones...
+  },
+  "cala-salada": {
+    slug: "cala-salada",
+    price: 120,
+    triptime: "30min",
+    gallary: [
+      "/images/destinations/carasalada.jpg",
+      "/images/destinations/carasalada2.jpg",
+      "/images/destinations/carasalada3.jpg"
     ],
-    specifications: [
-      {
-        name: ' Trip',
-        details: 'Travelling',
-      },
-      // Otras especificaciones...
+    description: "Descubre la serenidad de Cala Salada, una joya escondida en la costa de Ibiza. Con aguas cristalinas y arena dorada, Cala Salada es el lugar perfecto para relajarse y disfrutar de la belleza natural. Navega por las aguas tranquilas y sumérgete en un mundo submarino lleno de vida marina. Pasea por los senderos que rodean la cala y disfruta de vistas panorámicas impresionantes. La calma y la tranquilidad de Cala Salada te harán sentir como si estuvieras en un paraíso privado, lejos del bullicio de la vida cotidiana."
+  },
+
+  "cala-ubarca": {
+    slug: "cala-ubarca",
+    price: 250,
+    triptime: "1h 30min",
+    gallary: [
+      "/images/destinations/calaubarca.jpg",
+      "/images/destinations/calaubarca2.jpg",
+      "/images/destinations/calaubarca3.jpg"
     ],
+    description: "Embárcate en una aventura hacia Cala Ubarca, un rincón tranquilo rodeado de acantilados escarpados y vegetación exuberante. Este lugar es ideal para los amantes de la naturaleza y aquellos que buscan un refugio sereno. Las aguas de Cala Ubarca son perfectas para el buceo y la natación, ofreciendo una experiencia refrescante en un entorno espectacular. La belleza salvaje y la tranquilidad de Cala Ubarca te harán sentir en armonía con la naturaleza."
+  },
+
+  "isla-es-vedra": {
+    slug: "isla-es-vedra",
+    price: 300,
+    triptime: "2h",
+    gallary: [
+      "/images/destinations/esvedra.jpg",
+      "/images/destinations/esvedra2.jpeg",
+      "/images/destinations/esvedra3.jpeg"
+    ],
+    description: "Visita la mítica Isla Es Vedrà, un lugar lleno de misterio y leyendas. Esta impresionante formación rocosa que se alza majestuosa sobre el mar es uno de los puntos más emblemáticos de Ibiza. Navega alrededor de la isla y siente la energía única que emana de este lugar mágico. La impresionante vista de Es Vedrà, con sus acantilados y su ambiente enigmático, te dejará sin aliento. Disfruta de un día explorando los alrededores y descubriendo los secretos de esta isla fascinante."
+  },
+
+  "isla-margarita": {
+    slug: "isla-margarita",
+    price: 180,
+    triptime: "1h",
+    gallary: [
+      "/images/destinations/margaritas.jpg",
+      "/images/destinations/margaritas2.webp",
+      "/images/destinations/margaritas3.jpg"
+    ],
+    description: "Explora la belleza intacta de Isla Margarita, una isla pequeña pero encantadora que ofrece una experiencia única en el Mediterráneo. Sus aguas cristalinas y sus playas de arena blanca son ideales para nadar y tomar el sol. Navega alrededor de la isla y descubre calas escondidas y paisajes impresionantes. La tranquilidad y la belleza natural de Isla Margarita te brindarán una experiencia inolvidable en uno de los rincones más bellos del Mediterráneo."
+  },
+
+  "cala-comte": {
+    slug: "cala-comte",
+    price: 180,
+    triptime: "1h",
+    gallary: [
+      "/images/destinations/calacomte.jpg",
+      "/images/destinations/calacomte2.jpg",
+      "/images/destinations/calacomte3.jpeg"
+    ],
+    description: "Sumérgete en la belleza de Cala Comte, una de las playas más espectaculares de Ibiza. Conocida por sus aguas turquesas y sus impresionantes puestas de sol, Cala Comte es el lugar perfecto para una escapada romántica o una aventura en familia. Relájate en sus playas de arena fina o explora sus calas cercanas en una emocionante excursión en barco. La vista del sol poniéndose sobre el horizonte desde Cala Comte es una experiencia que no te puedes perder."
   }
+
 
 }

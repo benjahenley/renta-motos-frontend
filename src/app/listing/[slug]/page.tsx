@@ -16,26 +16,6 @@ export default function ListingDetailsPage({
   // Buscar el vendor cuyo slug coincide con el recibido por parámetro
   const selectedVendor = (vendorData as any)[slug];
 
-  // if (!selectedVendor) {
-  // return <div>No se encontró el vendedor con el slug proporcionado</div>;
-  // }
-
-  // Función para buscar el vendedor por su slug
-  // const findVendorBySlug = (slug: string) => {
-  //   for (const key in vendorData) {
-  //     if (vendorData.hasOwnProperty(key) && vendorData[key].slug === slug) {
-  //       return vendorData[key];
-  //     }
-  //   }
-  //   return null;
-  // };
-
-  // // Capturar el vendor cuyo slug coincide con el recibido por parámetro
-  // const selectedVendor = findVendorBySlug(slug);
-
-  // if (!selectedVendor) {
-  //   return <div>No se encontró el vendedor con el slug proporcionado</div>;
-  // }
 
   return (
     <>

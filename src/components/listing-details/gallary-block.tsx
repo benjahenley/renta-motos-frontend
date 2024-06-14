@@ -21,7 +21,7 @@ export default function GallaryBlock({ images }: GallaryBlockProps) {
       view: 'PHOTO_GALLERY',
       customSize: '100%',
       params: {
-        gallary: images, // Pasar la gallary como parte de los parámetros aca toquetie
+        gallary: images, // Pasar la gallary como parte de los parámetros
       },
     });
   }
@@ -33,40 +33,46 @@ export default function GallaryBlock({ images }: GallaryBlockProps) {
           className="relative row-start-1 row-end-3 h-full cursor-pointer"
           onClick={handleClick}
         >
-          <Image
-            src={images[6]}
-            alt="pic"
-            fill
-            priority
-            sizes="(min-width: 320) 100vw, 100vw"
-            className="object-cover"
-          />
+          {images[1] && (
+            <Image
+              src={images[1]}
+              alt="pic"
+              fill
+              priority
+              sizes="(min-width: 320) 100vw, 100vw"
+              className="object-cover"
+            />
+          )}
         </div>
         <div
           className="relative hidden h-full cursor-pointer md:block"
           onClick={handleClick}
         >
-          <Image
-            src={images[1]}
-            alt="pic"
-            fill
-            priority
-            sizes="(min-width: 320) 100vw, 100vw"
-            className="object-cover"
-          />
+          {images[2] && (
+            <Image
+              src={images[2]}
+              alt="pic"
+              fill
+              priority
+              sizes="(min-width: 320) 100vw, 100vw"
+              className="object-cover"
+            />
+          )}
         </div>
         <div
           className="relative hidden h-full cursor-pointer md:block"
           onClick={handleClick}
         >
-          <Image
-            src={images[2]}
-            alt="pic"
-            fill
-            priority
-            sizes="(min-width: 320) 100vw, 100vw"
-            className="object-cover"
-          />
+          {images[3] && (
+            <Image
+              src={images[3]}
+              alt="pic"
+              fill
+              priority
+              sizes="(min-width: 320) 100vw, 100vw"
+              className="object-cover"
+            />
+          )}
         </div>
       </div>
       <Button

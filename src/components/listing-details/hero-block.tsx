@@ -74,12 +74,12 @@ export default function ListingDetailsHeroBlock({
   return (
     <div className="flex justify-between border-b border-gray-lighter pb-6 md:pb-8 2xl:pb-10">
       <div>
-        <p className="text-gray-dark">{vendor.location}</p>
+        {/* <p className="text-gray-dark">{vendor.location}</p> */}
         <Text
           tag="h2"
           className="mt-2 !text-2xl uppercase !leading-7 md:!text-[26px] md:!leading-10 2xl:!text-[28px] 4xl:!text-3xl"
         >
-          {vendor.boatName}
+          {/* {vendor.boatName} */}
         </Text>
         {/* <div className="mt-3 flex items-center gap-2 leading-4 text-gray-dark md:mt-4">
           <p>{vendor.boatGuests} guests</p>

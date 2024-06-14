@@ -3,55 +3,37 @@ export const destinations = [
     name: "Portixol",
     slug: "/listing/Portixol",
     location: "Ibiza city",
-    thumbnail: "/images/destinations/portixol.jpeg"
+    thumbnail: "/images/destinations/portixol.jpg"
   },
   {
     name: "Cala salada",
-    slug: "/explore?location=CalaSalada",
+    slug: "/listing/cala-salada",
     location: "Ibiza city",
-    thumbnail: "/images/destinations/carasalada.jpeg"
+    thumbnail: "/images/destinations/carasalada.jpg"
   },
   {
     name: "Cala Ubarca",
-    slug: "/explore?location=Cala-Ubarca",
+    slug: "/listing/cala-ubarca",
     location: "Ibiza city",
-    thumbnail: "/images/destinations/calaubarca.jpeg"
+    thumbnail: "/images/destinations/calaubarca.jpg"
   },
   {
     name: "Cala Comte",
-    slug: "/explore?location=Cara-Comte",
+    slug: "/listing/cala-comte",
     location: "Ibiza city",
-    thumbnail: "/images/destinations/caracomte.jpeg"
+    thumbnail: "/images/destinations/calacomte.jpg"
   },
   {
     name: "Margaritas Island",
-    slug: "/explore?location=Margaritas-Island",
+    slug: "/listing/isla-margarita",
     location: "Ibiza city",
-    thumbnail: "/images/destinations/islamargaritas.jpeg"
+    thumbnail: "/images/destinations/margaritas.jpg"
   },
   {
     name: "Esvedra Island",
-    slug: "/explore?location=Esvedra Island",
+    slug: "/listing/isla-es-vedra",
     location: "Ibiza city",
-    thumbnail: "/images/destinations/islaesvedra.jpeg"
-  },
-  {
-    name: "Atoll Maldives",
-    slug: "/explore?location=maldive",
-    location: "Long Island city",
-    thumbnail: "/images/destinations/maldive.jpg"
-  },
-  {
-    name: "Kijal Malaysia",
-    slug: "/explore?location=malaysia",
-    location: "Long Island city",
-    thumbnail: "/images/destinations/malaysia.jpg"
-  },
-  {
-    name: "Dalmatia Croatia",
-    slug: "/explore?location=croatia",
-    location: "Long Island city",
-    thumbnail: "/images/destinations/dalmatia.jpg"
+    thumbnail: "/images/destinations/esvedra2.jpeg"
   }
 ]
   

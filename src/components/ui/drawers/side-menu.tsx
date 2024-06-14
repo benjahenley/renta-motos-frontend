@@ -33,11 +33,11 @@ const menu = [
   //   icon: <CubeIcon className="h-auto w-5" />,
   //   path: Routes.public.pricing,
   // },
-  {
-    name: 'settings',
-    icon: <Cog6ToothIcon className="h-auto w-5" />,
-    path: Routes.private.accountSettings,
-  },
+  // {
+  //   name: 'settings',
+  //   icon: <Cog6ToothIcon className="h-auto w-5" />,
+  //   path: Routes.private.accountSettings,
+  // },
   {
     name: 'help',
     icon: <InformationCircleIcon className="h-auto w-5" />,
@@ -56,7 +56,7 @@ interface navListTypes {
 function List({ navListItem }: navListTypes) {
   const pathname = usePathname();
   return (
-    <ul className="pt-4">
+    <ul className="mt-4 pt-4">
       {navListItem.map((item) => (
         <li
           key={item.name}
