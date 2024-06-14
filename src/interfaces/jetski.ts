@@ -11,10 +11,16 @@ interface Jetski {
 }
 
 export interface Reservation {
-  startTime: Date;
-  endTime: Date;
+  id: string;
+  date: Date;
+  price: number;
+  adults: number;
+  userFullName: string;
+  excursionName: string;
+  startTime: string;
   excursion: boolean;
-  excursionName?: string;
-  date: string;
-  jetskiId: string;
+  endTime: string;
+  userId: string;
+  expirationDate: Date;
+  status: string;
 }

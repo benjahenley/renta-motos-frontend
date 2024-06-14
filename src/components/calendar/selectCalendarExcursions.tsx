@@ -47,6 +47,7 @@ export default function SelectCalendarExcursions() {
   const [loading, setLoading] = useState(false);
 
   const [history, setHistory] = useState<number[]>(getHistoryTemplate());
+  const [reservations, setReservations] = useState<Reservation[]>([]);
   const [jetskis, setJetskis] = useState<Jetski[]>([]);
   const [guides, setGuidesState] = useState<number[]>(getGuidesTemplate());
 
@@ -121,11 +122,12 @@ export default function SelectCalendarExcursions() {
     setHistory([]);
   };
 
-  const inhabilitateReservedCells = (arrayOfReservations: Reservation[]) => {
+  const inhabilitateReservedCells = () => {
     const updates: [number[], string | undefined][] = [];
 
-    for (const reservation of arrayOfReservations) {
-      const { startTime, endTime, excursion, excursionName } = reservation;
+    for (const reservation of reservations) {
+      const { startTime, endTime, excursion, excursionName, adults } =
+        reservation;
       const rows = findTimezoneIndexes(startTime, endTime);
 
       updates.push([rows, excursion ? excursionName : undefined]);
@@ -157,8 +159,9 @@ export default function SelectCalendarExcursions() {
         const { reservations } = await getReservationsByDate(removeTime(date));
         console.log(reservations);
 
+        setReservations(reservations);
         setJetskis(jetskis);
-        inhabilitateReservedCells(reservations);
+        inhabilitateReservedCells();
       } catch (error) {
         console.error('Error fetching items:', error);
       }
@@ -171,47 +174,95 @@ export default function SelectCalendarExcursions() {
     const cellsToSelect: number = getCellsToSelect(rentTime);
     const { excursion, excursionName, adults } = selection.selected!;
     const roof: number = row + cellsToSelect;
-    const template = getHistoryTemplate();
-    let rows = [];
+    const rows: any = [];
 
+    // Clear history if the cell is already selected
     if (history[row] === 1) {
       setHistory([]);
     }
 
+    // Check if the selected timeslot exceeds available time slots
     if (roof > timeSlots.length) {
       console.log('Cannot select the timeSlot');
       return;
     }
 
+    // Loop through each timeslot to be selected
     for (let i = row; i < roof; i++) {
       const jetskisTaken = jetskisReserved[i][0];
       const excursionsArray = jetskisReserved[i][1];
       const isClicked = history[i];
 
+      // Clear history if the cell is already selected
       if (isClicked) {
         setHistory([]);
         return;
       }
 
-      if (jetskisTaken + adults >= 4) {
+      // Check if the number of jetskis exceeds available jetskis
+      if (jetskisTaken + adults > 4) {
         console.log(
-          'the selection overlaps with existing reservations. No jetskis available in some of said timeSlots',
+          'The selection overlaps with existing reservations. No jetskis available in some of said timeSlots',
         );
         return;
       }
 
-      const excursionIndex = excursionsArray.findIndex(
-        (excursion) => excursion === excursionName,
-      );
+      // Check if the number of excursions exceeds available guides
+      if (excursion) {
+        const excursionIndex = excursionsArray.findIndex(
+          (excursion) => excursion === excursionName,
+        );
 
-      if (excursionIndex === -1 && excursionsArray.length >= 2) {
-        console.log('Guides are full for some of the selected timeSlots');
-        return;
+        if (excursionIndex === -1 && excursionsArray.length >= 2) {
+          console.log('Guides are full for some of the selected timeSlots');
+          return;
+        }
       }
 
-      rows.push(row);
+      rows.push(i);
     }
+
+    // Update the history to reflect the new selection
+    const newHistory = [...history];
+    rows.forEach((r: any) => {
+      newHistory[r] = 1;
+    });
+
+    setHistory(newHistory);
+
+    // Update the jetskisReserved array
+    setjetskisReserved((prev) => {
+      excursions;
+      const newJetskisReserved = [...prev];
+      rows.forEach((r: any) => {
+        newJetskisReserved[r][0] += adults;
+        if (excursion) {
+          newJetskisReserved[r][1].push(excursionName!);
+        }
+      });
+      return newJetskisReserved;
+    });
   };
+
+  // Ensure that you have these helper functions available
+  function getCellsToSelect(rentTime: string): number {
+    switch (rentTime) {
+      case '30m':
+        return 1;
+      case '1h':
+        return 2;
+      case '1.5h':
+        return 3;
+      case '2h':
+        return 4;
+      case '4h':
+        return 8;
+      case 'fullDay':
+        return 16;
+      default:
+        return 0;
+    }
+  }
 
   async function handleSubmit(e: any) {
     // e.preventDefault();

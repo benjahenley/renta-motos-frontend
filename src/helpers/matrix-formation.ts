@@ -34,16 +34,22 @@ export const jetskiData = async () => {
 };
 
 export function getCellsToSelect(rentTime: string): number {
-  const rentTimeMapping: { [key: string]: number } = {
-    fullDay: 16,
-    '4h': 8,
-    '2h': 4,
-    '1.5h': 3,
-    '1h': 2,
-    '30m': 1,
-  };
-
-  return rentTimeMapping[rentTime] || 0;
+  switch (rentTime) {
+    case '30m':
+      return 1;
+    case '1h':
+      return 2;
+    case '1.5h':
+      return 3;
+    case '2h':
+      return 4;
+    case '4h':
+      return 8;
+    case 'fullDay':
+      return 16;
+    default:
+      return 0;
+  }
 }
 
 export function getMatrixTemplate(): number[][] {
@@ -72,16 +78,14 @@ export const populateMatrix = (rows: number | number[], col: number) => {
 };
 
 export const findTimezoneIndexes = (
-  startTime: Date,
-  endTime: Date,
+  startTime: string,
+  endTime: string,
 ): number[] => {
-  const start = extractTime(startTime);
-  const end = extractTime(endTime);
   let indexes: number[] = [];
 
   for (let i = 0; i < timeSlots.length; i++) {
     const shiftStartTime = timeSlots[i];
-    if (shiftStartTime >= start && shiftStartTime <= end) {
+    if (shiftStartTime >= startTime && shiftStartTime <= endTime) {
       indexes.push(i);
     }
   }
