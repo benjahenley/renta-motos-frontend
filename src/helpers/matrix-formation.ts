@@ -1,3 +1,4 @@
+import { getJetskis } from '@/api/get-jetskis/useGetJetskis';
 import { extractTime } from './extract-time';
 
 export let timeSlots = [
@@ -19,12 +20,18 @@ export let timeSlots = [
   '17:30',
 ];
 
-export let jetskiData = [
-  '4UHQ9bL6fcJP32QrUD2M',
-  'JjPZiMZemm7ZVMClx1mE',
-  '283fYy0T6Ki1w91veDhl',
-  'fkFOV4uPDFMfFfu6uZlA',
-];
+export const jetskiData = async () => {
+  try {
+    const { jetskis } = await getJetskis();
+    const availableJetskis = jetskis.filter(
+      (jetski: { available: boolean }) => jetski.available,
+    );
+    return availableJetskis;
+  } catch (error) {
+    console.error('Error fetching jetskis:', error);
+    return [];
+  }
+};
 
 export function getCellsToSelect(rentTime: string): number {
   const rentTimeMapping: { [key: string]: number } = {
@@ -47,8 +54,8 @@ export function getGuidesTemplate() {
   return timeSlots.map(() => 0);
 }
 
-export const findJetskiIndex = (id: string): number => {
-  return jetskiData.findIndex((jetskiId) => jetskiId === id);
+export const getHistoryTemplate = (): number[] => {
+  return timeSlots.map(() => 0);
 };
 
 export const populateMatrix = (rows: number | number[], col: number) => {
@@ -68,7 +75,6 @@ export const findTimezoneIndexes = (
   startTime: Date,
   endTime: Date,
 ): number[] => {
-  console.log(startTime, endTime);
   const start = extractTime(startTime);
   const end = extractTime(endTime);
   let indexes: number[] = [];
@@ -81,4 +87,11 @@ export const findTimezoneIndexes = (
   }
 
   return indexes;
+};
+
+export const getJetskisAndExcursionsTemplate = (): [number, string[]][] => {
+  const template: [number, string[]][] = [];
+
+  timeSlots.forEach(() => template.push([0, []]));
+  return template;
 };

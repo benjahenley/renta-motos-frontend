@@ -10,8 +10,9 @@ import Button from '@/components/ui/button';
 
 // dynamic imports
 const SignIn = dynamic(() => import('@/components/auth/sign-in'));
+
 const SelectCalendar = dynamic(
-  () => import('@/components/calendar/selectCalendar'),
+  () => import('@/components/calendar/selectCalendarExcursions'),
 );
 const SignUp = dynamic(() => import('@/components/auth/sign-up'));
 const AddReview = dynamic(() => import('@/components/ui/modals/add-review'));
