@@ -7,7 +7,7 @@ import Logo from '@/components/ui/logo';
 export default function NotFoundHeader() {
   const router = useRouter();
   return (
-    <header className="sticky top-0 z-30 flex h-14 w-full bg-white py-5 md:flex md:h-20 md:items-center md:bg-transparent xl:h-24">
+    <header className="dashboard-header sticky left-0 top-0 z-[100] flex w-full items-center justify-between bg-white  2xl:px-3 3xl:px-7 4xl:px-14">
       <div className="container-fluid flex w-full items-center justify-between">
         <Logo className="!text-gray-dark" />
         <Button

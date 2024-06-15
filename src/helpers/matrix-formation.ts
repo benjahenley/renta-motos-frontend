@@ -56,12 +56,17 @@ export function getMatrixTemplate(): number[][] {
   return Array.from({ length: timeSlots.length }, () => Array(4).fill(0));
 }
 
-export function getGuidesTemplate() {
-  return timeSlots.map(() => 0);
-}
+export const getAdultsPerTimeSlot = (
+  rows: number[],
+  adults: number,
+): number[] => {
+  const adultsPerTimeSlot = new Array(timeSlots.length).fill(0);
 
-export const getHistoryTemplate = (): number[] => {
-  return timeSlots.map(() => 0);
+  rows.forEach((value) => {
+    adultsPerTimeSlot[value] = adults;
+  });
+
+  return adultsPerTimeSlot;
 };
 
 export const populateMatrix = (rows: number | number[], col: number) => {

@@ -22,8 +22,8 @@ export default function StatCard({ data }: PricingCardTypes) {
         tag="h2"
         className="py-2 text-xl md:!text-[22px] lg:py-4 xl:py-5 2xl:!text-[26px] 4xl:!text-3xl"
       >
-        {data.order && <span>{data.order}</span>}
-        {data.price && <span>${data.price}</span>}
+        {data.order !== null && <span>{data.order}</span>}
+        {data.price !== null && <span>${data.price.toFixed(2)}</span>}
       </Text>
       <Text className="text-sm text-gray md:!text-sm 2xl:!text-base">
         vs. {data.last} last period

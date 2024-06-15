@@ -1,218 +1,91 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { reservation, selectionAtom } from '@/atoms/reservation';
 import Button from '@/components/ui/button';
 import { Jetski, getJetskis } from '@/api/get-jetskis/useGetJetskis';
-import { getToken } from '@/helpers/getToken';
 import { getReservationsByDate } from '@/api/reservations/getReservationsByDate';
-import {
-  formatDateToISOWithoutTime,
-  formatDateToISOWithoutTime as removeTime,
-} from '@/helpers/formatDate';
 import { useModal } from '../modals/context';
-import { Routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
-import { createOrder } from '@/api/order/createOrder';
 import {
   findTimezoneIndexes,
+  getAdultsPerTimeSlot,
   getCellsToSelect,
-  getGuidesTemplate,
-  getHistoryTemplate,
   getJetskisAndExcursionsTemplate,
-  jetskiData,
-  populateMatrix,
   timeSlots,
 } from '@/helpers/matrix-formation';
-import { Reservation } from '@/interfaces/jetski';
-import { addMinutesToTime } from '@/helpers/extract-time';
-
-///ejemplo
-const matrix: (number | string[])[][] = [
-  [2, ['excursion2', 'excursion1']],
-  [3, ['excursion2']],
-  [2, ['excursion2', 'excursion1']],
-  [0, ['excursion2', 'excursion1']],
-  [1, ['excursion2']],
-  [2, ['excursion2', 'excursion1']],
-  [0, []],
-];
+import { Reservation } from '@/interfaces/reservation';
 
 export default function SelectCalendarExcursions() {
-  const { openModal, closeModal } = useModal();
   const router = useRouter();
   const selection = useAtomValue<Partial<reservation>>(selectionAtom);
-
   const [loading, setLoading] = useState(false);
-
-  const [history, setHistory] = useState<number[]>(getHistoryTemplate());
+  const [history, setHistory] = useState<[number[], string | undefined][]>([]);
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [jetskis, setJetskis] = useState<Jetski[]>([]);
-  const [guides, setGuidesState] = useState<number[]>(getGuidesTemplate());
-
-  const [jetskisReserved, setjetskisReserved] = useState(
+  const [jetskisReserved, setJetskisReserved] = useState(
     getJetskisAndExcursionsTemplate(),
   );
 
   const rentTime = selection!.selected!.rentTime;
 
-  // const updateJetskisAndGuidesCounter = (
-  //   rows: number[],
-  //   excursionName?: string,
-  // ) => {
-  //   setjetskisReserved((prevData) => {
-  //     const data = prevData.map((slot, index) => {
-  //       if (index >= rows[0] && index <= rows[rows.length - 1]) {
-  //         const newCount = slot[0] + 1;
-  //         const newExcursions = excursionName
-  //           ? [...slot[1], excursionName]
-  //           : [...slot[1]];
-  //         return [newCount, newExcursions] as [number, string[]];
-  //       }
-  //       return slot;
-  //     });
-  //     return data;
-  //   });
-  // };
-
-  // const pushToHistory = (rows: number | number[], col: number) => {
-  //   const populatedMatrix: (number | null)[][] = populateMatrix(rows, col);
-
-  //   setHistory((prevHistory) => {
-  //     const newHistory = [...prevHistory, populatedMatrix];
-
-  //     if (newHistory.length > selection.selected?.adults!) {
-  //       newHistory.shift();
-  //     }
-
-  //     return newHistory;
-  //   });
-  // };
-
-  // const removeSelectionFromHistory = (
-  //   row: number,
-  //   col: number,
-  //   cellsToSelect: number,
-  // ) => {
-  //   const matchingIndex = history.findIndex((matrix) =>
-  //     matrix.slice(row, row + cellsToSelect).some((row) => row[col] === 1),
-  //   );
-
-  //   if (matchingIndex !== -1) {
-  //     const historyMatrix = history[matchingIndex];
-
-  //     setMatrixState((prevMatrix) =>
-  //       prevMatrix.map((rowArray, rowIndex) =>
-  //         rowArray.map((cell, colIndex) =>
-  //           historyMatrix[rowIndex][colIndex] === 1 ? 0 : cell,
-  //         ),
-  //       ),
-  //     );
-
-  //     setHistory((prevHistory) => {
-  //       const newHistory = [...prevHistory];
-  //       newHistory.splice(matchingIndex, 1);
-  //       return newHistory;
-  //     });
-  //   }
-  // };
-
-  const deleteHistory = (rows: number[]) => {
-    setHistory([]);
-  };
-
-  const inhabilitateReservedCells = () => {
-    const updates: [number[], string | undefined][] = [];
-
-    for (const reservation of reservations) {
-      const { startTime, endTime, excursion, excursionName, adults } =
-        reservation;
-      const rows = findTimezoneIndexes(startTime, endTime);
-
-      updates.push([rows, excursion ? excursionName : undefined]);
-    }
-
-    console.log(updates);
-
-    setjetskisReserved((prevData) => {
-      const data = prevData.map((slot, index) => {
-        updates.forEach(([rows, excursionName]) => {
-          if (index >= rows[0] && index <= rows[rows.length - 1]) {
-            slot[0]++;
-            if (excursionName) {
-              slot[1] = [...slot[1], excursionName];
-            }
-          }
-        });
-
-        return slot;
-      });
-      return data;
-    });
-  };
-
+  // Load reservations and jetskis on component mount
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const jetskis = await jetskiData();
-        const { reservations } = await getReservationsByDate(removeTime(date));
-        console.log(reservations);
-
+        const { jetskis } = await getJetskis();
+        const { reservations } = await getReservationsByDate(
+          selection.selected!.date!,
+        );
         setReservations(reservations);
         setJetskis(jetskis);
-        inhabilitateReservedCells();
+        processReservations(reservations);
       } catch (error) {
         console.error('Error fetching items:', error);
       }
     };
-
     fetchItems();
   }, [selection]);
 
+  // Process existing reservations to update the state
+  const processReservations = (reservations: Reservation[]) => {
+    const updates: [number[], string | undefined][] = [];
+    reservations.forEach((reservation) => {
+      const { startTime, endTime, excursion, excursionName, adults } =
+        reservation;
+      const rows = findTimezoneIndexes(startTime, endTime);
+      const adultsPerTimeSlot = getAdultsPerTimeSlot(rows, adults);
+      updates.push([adultsPerTimeSlot, excursion ? excursionName : undefined]);
+    });
+    setHistory(updates);
+  };
+
+  // Handle cell click events
   const handleCellClick = (row: number) => {
-    const cellsToSelect: number = getCellsToSelect(rentTime);
+    const cellsToSelect = getCellsToSelect(rentTime);
     const { excursion, excursionName, adults } = selection.selected!;
-    const roof: number = row + cellsToSelect;
-    const rows: any = [];
+    const roof = row + cellsToSelect;
 
-    // Clear history if the cell is already selected
-    if (history[row] === 1) {
-      setHistory([]);
-    }
-
-    // Check if the selected timeslot exceeds available time slots
     if (roof > timeSlots.length) {
       console.log('Cannot select the timeSlot');
       return;
     }
 
-    // Loop through each timeslot to be selected
+    const rows: number[] = [];
     for (let i = row; i < roof; i++) {
       const jetskisTaken = jetskisReserved[i][0];
       const excursionsArray = jetskisReserved[i][1];
-      const isClicked = history[i];
 
-      // Clear history if the cell is already selected
-      if (isClicked) {
-        setHistory([]);
-        return;
-      }
-
-      // Check if the number of jetskis exceeds available jetskis
       if (jetskisTaken + adults > 4) {
-        console.log(
-          'The selection overlaps with existing reservations. No jetskis available in some of said timeSlots',
-        );
+        console.log('No jetskis available in some of the selected timeSlots');
         return;
       }
 
-      // Check if the number of excursions exceeds available guides
       if (excursion) {
         const excursionIndex = excursionsArray.findIndex(
-          (excursion) => excursion === excursionName,
+          (exc) => exc === excursionName,
         );
-
         if (excursionIndex === -1 && excursionsArray.length >= 2) {
           console.log('Guides are full for some of the selected timeSlots');
           return;
@@ -222,47 +95,56 @@ export default function SelectCalendarExcursions() {
       rows.push(i);
     }
 
-    // Update the history to reflect the new selection
     const newHistory = [...history];
-    rows.forEach((r: any) => {
-      newHistory[r] = 1;
+    rows.forEach((r) => {
+      newHistory[r] = [new Array(timeSlots.length).fill(0), excursionName];
+      newHistory[r][0][r] = adults;
     });
 
     setHistory(newHistory);
+    updateJetskisReserved(rows, adults, excursionName);
+  };
 
-    // Update the jetskisReserved array
-    setjetskisReserved((prev) => {
-      excursions;
+  // Update the state to reflect the new selection
+  const updateJetskisReserved = (
+    rows: number[],
+    adults: number,
+    excursionName?: string,
+  ) => {
+    setJetskisReserved((prev) => {
       const newJetskisReserved = [...prev];
-      rows.forEach((r: any) => {
+      rows.forEach((r) => {
         newJetskisReserved[r][0] += adults;
-        if (excursion) {
-          newJetskisReserved[r][1].push(excursionName!);
+        if (excursionName) {
+          newJetskisReserved[r][1].push(excursionName);
         }
       });
       return newJetskisReserved;
     });
   };
 
-  // Ensure that you have these helper functions available
-  function getCellsToSelect(rentTime: string): number {
-    switch (rentTime) {
-      case '30m':
-        return 1;
-      case '1h':
-        return 2;
-      case '1.5h':
-        return 3;
-      case '2h':
-        return 4;
-      case '4h':
-        return 8;
-      case 'fullDay':
-        return 16;
-      default:
-        return 0;
+  const cellDisplay = (row: number) => {
+    const remainingJetskis = 4 - jetskisReserved[row][0];
+    const excursionsBooked = jetskisReserved[row][1];
+    const { excursionName, excursion, adults } = selection.selected!;
+
+    let classes = 'cursor-pointer';
+    if (history[row]) {
+      classes = 'bg-green-500 cursor-pointer';
+    } else if (remainingJetskis - adults <= 0) {
+      classes = 'bg-gray-300 cursor-not-allowed';
+    } else if (excursion) {
+      const isExcursionBooked = excursionsBooked.includes(excursionName!);
+      if (
+        (!isExcursionBooked && excursionsBooked.length >= 2) ||
+        remainingJetskis - adults <= 0
+      ) {
+        classes = 'bg-gray-300 cursor-not-allowed';
+      }
     }
-  }
+
+    return classes;
+  };
 
   async function handleSubmit(e: any) {
     // e.preventDefault();
@@ -327,38 +209,6 @@ export default function SelectCalendarExcursions() {
 
   const date = new Date(selection.startDate!);
 
-  const cellDisplay = (row: number) => {
-    const remainingJetskis = 4 - jetskisReserved[row][0];
-    const excursionsBooked = jetskisReserved[row][1];
-    const { excursionName, excursion, adults } = selection.selected!;
-
-    let classes = 'cursor-pointer';
-
-    // if cell is selected, show green
-    if (history[row] === 1) {
-      classes = 'bg-green-500 cursor-pointer';
-    }
-
-    // if timeSlot does not have enough jetskis left based on selection, inhabilitate.
-    if (remainingJetskis - adults <= 0) {
-      classes = 'bg-gray-300 cursor-not-allowed';
-    }
-
-    // if user does not have a licence
-    if (excursion) {
-      // Check if the excursion being reserved is different, and if there are guides available.
-      const isExcursionBooked = excursionsBooked.includes(excursionName!);
-      if (
-        (!isExcursionBooked && excursionsBooked.length >= 2) ||
-        remainingJetskis - adults <= 0
-      ) {
-        classes = 'bg-gray-300 cursor-not-allowed';
-      }
-    }
-
-    return classes;
-  };
-
   return (
     <div className={clsx('container mb-12 mt-8 px-4 lg:mb-16')}>
       <div className="m-auto w-full max-w-[496px] rounded-lg border border-gray-200 bg-white p-6 pt-9 sm:p-12">
@@ -391,19 +241,15 @@ export default function SelectCalendarExcursions() {
                   {timeSlots.map((slot, rowIndex) => (
                     <tr className="tr" key={rowIndex}>
                       <td className="td px-4 py-2">{slot}</td>
-                      {/* {jetskis!.map((boat, colIndex) => ( */}
                       <td
-                        // key={boat.id}
                         className={`td px-4 py-2 ${cellDisplay(rowIndex)}`}
                         onClick={() => handleCellClick(rowIndex)}
                       ></td>
-                      {/* ))} */}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-
             <div>
               <Button
                 disabled={

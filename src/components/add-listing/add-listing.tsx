@@ -67,16 +67,16 @@ export default function AddListing() {
     case 3:
       stepComponent = <AddBoatPhotos />;
       break;
+    // case 4:
+    //   stepComponent = <AddLocation />;
+    //   break;
+    // case 4:
+    //   stepComponent = <AddEquipment />;
+    //   break;
     case 4:
-      stepComponent = <AddLocation />;
-      break;
-    case 5:
-      stepComponent = <AddEquipment />;
-      break;
-    case 6:
       stepComponent = <AddSpecification />;
       break;
-    case 7:
+    case 5:
       stepComponent = <StepsEnd />;
       break;
   }

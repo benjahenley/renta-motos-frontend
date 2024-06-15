@@ -1,13 +1,11 @@
 import { atomWithStorage } from 'jotai/utils';
 
 export type reservation = {
-  selected: {
-    adults: number;
-    rentTime: '1h' | '2h' | '4h' | 'fullDay';
-    excursion: string | boolean;
-    excursionName?: string | undefined;
-  };
-  startDate: Date;
+  date: string;
+  adults: number;
+  rentTime: '30min' | '1h' | '1h30' | '2h' | '4h' | 'fullDay';
+  excursion: boolean;
+  excursionName?: string | undefined;
 };
 
 export const selectionAtom = atomWithStorage<Partial<reservation | {}>>(

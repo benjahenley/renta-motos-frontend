@@ -58,7 +58,7 @@ export default function FindTripForm() {
     <form
       noValidate
       onSubmit={handleFormSubmit}
-      className="relative z-[2] w-full max-w-[450px] min-h-[280px] sm:min-h-[465px] rounded-lg bg-white p-6 shadow-2xl sm:m-0 sm:max-w-[380px] sm:p-7 sm:pt-9 md:max-w-[400px] md:shadow-none lg:rounded-xl xl:max-w-[460px] xl:p-9 4xl:max-w-[516px] 4xl:p-12 flex flex-col justify-between lg:mt-8"
+      className="relative z-[2] w-full max-w-[450px] min-h-[190px] sm:min-h-[465px] rounded-lg bg-white p-6 shadow-2xl sm:m-0 sm:max-w-[380px] sm:p-7 sm:pt-9 md:max-w-[400px] md:shadow-none lg:rounded-xl xl:max-w-[460px] xl:p-9 4xl:max-w-[516px] 4xl:p-12 flex flex-col justify-between lg:mt-8"
     >
       <div className="mb-3 sm:mb-0 flex-grow">
         <span className="mb-2 hidden font-satisfy text-xl leading-7 text-gray-dark sm:block 4xl:text-[28px] 4xl:leading-[44px]">
@@ -67,7 +67,7 @@ export default function FindTripForm() {
         </span>
         <Text
           tag="h1"
-          className="leading-12 mb-2 !text-xl !font-black uppercase text-gray-dark sm:!text-[28px] sm:!leading-9  4xl:!text-4xl 4xl:!leading-[52px] sm:mt-20"
+          className="leading-12 mb-2 !text-xl text-center sm:text-left !font-black uppercase text-gray-dark sm:!text-[28px] sm:!leading-9  4xl:!text-4xl 4xl:!leading-[52px] sm:mt-20"
         >
           Experience <br className="hidden sm:block" />
           our aquatic bikes

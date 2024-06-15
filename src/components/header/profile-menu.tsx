@@ -33,10 +33,10 @@ const menu = {
     {
       text: 'Dashboard',
     },
-    {
-      path: Routes.private.accountSettings,
-      text: 'settings',
-    },
+    // {
+    //   path: Routes.private.accountSettings,
+    //   text: 'settings',
+    // },
     {
       path: Routes.public.help,
       text: 'Help',

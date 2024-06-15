@@ -82,7 +82,7 @@ export default function BookingForm({
 
   function handleBooking(data: any) {
     console.log(data);
-    setReservation(data);
+    setReservation([data]);
 
     try {
       const token = getToken();

@@ -23,7 +23,7 @@ export default function AddListingHeader() {
   return (
     <header
       ref={headerRef}
-      className="addlisting-header sticky top-0 z-50 flex h-16 w-full bg-white md:flex md:items-center lg:h-[72px] 2xl:h-20 4xl:h-24"
+      className="addlisting-header sticky left-0 top-0 z-[100] flex w-full items-center justify-between bg-white 2xl:px-0 4xl:px-10"
     >
       <div className="container-fluid flex w-full items-center justify-between">
         <Logo className="!text-gray-dark" />

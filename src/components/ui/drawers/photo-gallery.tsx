@@ -146,7 +146,7 @@ export default function PhotoGallery({ gallary }: PhotoGalleryProps) {
             <div
               className="group relative mb-2 cursor-pointer overflow-hidden rounded-md transition-all duration-300 md:rounded-xl lg:mb-3"
               key={`gallery-img-${index}`}
-              onClick={() => openGallery('MODAL_GALLERY', index)}
+              // onClick={() => openGallery('MODAL_GALLERY', index)}
             >
               <Image
                 src={item}

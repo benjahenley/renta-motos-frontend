@@ -151,7 +151,7 @@ export default function BoatInfo() {
           {watch('boatDescription')?.length ?? 0}
           /450
         </p>
-        <Text
+        {/* <Text
           tag="h3"
           className="mb-4 mt-12 text-lg !font-medium md:!text-xl lg:mb-6 2xl:!text-2xl"
         >
@@ -206,7 +206,7 @@ export default function BoatInfo() {
           <FieldHelperText className="text-xs font-normal text-red">
             {errors.guests?.message}
           </FieldHelperText>
-        </div>
+        </div> */}
         <CreateListingFooter onBack={() => setStep(1)} />
       </form>
     </div>
