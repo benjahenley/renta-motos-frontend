@@ -237,64 +237,6 @@ export const vendorData = {
     ],
   },
   // Agregar otro vendedor aquí
-  "listing-2": {
-    slug: "listing-2",
-    price: 300,
-
-    gallary: [
-      "/images/top-boats/boat-forteen.png",
-      "/images/top-boats/boat-two.jpg",
-      "/images/top-boats/boat-three.jpg",
-      "/images/top-boats/boat-four.jpg",
-      "/images/top-boats/boat-one.jpg",
-      "/images/top-boats/boat-nine.png",
-      "/images/top-boats/boat-two.jpg",
-      "/images/top-boats/boat-three.jpg",
-      "/images/top-boats/boat-four.jpg",
-      "/images/top-boats/boat-five.jpg",
-      "/images/top-boats/boat-ten.png",
-      "/images/top-boats/boat-six.jpg",
-    ],
-    vendor: {
-      name: 'María Lopez',
-      img: 'https://randomuser.me/api/portraits/women/12.jpg',
-      coverImage: "/images/listing-details/cover-image-2.png",
-      memberSince: 'Feb 2018',
-      languages: ['Spanish', 'English'],
-      responseRate: 90,
-      responseTime: 'Within 30 minutes',
-      location: 'Kraig Pike',
-      boatName: 'YZ Cruiser HD',
-      boatGuests: 10,
-      boatCabins: 2,
-      boatBathrooms: 1,
-      totalReview: 42,
-      username: "@marialopez",
-      instagramUserName: "marialopez_travel",
-      twitterUserName: "@marialopez",
-    },
-    description:
-      "El YZ Cruiser HD: un modelo de lujo diseñado para aquellos que buscan una experiencia premium en el mar. Con su elegante diseño y su rendimiento excepcional, este barco ofrece un viaje inolvidable. Equipado con las últimas tecnologías y comodidades, garantiza confort y seguridad durante todo el viaje.",
-    equipment: [
-      {
-        img: '/images/listing-details/pilot.svg',
-        name: 'Automatic Pilot',
-      },
-      {
-        img: '/images/listing-details/shower.svg',
-        name: 'Deck Shower',
-      },
-      // Otros equipos...
-    ],
-    specifications: [
-      {
-        name: ' Tipo de motor',
-        details: '4 cilindros;2.0 Liter High Output;4 tiempos;DOHC;4 válvulas',
-      },
-      // Otras especificaciones...
-    ],
-  },
-  // Agregar otro vendedor aquí
   "portixol": {
     slug: "portixol",
     price: 300,

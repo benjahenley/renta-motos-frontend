@@ -21,6 +21,8 @@ interface BookingFormProps {
   averageRating: number;
   totalReviews: number;
   listing: any;
+  slug: string;
+  setExcursion: (excursion: boolean, excursionName: string) => void;
   className?: string;
 }
 
@@ -43,6 +45,8 @@ export default function BookingForm({
   totalReviews,
   className,
   listing,
+  slug,
+  setExcursion,
 }: BookingFormProps) {
   const {
     control,
@@ -65,7 +69,6 @@ export default function BookingForm({
   const [rentTime, setRentTime] = useState<RentTime>('2h');
   const [adults, setAdults] = useState<number>(1);
   const [reservation, setReservation] = useAtom(selectionAtom);
-  const [excursion, setExcursion] = useAtom(excursionAtom);
   const [focus, setFocus] = useState<boolean>(false);
   const [calculatedPrice, setCalculatedPrice] = useState<number>(450);
   const [minEndDate, setMinEndDate] = useState<Date | null>(null);
@@ -83,19 +86,29 @@ export default function BookingForm({
   }, [rentTime, adults]);
 
   async function handleBooking(data: any) {
-    console.log(data);
+    console.log('Booking data:', data);
 
-    // Extraer los valores de excursion y excursionName del objeto data
-    const { excursion, excursionName } = data;
+    const isExcursion = slug !== 'listing-1';
+    const excursionName = slug;
 
-    // Establecer valores en el átomo
-    setExcursion({
-      excursion: excursion,
-      excursionName: excursionName,
-    });
+
+    console.log('Excursion:', isExcursion, 'Excursion Name:', excursionName);
+    // Set the excursion atom
+    setExcursion(isExcursion, excursionName);
 
     // Establecer el resto de los datos en la reserva
-    setReservation(data);
+    setReservation({
+      ...data,
+      excursion: isExcursion,
+      excursionName,
+    });
+
+    console.log('Updated reservation:', {
+      ...data,
+      excursion: isExcursion,
+      excursionName,
+    });
+
 
     try {
       const token = getToken();

@@ -76,8 +76,8 @@ export default function FindTripForm() {
       </div>
 
       <div className="mt-auto flex flex-col justify-end">
-      <Text className="mb-5 hidden leading-6 !text-secondary sm:block 3xl:leading-8 4xl:mb-6 4xl:text-lg">
-          Go check our equipment and do your reservation.
+      <Text className="mb-5 text-center leading-6 !text-secondary sm:block sm:text-left 3xl:leading-8 4xl:mb-6 4xl:text-lg">
+        Don't miss the oportunity to travel and discovering, go check our equipment and do your reservation!
         </Text>
         <Button
           type="submit"
