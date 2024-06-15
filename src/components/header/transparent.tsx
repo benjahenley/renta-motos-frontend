@@ -14,7 +14,7 @@ export default function TransparentHeader() {
   return (
     <header
       ref={headerRef}
-      className="transparent-header fixed left-0 top-0 z-[100] flex w-full items-center justify-between bg-white sm:bg-transparent 2xl:px-3 3xl:px-7 4xl:px-14"
+      className="transparent-header fixed left-0 top-0 z-[100] flex w-full items-center justify-between bg-white sm:bg-transparent  2xl:px-5 3xl:px-8 4xl:px-14 px-9"
     >
       <div className="flex w-full justify-center sm:w-auto sm:justify-center">
         <Logo />

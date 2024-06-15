@@ -14,10 +14,17 @@ import VendorBlock from '@/components/listing-details/vendor-block';
 // import ChatBlock from '@/components/listing-details/chat-block';
 import { useModal } from '@/components/modals/context';
 import Button from '@/components/ui/button';
+import { useAtom } from 'jotai';
+import { excursionAtom } from '@/atoms/excursion';
 
-export default function ListingDetails({vendor} : {vendor: any}) {
+export default function ListingDetails({ vendor }: { vendor: any }) {
   const { openModal } = useModal();
+  const [, setExcursion] = useAtom(excursionAtom);
 
+  const setExcursionData = (excursion: boolean, excursionName: string) => {
+    console.log('Setting excursion data:', { excursion, excursionName });
+    setExcursion({ excursion, excursionName });
+  };
 
   return (
     <>
@@ -40,18 +47,9 @@ export default function ListingDetails({vendor} : {vendor: any}) {
               price={vendor.price}
               averageRating={reviewsData.stats.averageRating}
               totalReviews={reviewsData.stats.totalReview}
+              slug={vendor.slug}
+              setExcursion={setExcursionData}
             />
-            <div className="mt-4 w-full text-center 4xl:mt-8">
-              <Button
-                size="lg"
-                variant="text"
-                className="relative !p-0 !font-bold !text-secondary focus:!ring-0"
-                onClick={() => openModal('REPORT_LISTING')}
-              >
-                Report this listing
-                <span className="absolute bottom-0 left-0 w-full border border-gray"></span>
-              </Button>
-            </div>
           </div>
         </div>
       </div>

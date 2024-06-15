@@ -14,12 +14,15 @@ import { selectionAtom } from '@/atoms/reservation';
 import { Routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
 import { getToken } from '@/helpers/getToken';
+import { excursionAtom } from '@/atoms/excursion'; // Ajusta la ruta según tu estructura de proyecto
 
 interface BookingFormProps {
   price: number;
   averageRating: number;
   totalReviews: number;
-  listing: any; // Añadido para recibir el objeto listado
+  listing: any;
+  slug: string;
+  setExcursion: (excursion: boolean, excursionName: string) => void;
   className?: string;
 }
 
@@ -30,7 +33,7 @@ const BookingSchema = z.object({
   startDate: z.date().min(new Date(), { message: 'Invalid Start Date!' }),
   selected: z.object({
     adults: z.number().min(1, 'Minimum 1 Adult required!'),
-    rentTime: z.enum(rentTimeOptions), // Asegúrate de que esto esté en el esquema
+    rentTime: z.enum(rentTimeOptions),
   }),
 });
 
@@ -42,6 +45,8 @@ export default function BookingForm({
   totalReviews,
   className,
   listing,
+  slug,
+  setExcursion,
 }: BookingFormProps) {
   const {
     control,
@@ -80,9 +85,28 @@ export default function BookingForm({
     setCalculatedPrice(price);
   }, [rentTime, adults]);
 
-  function handleBooking(data: any) {
-    console.log(data);
-    setReservation([data]);
+  async function handleBooking(data: any) {
+    console.log('Booking data:', data);
+
+    const isExcursion = slug !== 'listing-1';
+    const excursionName = slug;
+
+    console.log('Excursion:', isExcursion, 'Excursion Name:', excursionName);
+    // Set the excursion atom
+    setExcursion(isExcursion, excursionName);
+
+    // Establecer el resto de los datos en la reserva
+    setReservation({
+      ...data,
+      excursion: isExcursion,
+      excursionName,
+    });
+
+    console.log('Updated reservation:', {
+      ...data,
+      excursion: isExcursion,
+      excursionName,
+    });
 
     try {
       const token = getToken();
@@ -90,6 +114,8 @@ export default function BookingForm({
         openModal('SIGN_IN');
         return;
       }
+
+      // Redirigir a la página de calendario
       router.push(Routes.private.selectCalendar);
     } catch (e) {
       console.error('Error checking token:', e);
