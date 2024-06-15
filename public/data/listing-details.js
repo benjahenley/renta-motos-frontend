@@ -295,8 +295,8 @@ export const vendorData = {
     ],
   },
   // Agregar otro vendedor aquí
-  "Portixol": {
-    slug: "Portixol",
+  "portixol": {
+    slug: "portixol",
     price: 300,
     triptime: '2h',
     gallary: [
@@ -322,8 +322,8 @@ export const vendorData = {
     description: "Descubre la serenidad de Cala Salada, una joya escondida en la costa de Ibiza. Con aguas cristalinas y arena dorada, Cala Salada es el lugar perfecto para relajarse y disfrutar de la belleza natural. Navega por las aguas tranquilas y sumérgete en un mundo submarino lleno de vida marina. Pasea por los senderos que rodean la cala y disfruta de vistas panorámicas impresionantes. La calma y la tranquilidad de Cala Salada te harán sentir como si estuvieras en un paraíso privado, lejos del bullicio de la vida cotidiana."
   },
 
-  "cala-ubarca": {
-    slug: "cala-ubarca",
+  "cala-daubarca": {
+    slug: "cala-daubarca",
     price: 250,
     triptime: "1h 30min",
     gallary: [
@@ -334,8 +334,8 @@ export const vendorData = {
     description: "Embárcate en una aventura hacia Cala Ubarca, un rincón tranquilo rodeado de acantilados escarpados y vegetación exuberante. Este lugar es ideal para los amantes de la naturaleza y aquellos que buscan un refugio sereno. Las aguas de Cala Ubarca son perfectas para el buceo y la natación, ofreciendo una experiencia refrescante en un entorno espectacular. La belleza salvaje y la tranquilidad de Cala Ubarca te harán sentir en armonía con la naturaleza."
   },
 
-  "isla-es-vedra": {
-    slug: "isla-es-vedra",
+  "esvedra": {
+    slug: "esvedra",
     price: 300,
     triptime: "2h",
     gallary: [
@@ -346,8 +346,8 @@ export const vendorData = {
     description: "Visita la mítica Isla Es Vedrà, un lugar lleno de misterio y leyendas. Esta impresionante formación rocosa que se alza majestuosa sobre el mar es uno de los puntos más emblemáticos de Ibiza. Navega alrededor de la isla y siente la energía única que emana de este lugar mágico. La impresionante vista de Es Vedrà, con sus acantilados y su ambiente enigmático, te dejará sin aliento. Disfruta de un día explorando los alrededores y descubriendo los secretos de esta isla fascinante."
   },
 
-  "isla-margarita": {
-    slug: "isla-margarita",
+  "margaritas": {
+    slug: "margaritas",
     price: 180,
     triptime: "1h",
     gallary: [
@@ -358,8 +358,8 @@ export const vendorData = {
     description: "Explora la belleza intacta de Isla Margarita, una isla pequeña pero encantadora que ofrece una experiencia única en el Mediterráneo. Sus aguas cristalinas y sus playas de arena blanca son ideales para nadar y tomar el sol. Navega alrededor de la isla y descubre calas escondidas y paisajes impresionantes. La tranquilidad y la belleza natural de Isla Margarita te brindarán una experiencia inolvidable en uno de los rincones más bellos del Mediterráneo."
   },
 
-  "cala-comte": {
-    slug: "cala-comte",
+  "cala-bassa": {
+    slug: "cala-bassa",
     price: 180,
     triptime: "1h",
     gallary: [

@@ -14,12 +14,13 @@ import { selectionAtom } from '@/atoms/reservation';
 import { Routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
 import { getToken } from '@/helpers/getToken';
+import { excursionAtom } from '@/atoms/excursion'; // Ajusta la ruta según tu estructura de proyecto
 
 interface BookingFormProps {
   price: number;
   averageRating: number;
   totalReviews: number;
-  listing: any; // Añadido para recibir el objeto listado
+  listing: any;
   className?: string;
 }
 
@@ -30,7 +31,7 @@ const BookingSchema = z.object({
   startDate: z.date().min(new Date(), { message: 'Invalid Start Date!' }),
   selected: z.object({
     adults: z.number().min(1, 'Minimum 1 Adult required!'),
-    rentTime: z.enum(rentTimeOptions), // Asegúrate de que esto esté en el esquema
+    rentTime: z.enum(rentTimeOptions),
   }),
 });
 
@@ -64,6 +65,7 @@ export default function BookingForm({
   const [rentTime, setRentTime] = useState<RentTime>('2h');
   const [adults, setAdults] = useState<number>(1);
   const [reservation, setReservation] = useAtom(selectionAtom);
+  const [excursion, setExcursion] = useAtom(excursionAtom);
   const [focus, setFocus] = useState<boolean>(false);
   const [calculatedPrice, setCalculatedPrice] = useState<number>(450);
   const [minEndDate, setMinEndDate] = useState<Date | null>(null);
@@ -80,8 +82,19 @@ export default function BookingForm({
     setCalculatedPrice(price);
   }, [rentTime, adults]);
 
-  function handleBooking(data: any) {
+  async function handleBooking(data: any) {
     console.log(data);
+
+    // Extraer los valores de excursion y excursionName del objeto data
+    const { excursion, excursionName } = data;
+
+    // Establecer valores en el átomo
+    setExcursion({
+      excursion: excursion,
+      excursionName: excursionName,
+    });
+
+    // Establecer el resto de los datos en la reserva
     setReservation(data);
 
     try {
@@ -90,6 +103,8 @@ export default function BookingForm({
         openModal('SIGN_IN');
         return;
       }
+
+      // Redirigir a la página de calendario
       router.push(Routes.private.selectCalendar);
     } catch (e) {
       console.error('Error checking token:', e);
