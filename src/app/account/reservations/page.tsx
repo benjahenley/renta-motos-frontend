@@ -14,9 +14,10 @@ import LoadingScreen from '@/components/loading-screen';
 import { useRouter } from 'next/navigation';
 import { extractTime } from '@/helpers/extract-time';
 import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
+import { getReservationsByUserId } from '@/api/reservations/getReservationsByUserId';
 
 async function getData(token: string, start: number, offset: number) {
-  const data = await getReservationsByUserId(token);
+  const data = await getReservationsByUserId();
   const reservations = data.orders.flatMap(
     (order: any) =>
       order.reservations

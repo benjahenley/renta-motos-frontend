@@ -1,21 +1,27 @@
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
 import useJetskis from '@/hooks/use-jetskis';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import Input from '@/components/ui/form-fields/input';
+import { PlusIcon } from '@heroicons/react/24/solid';
+import { Routes } from '@/config/routes';
 import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Button from '@/components/ui/button';
 import { Jetski, getJetskis } from '@/api/get-jetskis/useGetJetskis';
+import { useRouter } from 'next/navigation';
 
-const SimpleTable = ({ data, handleToggleMaintenance }: { data: Jetski[], handleToggleMaintenance: (id: string) => void }) => {
+const SimpleTable = ({
+  data,
+  handleToggleMaintenance,
+}: {
+  data: Jetski[];
+  handleToggleMaintenance: (id: string) => void;
+}) => {
   return (
-    <div className='rc-table-container extratable__container'>
-      <div className='rc-table-content'>
+    <div className="rc-table-container extratable__container">
+      <div className="rc-table-content">
         <table className="extratable min-w-full border-collapse border border-gray-400">
-          <thead className='rc-table-thead thead'>
+          <thead className="rc-table-thead thead">
             <tr>
               <th className="tth px-4 py-2">Name</th>
               <th className="tth px-4 py-2">Status</th>
@@ -23,13 +29,17 @@ const SimpleTable = ({ data, handleToggleMaintenance }: { data: Jetski[], handle
             </tr>
           </thead>
           <tbody>
-            {data.map(jetski => (
-              <tr className='tr' key={jetski.id}>
+            {data.map((jetski) => (
+              <tr className="tr" key={jetski.id}>
                 <td className="td px-4 py-2">{jetski.name}</td>
-                <td className="td px-4 py-2">{jetski.available ? 'available' : 'maintenance'}</td>
+                <td className="td px-4 py-2">
+                  {jetski.available ? 'available' : 'maintenance'}
+                </td>
                 <td className="td px-4 py-2">
                   <Button onClick={() => handleToggleMaintenance(jetski.id)}>
-                    {jetski.available ? 'Disable for Maintenance' : 'Enable for Rental'}
+                    {jetski.available
+                      ? 'Disable for Maintenance'
+                      : 'Enable for Rental'}
                   </Button>
                 </td>
               </tr>
@@ -46,13 +56,14 @@ const JetskiManagement: React.FC = () => {
   const [current, setCurrent] = useState(1);
   const [searchFilter, setSearchFilter] = useState('');
   const [displayData, setDisplayData] = useState<Jetski[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const filterData = () => {
       let filteredData = Array.isArray(jetskis) ? jetskis : [];
       if (searchFilter) {
-        filteredData = filteredData.filter(jetski =>
-          jetski.name.toLowerCase().includes(searchFilter.toLowerCase())
+        filteredData = filteredData.filter((jetski) =>
+          jetski.name.toLowerCase().includes(searchFilter.toLowerCase()),
         );
       }
       const start = (current - 1) * 10;
@@ -68,7 +79,7 @@ const JetskiManagement: React.FC = () => {
       await toggleStatus(id);
       // Después de actualizar el estado, necesitas volver a obtener los datos de jetskis para reflejar los cambios en la UI.
       const updatedJetskis = await getJetskis();
-      setDisplayData(updatedJetskis.jetskis);
+      setDisplayData(updatedJetskis);
     } catch (error) {
       console.error('Failed to update jetski status', error);
     }
@@ -82,7 +93,16 @@ const JetskiManagement: React.FC = () => {
         <Text tag="h4" className="text-xl">
           Jetski Management
         </Text>
-        <Input
+        <Button
+          size="xl"
+          rounded="pill"
+          className="!p-2 capitalize text-white sm:rounded-md sm:!px-8 sm:!py-[10px]"
+          onClick={() => router.push(Routes.private.addListing)}
+        >
+          <PlusIcon className="h-auto w-5 sm:mr-3" />
+          <span className="hidden sm:block">Add Jet Ski</span>
+        </Button>
+        {/* <Input
           type="text"
           variant="outline"
           placeholder="Search by name"
@@ -90,9 +110,12 @@ const JetskiManagement: React.FC = () => {
           value={searchFilter}
           onChange={(e) => setSearchFilter(e.target.value)}
           inputClassName="pl-12"
-        />
+        /> */}
       </div>
-      <SimpleTable data={displayData} handleToggleMaintenance={handleToggleMaintenance} />
+      <SimpleTable
+        data={displayData}
+        handleToggleMaintenance={handleToggleMaintenance}
+      />
       <div className="mt-8 text-center">
         <Pagination
           current={current}

@@ -62,20 +62,20 @@ export const reservationColumn = (
     ),
   },
   {
-    title: (
-      <HeaderCell
-        title={'ID'}
-        sortable={true}
-        ascending={order === 'asc' && column === 'id'}
-      />
-    ),
-    onHeaderCell: () => onHeaderClick('id'),
+    title: <HeaderCell title={'ID'} />,
     dataIndex: 'id',
     key: 'id',
     width: 100,
   },
   {
-    title: <HeaderCell title={'Date'} />,
+    title: (
+      <HeaderCell
+        title={'Date'}
+        sortable={true}
+        ascending={order === 'asc' && column === 'date'}
+      />
+    ),
+    onHeaderCell: () => onHeaderClick('date'),
     dataIndex: 'date',
     key: 'date',
     width: 150,
@@ -99,25 +99,16 @@ export const reservationColumn = (
   },
   {
     title: <HeaderCell title={'Customer'} />,
-    dataIndex: 'name',
-    key: 'name',
-    width: 250,
+    dataIndex: 'userFullName',
+    key: 'userFullName',
+    width: 200,
     render: (name: any) => <p className="whitespace-nowrap">{name}</p>,
-  },
-  {
-    title: <HeaderCell title={'Jetski ID'} />,
-    dataIndex: 'jetskiId',
-    key: 'jetskiId',
-    width: 150,
-    render: (jetskiId: string) => (
-      <p className="whitespace-nowrap">{jetskiId}</p>
-    ),
   },
   {
     title: <HeaderCell title={'Status'} />,
     dataIndex: 'status',
     key: 'status',
-    width: 150,
+    width: 50,
     render: (status: string) => {
       if (!status) return '__';
       return (

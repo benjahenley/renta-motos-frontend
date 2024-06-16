@@ -1,11 +1,14 @@
 // helpers/getDashboardData.ts
 
-import { getAllOrders } from '@/helpers/getOrders';
+import { getAllReservations } from '@/api/reservations/getAllReservations';
 
 export async function getDashboardData() {
-  const orders = await getAllOrders();
-  const totalOrders = orders.length;
-  const totalPrice = orders.reduce((acc: any, order: any) => acc + order.price * 0.3, 0);
+  const reservations = await getAllReservations();
+  const totalOrders = reservations.length;
+  const totalPrice = reservations.reduce(
+    (acc: any, order: any) => acc + order.price * 0.3,
+    0,
+  );
   const avgOrderPrice = totalOrders > 0 ? totalPrice / totalOrders : 0;
 
   return {

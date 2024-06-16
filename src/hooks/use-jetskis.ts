@@ -38,11 +38,14 @@
 
 // export default useJetskis;
 
-
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Jetski, getJetskis, updateJetskiStatus } from '@/api/get-jetskis/useGetJetskis';
+import {
+  Jetski,
+  getJetskis,
+  updateJetskiStatus,
+} from '@/api/get-jetskis/useGetJetskis';
 
 const useJetskis = () => {
   const [jetskis, setJetskis] = useState<Jetski[]>([]);
@@ -53,8 +56,8 @@ const useJetskis = () => {
     const fetchJetskis = async () => {
       try {
         const data = await getJetskis();
-        console.log("Fetched jetskis:", data); // Verifica los datos obtenidos
-        setJetskis(data.jetskis); // Accede al array de jetskis dentro del objeto
+        console.log('Fetched jetskis:', data);
+        setJetskis(data);
       } catch (err) {
         setError(err as Error);
       } finally {
@@ -68,7 +71,7 @@ const useJetskis = () => {
   const toggleStatus = async (id: string) => {
     try {
       const updatedJetski = await updateJetskiStatus(id);
-      setJetskis(jetskis.map(j => (j.id === id ? updatedJetski : j)));
+      setJetskis(jetskis.map((j) => (j.id === id ? updatedJetski : j)));
     } catch (err) {
       setError(err as Error);
     }

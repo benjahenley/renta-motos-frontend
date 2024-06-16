@@ -13,7 +13,7 @@ interface MenuItemProps {
   onClick?: (e: any) => void;
 }
 
-const dropdown = ['edit', 'preview', 'delete'];
+const dropdown = ['delete'];
 
 export default function DotsDropdown({ onClick }: MenuItemProps) {
   return (
@@ -44,11 +44,11 @@ export default function DotsDropdown({ onClick }: MenuItemProps) {
                   onClick={onClick}
                   id={item}
                 >
-                  {item === 'edit' && <PencilIcon className="h-auto w-5" />}
+                  {/* {item === 'edit' && <PencilIcon className="h-auto w-5" />}
                   {item === 'preview' && (
                     <ViewfinderCircleIcon className="h-auto w-5" />
-                  )}
-                  {item === 'delete' && <TrashIcon className="h-auto w-5" />}{' '}
+                  )} */}
+                  {item === 'delete' && <TrashIcon className="h-auto w-5" />}
                   {item}
                 </Menu.Item>
               ))}

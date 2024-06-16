@@ -8,10 +8,10 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import { getReservations } from '@/helpers/getReservationList';
+import { getAllReservations } from '@/api/reservations/getAllReservations';
 
 async function getData(start: number, offset: number) {
-  const data = await getReservations();
+  const data = await getAllReservations();
   const filteredData = data.slice(start, offset);
   return filteredData;
 }
@@ -22,7 +22,7 @@ export default function LIstingPage() {
   const [data, setData] = useState<any[]>([]);
   const [searchfilter, setSearchFilter] = useState('');
   const [current, setCurrent] = useState(1);
-  
+
   // filter data in table
   useEffect(() => {
     const filterData = async () => {
@@ -75,7 +75,7 @@ export default function LIstingPage() {
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [data]
+    [data],
   );
 
   // single select checkbox function
@@ -90,7 +90,7 @@ export default function LIstingPage() {
       setData(cArr);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [data]
+    [data],
   );
 
   // handle more button with edit, preview, delete
@@ -114,7 +114,7 @@ export default function LIstingPage() {
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data]
+    [data],
   );
 
   // gets the columns of table
@@ -126,9 +126,9 @@ export default function LIstingPage() {
         onSelectAll,
         onChange,
         onMore,
-        onHeaderClick
+        onHeaderClick,
       ),
-    [order, column, onSelectAll, onChange, onMore, onHeaderClick]
+    [order, column, onSelectAll, onChange, onMore, onHeaderClick],
   );
 
   return (

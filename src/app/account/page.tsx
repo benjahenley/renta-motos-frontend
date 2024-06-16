@@ -47,13 +47,13 @@ export default function DashboardPage() {
 
   return (
     <div className="container-fluid mb-12 lg:mb-16">
-      <DashboardHero />
-      <div className="mb-12 mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:mb-16 lg:mt-12 2xl:mt-16 2xl:gap-6">
+      {/* <DashboardHero /> */}
+      {/* <div className="mb-12 mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:mb-16 lg:mt-12 2xl:mt-16 2xl:gap-6">
         {statCards.map((item, index) => (
           <StatCard key={`pricing-card-${index}`} data={item} />
         ))}
-      </div>
-      <div>
+      </div> */}
+      <div className="pt-10">
         <TransactionActivity />
       </div>
     </div>

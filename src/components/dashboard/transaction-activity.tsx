@@ -8,22 +8,18 @@ import Input from '@/components/ui/form-fields/input';
 import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
-import { getReservations } from '@/helpers/getReservationList';
-
-async function getData(start: number, offset: number) {
-  const data = await getReservations();
-  const filteredData = data.slice(start, offset);
-  return filteredData;
-}
+import { getToken } from '@/helpers/getToken';
+import { getAllReservations } from '@/api/reservations/getAllReservations';
+import { useRouter } from 'next/navigation';
 
 export default function TransactionActivity() {
+  const router = useRouter();
   const [order, setOrder] = useState<string>('desc');
   const [column, setColumn] = useState<string>('');
   const [data, setData] = useState<any[]>([]);
   const [searchfilter, setSearchFilter] = useState('');
   const [current, setCurrent] = useState(1);
 
-  // filter data in table
   useEffect(() => {
     const filterData = async () => {
       let fArr = [...data];
@@ -36,9 +32,16 @@ export default function TransactionActivity() {
       } else {
         let start = (current - 1) * 10;
         let offset = current * 10;
-        const newData = await getData(start, offset);
-        console.log({ newData });
-        setData(newData);
+        try {
+          const token = getToken();
+          const reservations = await getAllReservations();
+          const filteredData = reservations.slice(start, offset);
+          console.log({ filteredData });
+
+          setData(filteredData);
+        } catch (e: any) {
+          throw new Error(e.message);
+        }
       }
     };
     filterData();
@@ -49,8 +52,16 @@ export default function TransactionActivity() {
     const fetchData = async () => {
       let start = (current - 1) * 10;
       let offset = current * 10;
-      const fetchedData = await getData(start, offset);
-      setData(fetchedData);
+      try {
+        const token = getToken();
+        const reservations = await getAllReservations();
+        const filteredData = reservations.slice(start, offset);
+
+        console.log({ filteredData });
+        setData(filteredData);
+      } catch (e: any) {
+        throw new Error(e.message);
+      }
     };
     fetchData();
   }, [current]);
@@ -72,10 +83,9 @@ export default function TransactionActivity() {
           cArr.push(item);
         });
         setData(fArr);
-      } 
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }
     },
-    [data]
+    [data],
   );
 
   // single select checkbox function
@@ -90,7 +100,7 @@ export default function TransactionActivity() {
       setData(cArr);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [data]
+    [data],
   );
 
   // handle more button with edit, preview, delete
@@ -114,7 +124,7 @@ export default function TransactionActivity() {
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data]
+    [data],
   );
 
   // gets the columns of table
@@ -126,18 +136,18 @@ export default function TransactionActivity() {
         onSelectAll,
         onChange,
         onMore,
-        onHeaderClick
+        onHeaderClick,
       ),
-    [order, column, onSelectAll, onChange, onMore, onHeaderClick]
+    [order, column, onSelectAll, onChange, onMore, onHeaderClick],
   );
 
   return (
     <>
-      <div className="mb-4 grid grid-cols-1 items-center gap-3 sm:grid-cols-[1fr_262px] md:gap-5 xl:gap-10">
-        <Text tag="h4" className="text-xl">
-          Transaction Activity
+      <div className="mb-4 grid grid-cols-1 items-center gap-3 md:gap-5 xl:gap-10">
+        <Text tag="h1" className="text-4xl text-center w-full pb-5">
+          Reservations
         </Text>
-        <Input
+        {/* <Input
           type="text"
           variant="outline"
           placeholder="Search by name"
@@ -145,7 +155,7 @@ export default function TransactionActivity() {
           value={searchfilter}
           onChange={(e) => setSearchFilter(e.target.value)}
           inputClassName="pl-12"
-        />
+        /> */}
       </div>
       <Table
         data={data}

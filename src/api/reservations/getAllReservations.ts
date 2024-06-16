@@ -1,8 +1,9 @@
-export const getAllReservations = async (token: string) => {
-  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservations/all';
-  console.log(url);
+import { getToken } from '@/helpers/getToken';
 
+export const getAllReservations = async (): Promise<any[]> => {
+  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservations/all';
   try {
+    const token = getToken();
     const response = await fetch(url, {
       method: 'GET',
       headers: {

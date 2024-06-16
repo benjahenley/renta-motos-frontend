@@ -1,9 +1,12 @@
+import { getToken } from '@/helpers/getToken';
+
 // api/reservations/getReservationByUserID.ts
-export const getOrdersByUserId = async (token: string) => {
+export const getReservationsByUserId = async () => {
   const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservations';
-  console.log(url);
 
   try {
+    const token = getToken();
+
     const response = await fetch(url, {
       method: 'GET',
       headers: {

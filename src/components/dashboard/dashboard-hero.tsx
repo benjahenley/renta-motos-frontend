@@ -7,11 +7,8 @@ import Button from '@/components/ui/button';
 import { Routes } from '@/config/routes';
 import useAuth from '@/hooks/use-auth';
 
-
 export default function DashboardHero() {
   const { user, unauthorize } = useAuth();
-
-  const router = useRouter();
   return (
     <div className="mt-8 flex items-center justify-between lg:mt-12 2xl:mt-16">
       <div>
@@ -20,17 +17,7 @@ export default function DashboardHero() {
         </Text>
         <Text className="mt-2 text-sm text-gray lg:mt-3">{user.email}</Text>
       </div>
-      <div>
-        <Button
-          size="xl"
-          rounded="pill"
-          className="!p-2 capitalize text-white sm:rounded-md sm:!px-8 sm:!py-[10px]"
-          onClick={() => router.push(Routes.private.addListing)}
-        >
-          <PlusIcon className="h-auto w-5 sm:mr-3" />
-          <span className="hidden sm:block">Add Jet Ski</span>
-        </Button>
-      </div>
+      <div></div>
     </div>
   );
 }
