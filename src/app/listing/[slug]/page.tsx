@@ -11,17 +11,16 @@ export default function ListingDetailsPage({
 }) {
   const { slug } = params;
 
-  console.log(params);
+  console.log(slug);
 
   // Buscar el vendor cuyo slug coincide con el recibido por parámetro
   const selectedVendor = (vendorData as any)[slug];
-
 
   return (
     <>
       <div className="container-fluid w-full 3xl:!px-12">
         <GallaryBlock images={selectedVendor.gallary} />
-        <ListingDetails vendor={selectedVendor} />
+        <ListingDetails vendor={selectedVendor} slug={slug} />
         {/* <RelatedListingBlock /> */}
       </div>
       <SubscriptionBlock sectionClassName="3xl:!px-12 4xl:!px-12" />

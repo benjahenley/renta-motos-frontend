@@ -9,7 +9,7 @@ import SelectBox from '@/components/listing-details/booking-form/select-box';
 import DateTime from '@/components/ui/form-fields/date-time-picker';
 import Button from '@/components/ui/button';
 import { useModal } from '@/components/modals/context';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { selectionAtom } from '@/atoms/reservation';
 import { Routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
@@ -22,7 +22,6 @@ interface BookingFormProps {
   totalReviews: number;
   listing: any;
   slug: string;
-  setExcursion: (excursion: boolean, excursionName: string) => void;
   className?: string;
 }
 
@@ -46,7 +45,6 @@ export default function BookingForm({
   className,
   listing,
   slug,
-  setExcursion,
 }: BookingFormProps) {
   const {
     control,
@@ -68,7 +66,7 @@ export default function BookingForm({
   const [error, setError] = useState<string | undefined>();
   const [rentTime, setRentTime] = useState<RentTime>('2h');
   const [adults, setAdults] = useState<number>(1);
-  const [reservation, setReservation] = useAtom(selectionAtom);
+  const [selection, setSelection] = useAtom(selectionAtom);
   const [focus, setFocus] = useState<boolean>(false);
   const [calculatedPrice, setCalculatedPrice] = useState<number>(450);
   const [minEndDate, setMinEndDate] = useState<Date | null>(null);
@@ -86,27 +84,18 @@ export default function BookingForm({
   }, [rentTime, adults]);
 
   async function handleBooking(data: any) {
-    console.log('Booking data:', data);
+    const date = new Date(data.startDate).toISOString();
 
-    const isExcursion = slug !== 'listing-1';
-    const excursionName = slug;
+    const newSelection = {
+      ...selection,
+      adults: data.selected.adults,
+      rentTime: data.selected.rentTime,
+      date,
+    };
 
-    console.log('Excursion:', isExcursion, 'Excursion Name:', excursionName);
-    // Set the excursion atom
-    setExcursion(isExcursion, excursionName);
+    setSelection(newSelection);
 
-    // Establecer el resto de los datos en la reserva
-    setReservation({
-      ...data,
-      excursion: isExcursion,
-      excursionName,
-    });
-
-    console.log('Updated reservation:', {
-      ...data,
-      excursion: isExcursion,
-      excursionName,
-    });
+    console.log('SELECTION:', newSelection);
 
     try {
       const token = getToken();
@@ -115,7 +104,6 @@ export default function BookingForm({
         return;
       }
 
-      // Redirigir a la página de calendario
       router.push(Routes.private.selectCalendar);
     } catch (e) {
       console.error('Error checking token:', e);

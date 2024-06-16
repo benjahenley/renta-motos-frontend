@@ -14,17 +14,31 @@ import VendorBlock from '@/components/listing-details/vendor-block';
 // import ChatBlock from '@/components/listing-details/chat-block';
 import { useModal } from '@/components/modals/context';
 import Button from '@/components/ui/button';
-import { useAtom } from 'jotai';
-import { excursionAtom } from '@/atoms/excursion';
+import { useAtom, useSetAtom } from 'jotai';
+import { selectionAtom } from '@/atoms/reservation';
+import { useEffect } from 'react';
 
-export default function ListingDetails({ vendor }: { vendor: any }) {
+export default function ListingDetails({
+  vendor,
+  slug,
+}: {
+  vendor: any;
+  slug: string;
+}) {
   const { openModal } = useModal();
-  const [, setExcursion] = useAtom(excursionAtom);
+  const setSelection = useSetAtom(selectionAtom);
 
-  const setExcursionData = (excursion: boolean, excursionName: string) => {
-    console.log('Setting excursion data:', { excursion, excursionName });
-    setExcursion({ excursion, excursionName });
-  };
+  useEffect(() => {
+    const setSelectionData = () => {
+      const excursion = slug !== 'listing-1' ? true : false;
+      const excursionName = slug;
+      console.log('Setting excursion data:', { excursion, excursionName });
+
+      setSelection({ excursion, excursionName });
+    };
+
+    setSelectionData();
+  }, []);
 
   return (
     <>
@@ -48,7 +62,6 @@ export default function ListingDetails({ vendor }: { vendor: any }) {
               averageRating={reviewsData.stats.averageRating}
               totalReviews={reviewsData.stats.totalReview}
               slug={vendor.slug}
-              setExcursion={setExcursionData}
             />
           </div>
         </div>

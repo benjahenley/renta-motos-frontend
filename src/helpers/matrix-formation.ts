@@ -104,3 +104,10 @@ export const getJetskisAndExcursionsTemplate = (): [number, string[]][] => {
   timeSlots.forEach(() => template.push([0, []]));
   return template;
 };
+
+export const getHistoryTemplate = (): [number, string[]][] => {
+  const template: [number[], string[]][] = [];
+
+  timeSlots.forEach(() => template.push([0, []]));
+  return template;
+};

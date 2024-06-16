@@ -1,6 +1,6 @@
 // api/reservations/getReservationByUserID.ts
 export const getOrdersByUserId = async (token: string) => {
-  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/orders';
+  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservations';
   console.log(url);
 
   try {

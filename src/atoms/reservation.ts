@@ -1,6 +1,6 @@
 import { atomWithStorage } from 'jotai/utils';
 
-export type reservation = {
+export type Selection = {
   date: string;
   adults: number;
   rentTime: '30min' | '1h' | '1h30' | '2h' | '4h' | 'fullDay';
@@ -8,7 +8,7 @@ export type reservation = {
   excursionName?: string | undefined;
 };
 
-export const selectionAtom = atomWithStorage<Partial<reservation | {}>>(
-  'reservation',
+export const selectionAtom = atomWithStorage<Partial<Selection | {}>>(
+  'selection',
   {},
 );

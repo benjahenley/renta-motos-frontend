@@ -75,7 +75,9 @@ export default function SelectBox({
               <Counter
                 count={adults}
                 countBy={1}
-                onCount={(val) => setAdults(val)}
+                onCount={(val) => {
+                  if (val <= 4) setAdults(val);
+                }}
               />
             </div>
 

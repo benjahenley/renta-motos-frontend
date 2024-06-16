@@ -8,7 +8,6 @@ import Input from '@/components/ui/form-fields/input';
 import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
-import { getOrdersByUserId } from '@/api/reservations/getOrdersByUserId';
 import { checkRole } from '@/api/user/isAuthorized';
 import { getToken } from '@/helpers/getToken';
 import LoadingScreen from '@/components/loading-screen';
@@ -17,7 +16,7 @@ import { extractTime } from '@/helpers/extract-time';
 import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
 
 async function getData(token: string, start: number, offset: number) {
-  const data = await getOrdersByUserId(token);
+  const data = await getReservationsByUserId(token);
   const reservations = data.orders.flatMap(
     (order: any) =>
       order.reservations
