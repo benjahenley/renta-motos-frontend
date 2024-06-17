@@ -1,5 +1,7 @@
+'use client';
+
 import { deleteReservation } from '@/api/reservations/deleteReservation';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { EllipsisHorizontalIcon, TrashIcon } from '@heroicons/react/24/solid';
 
@@ -18,8 +20,13 @@ export default function DotsDropdown({
 }: MenuItemProps) {
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    console.log('Received reservationId in DotsDropdown:', reservationId); // Verifica que se reciba correctamente
+  }, [reservationId]);
+
   const handleDelete = async (e: any) => {
     setLoading(true);
+    console.log('Deleting reservation with ID:', reservationId); // Verifica que el ID se use correctamente
     try {
       await deleteReservation(reservationId);
       onDeleteSuccess();
@@ -51,11 +58,18 @@ export default function DotsDropdown({
             <div className="rounded-lg p-2">
               {dropdown.map((item) => (
                 <Menu.Item
-                  key={`reservation-${item}`}
+                  key={`reservation-${item}`}  // Añadir clave única basada en el item
                   as="button"
                   type="button"
                   className="flex w-full items-center gap-3 rounded-md p-2 text-left text-sm capitalize hover:bg-gray-lightest"
-                  onClick={item === 'delete' ? handleDelete : onClick}
+                  onClick={(e) => {
+                    console.log('Clicked on item:', item);
+                    if (item === 'delete') {
+                      handleDelete(e);
+                    } else if (onClick) {
+                      onClick(e);
+                    }
+                  }}
                   id={item}
                 >
                   {item === 'delete' && <TrashIcon className="h-auto w-5" />}

@@ -7,10 +7,16 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { getToken } from '@/helpers/getToken';
-import { getAllReservations } from '@/api/reservations/getAllReservations';
+import { getAllReservations } from '@/api/reservations/getAllReservations'
 import { deleteReservation } from '@/api/reservations/deleteReservation';
-import DotsDropdown from '@/components/reservation/dots-dropdown';
+import DotsDropdown from '../reservation/dots-dropdown';
 import { useRouter } from 'next/navigation';
+
+async function getData(start: number, offset: number) {
+  const reservations = await getAllReservations();
+  const filteredData = reservations.slice(start, offset);
+  return filteredData;
+}
 
 export default function TransactionActivity() {
   const router = useRouter();
@@ -20,6 +26,7 @@ export default function TransactionActivity() {
   const [searchfilter, setSearchFilter] = useState('');
   const [current, setCurrent] = useState(1);
 
+  // filter data in table
   useEffect(() => {
     const filterData = async () => {
       let fArr = [...data];
@@ -32,36 +39,21 @@ export default function TransactionActivity() {
       } else {
         let start = (current - 1) * 10;
         let offset = current * 10;
-        try {
-          const token = getToken();
-          const reservations = await getAllReservations();
-          const filteredData = reservations.slice(start, offset);
-          console.log({ filteredData });
-
-          setData(filteredData);
-        } catch (e: any) {
-          throw new Error(e.message);
-        }
+        const newData = await getData(start, offset);
+        console.log({ newData });
+        setData(newData);
       }
     };
     filterData();
-  }, [searchfilter]);
+  }, [searchfilter, current]);
 
   // table current change
   useEffect(() => {
     const fetchData = async () => {
       let start = (current - 1) * 10;
       let offset = current * 10;
-      try {
-        const token = getToken();
-        const reservations = await getAllReservations();
-        const filteredData = reservations.slice(start, offset);
-
-        console.log({ filteredData });
-        setData(filteredData);
-      } catch (e: any) {
-        throw new Error(e.message);
-      }
+      const fetchedData = await getData(start, offset);
+      setData(fetchedData);
     };
     fetchData();
   }, [current]);
@@ -85,7 +77,7 @@ export default function TransactionActivity() {
         setData(fArr);
       }
     },
-    [data],
+    [data]
   );
 
   // single select checkbox function
@@ -98,9 +90,8 @@ export default function TransactionActivity() {
         cArr.push(item);
       });
       setData(cArr);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [data],
+    [data]
   );
 
   // handle more button with edit, preview, delete
@@ -109,7 +100,6 @@ export default function TransactionActivity() {
       if (e.target.id === 'delete') {
         try {
           await deleteReservation(row.id);
-          // Remove the deleted row from the data
           setData((prevData) => prevData.filter((item) => item.id !== row.id));
         } catch (error) {
           console.error('Failed to delete reservation:', error);
@@ -118,8 +108,14 @@ export default function TransactionActivity() {
         console.log(e.target.id);
       }
     },
-    [data],
+    [data]
   );
+
+  const onDeleteSuccess = (id: string) => {
+    // handle success, such as showing a success message or updating state
+    setData((prevData) => prevData.filter((item) => item.id !== id));
+  };
+
 
   // on header click sort table by ascending or descending order
   const onHeaderClick = useCallback(
@@ -128,16 +124,13 @@ export default function TransactionActivity() {
         setColumn(value);
         setOrder(order === 'desc' ? 'asc' : 'desc');
         if (order === 'desc') {
-          //@ts-ignore
           setData([...data.sort((a, b) => (a[value] > b[value] ? -1 : 1))]);
         } else {
-          //@ts-ignore
           setData([...data.sort((a, b) => (a[value] > b[value] ? 1 : -1))]);
         }
       },
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data],
+    [data, order]
   );
 
   // gets the columns of table
@@ -150,17 +143,18 @@ export default function TransactionActivity() {
         onChange,
         onMore,
         onHeaderClick,
+        onDeleteSuccess,  // Añadido onDeleteSuccess
       ),
-    [order, column, onSelectAll, onChange, onMore, onHeaderClick],
+    [order, column, onSelectAll, onChange, onMore, onHeaderClick, ]
   );
 
   return (
     <>
-      <div className="mb-4 grid grid-cols-1 items-center gap-3 md:gap-5 xl:gap-10">
-        <Text tag="h1" className="text-4xl text-center w-full pb-5">
-          Reservations
+      <div className="mb-4 grid grid-cols-1 items-center gap-3 sm:grid-cols-[1fr_262px] md:gap-5 xl:gap-10">
+        <Text tag="h4" className="text-xl">
+          Transaction Activity
         </Text>
-        {/* <Input
+        <Input
           type="text"
           variant="outline"
           placeholder="Search by name"
@@ -168,10 +162,19 @@ export default function TransactionActivity() {
           value={searchfilter}
           onChange={(e) => setSearchFilter(e.target.value)}
           inputClassName="pl-12"
-        /> */}
+        />
       </div>
       <Table
-        data={data}
+        data={data.map((item) => ({
+          ...item,
+          actions: (
+            <DotsDropdown
+              key={item.id}
+              reservationId={item.id}
+              onDeleteSuccess={() => setData(data.filter((d) => d.id !== item.id))}
+            />
+          ),
+        }))}
         columns={columns}
         variant="minimal"
         className="text-sm"
