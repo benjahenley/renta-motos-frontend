@@ -1,7 +1,8 @@
 import { getToken } from '@/helpers/getToken';
 import { Reservation } from '@/interfaces/reservation';
 
-export const getReservationsByUserId = async (): Promise<Reservation[]> => {
+// api/reservations/getReservationByUserID.ts
+export const getReservationsByUserId = async () => {
   const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservations/user';
 
   try {
