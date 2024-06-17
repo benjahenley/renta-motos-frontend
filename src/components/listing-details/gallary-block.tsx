@@ -12,6 +12,7 @@ interface GallaryBlockProps {
 
 export default function GallaryBlock({ images }: GallaryBlockProps) {
   const [drawerSate, setDrawerState] = useAtom(drawerStateAtom);
+  console.log(images);
 
   function handleClick() {
     setDrawerState({
@@ -33,7 +34,7 @@ export default function GallaryBlock({ images }: GallaryBlockProps) {
           className="relative row-start-1 row-end-3 h-full cursor-pointer"
           onClick={handleClick}
         >
-          {images[1] && (
+          {images![1]! && (
             <Image
               src={images[1]}
               alt="pic"

@@ -9,11 +9,11 @@ import { useRouter } from 'next/router';
 export default function PaymentPage({ params }: { params: { id: string } }) {
   // const router = useRouter();
   // const { id } = router.query;
-  console.log(params.id);
+  console.log(params);
   return (
     <>
       <ListingDetailsHeader />
-      <PaymentBlock orderId={params.id} />
+      <PaymentBlock reservationId={params.id} />
     </>
   );
 }

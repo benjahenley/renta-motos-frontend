@@ -18,6 +18,15 @@ import { useAtom, useSetAtom } from 'jotai';
 import { selectionAtom } from '@/atoms/reservation';
 import { useEffect } from 'react';
 
+const rentTimeArray: Record<string, string> = {
+  'isla-margarita': '1h',
+  'cala-salada': '30min',
+  'cala-comte': '1h',
+  'cala-ubarca': '1h 30',
+  portixol: '2h',
+  'isla-es-vedra': '2h',
+};
+
 export default function ListingDetails({
   vendor,
   slug,
@@ -32,9 +41,15 @@ export default function ListingDetails({
     const setSelectionData = () => {
       const excursion = slug !== 'listing-1' ? true : false;
       const excursionName = slug;
-      console.log('Setting excursion data:', { excursion, excursionName });
+      const rentTime = vendor.triptime;
 
-      setSelection({ excursion, excursionName });
+      console.log('Setting excursion data:', {
+        excursion,
+        excursionName,
+        rentTime,
+      });
+
+      setSelection({ excursion, excursionName, rentTime });
     };
 
     setSelectionData();

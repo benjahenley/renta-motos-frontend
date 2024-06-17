@@ -35,11 +35,11 @@ export const jetskiData = async () => {
 
 export function getCellsToSelect(rentTime: string): number {
   switch (rentTime) {
-    case '30m':
+    case '30min':
       return 1;
     case '1h':
       return 2;
-    case '1.5h':
+    case '1h 30min':
       return 3;
     case '2h':
       return 4;

@@ -18,6 +18,8 @@ import { Reservation } from '@/interfaces/reservation';
 import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
 import { getToken } from '@/helpers/getToken';
 import { addMinutesToTime } from '@/helpers/extract-time';
+import { createReservation } from '@/api/reservations/createReservation';
+import { Routes } from '@/config/routes';
 
 export default function SelectCalendarExcursions() {
   const { openModal, closeModal } = useModal();
@@ -37,6 +39,7 @@ export default function SelectCalendarExcursions() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
+        setHistory([]);
         console.log(selection!.date!);
         const { reservations } = await getReservationsByDate(
           formatDateToISOWithoutTime(selection!.date!),
@@ -218,7 +221,10 @@ export default function SelectCalendarExcursions() {
         endTime,
       };
 
-      console.log(data);
+      const { reservationId } = await createReservation(token, data);
+      console.log(reservationId);
+      // Routes.public.payment(reservationId))
+      router.push(`/payment/${reservationId}`);
     } catch (e: any) {
       console.log(e.message);
       alert(e.message);

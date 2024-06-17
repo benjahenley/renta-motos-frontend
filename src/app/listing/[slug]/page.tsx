@@ -13,15 +13,14 @@ export default function ListingDetailsPage({
   params: { slug: string };
 }) {
   const { slug } = params;
+  const slugMinusculas = slug.toLocaleLowerCase();
   const router = useRouter();
-
-  console.log(slug);
 
   var selectedVendor: any = {};
 
   // Buscar el vendor cuyo slug coincide con el recibido por parámetro
   try {
-    const selectedVendorr = (vendorData as any)[slug];
+    const selectedVendorr = (vendorData as any)[slugMinusculas];
     if (!selectedVendorr) {
       throw new Error('not found');
     }
@@ -34,7 +33,7 @@ export default function ListingDetailsPage({
     <>
       <div className="container-fluid w-full 3xl:!px-12">
         <GallaryBlock images={selectedVendor.gallary} />
-        <ListingDetails vendor={selectedVendor} slug={slug} />
+        <ListingDetails vendor={selectedVendor} slug={slugMinusculas} />
         {/* <RelatedListingBlock /> */}
       </div>
       <SubscriptionBlock sectionClassName="3xl:!px-12 4xl:!px-12" />

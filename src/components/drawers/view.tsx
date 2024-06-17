@@ -8,13 +8,13 @@ import Drawer from '@/components/ui/drawer';
 import clsx from 'clsx';
 
 const PhotoGallery = dynamic(
-  () => import('@/components/ui/drawers/photo-gallery')
+  () => import('@/components/ui/drawers/photo-gallery'),
 );
 
 const SideMenu = dynamic(() => import('@/components/ui/drawers/side-menu'));
 const Filter = dynamic(() => import('@/components/explore/filter'));
 const BookingFormModal = dynamic(
-  () => import('@/components/ui/drawers/booking-form-drawer')
+  () => import('@/components/ui/drawers/booking-form-drawer'),
 );
 
 export type DRAWER_VIEW =
@@ -23,14 +23,12 @@ export type DRAWER_VIEW =
   | 'BOOKING_FORM'
   | 'FILTER_MENU';
 
-
-
 // render drawer contents
 function renderDrawerContent(view: DRAWER_VIEW | string, params?: any) {
   switch (view) {
     case 'PHOTO_GALLERY':
       console.log('Params en renderDrawerContent:', params); // Verifica si params está llegando correctamente
-      return params ? <PhotoGallery gallary={params.gallary} /> : null;//aca toquetie
+      return <PhotoGallery gallary={params!.gallary!} />;
     case 'SIDE_MENU':
       return <SideMenu />;
     case 'FILTER_MENU':
@@ -54,7 +52,7 @@ export const drawerStateAtom = atom<DrawerPropsType>({
   isOpen: false,
   placement: 'left',
   view: 'SIDE_MENU',
-  params: {},//aca toquetie
+  params: {}, //aca toquetie
 });
 
 export default function DrawerContainer() {
@@ -73,7 +71,7 @@ export default function DrawerContainer() {
         customSize={drawerSate.customSize}
         containerClassName={clsx(
           drawerSate.view === 'BOOKING_FORM' && 'bg-white',
-          drawerSate.view === 'PHOTO_GALLERY' && 'bg-white overflow-y-auto'
+          drawerSate.view === 'PHOTO_GALLERY' && 'bg-white overflow-y-auto',
         )}
         onClose={() => setDrawerState({ ...drawerSate, isOpen: false })}
       >

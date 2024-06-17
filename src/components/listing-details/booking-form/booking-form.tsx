@@ -78,10 +78,29 @@ export default function BookingForm({
     fullDay: 450,
   };
 
+  const rentPricesExcursions: Record<any, number> = {
+    'isla-margarita': 180,
+    'cala-salada': 120,
+    'cala-comte': 180,
+    'cala-ubarca': 250,
+    portixol: 300,
+    'isla-es-vedra': 300,
+  };
+
   useEffect(() => {
-    const price = rentPrices[rentTime] * adults;
-    setCalculatedPrice(price);
-  }, [rentTime, adults]);
+    if (selection.excursion) {
+      console.log(
+        selection.excursionName,
+        rentPricesExcursions[selection.excursionName!],
+        adults,
+      );
+      const price = rentPricesExcursions[selection.excursionName!] * adults;
+      setCalculatedPrice(price);
+    } else {
+      const price = rentPrices[rentTime] * adults;
+      setCalculatedPrice(price);
+    }
+  }, [rentTime, adults, selection]);
 
   async function handleBooking(data: any) {
     const date = new Date(data.startDate).toISOString();
@@ -89,7 +108,6 @@ export default function BookingForm({
     const newSelection = {
       ...selection,
       adults: data.selected.adults,
-      rentTime: data.selected.rentTime,
       date,
     };
 
@@ -129,7 +147,7 @@ export default function BookingForm({
     >
       <div className="flex items-center justify-between gap-3">
         <p className="text-xl font-bold text-gray-dark xl:text-[22px]">
-          ${price} Euro <span className="text-base"></span>
+          ${calculatedPrice} Euro <span className="text-base"></span>
         </p>
       </div>
       <div
@@ -174,13 +192,14 @@ export default function BookingForm({
         control={control}
         render={({ field: { onChange, value } }) => (
           <SelectBox
+            listing={listing}
             defaultSelected={value}
             onChange={({ rentTime, adults }) => {
               setRentTime(rentTime as any);
               setAdults(adults as any);
               onChange({ rentTime, adults });
             }}
-            rentTimeDisabled={listing.triptime !== undefined}
+            rentTimeDisabled={selection.excursion}
           />
         )}
       />
@@ -200,7 +219,7 @@ export default function BookingForm({
       </Button>
       <ul className="mt-3 xl:mt-5">
         <li className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0">
-          <span className="font-normal"> {rentTime} Rent Time</span>
+          <span className="font-normal">Total</span>
           <span className="font-bold">${calculatedPrice}</span>
         </li>
         {/* {list.map((item) => (

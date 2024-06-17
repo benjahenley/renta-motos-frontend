@@ -7,6 +7,7 @@ import { ArrowDownIcon } from '@/components/icons/arrow-down';
 import Radio from '@/components/ui/form-fields/radio';
 import Counter from '@/components/ui/counter';
 import Button from '@/components/ui/button';
+import { useAtom } from 'jotai';
 
 interface SelectedProps {
   adults: number;
@@ -28,7 +29,7 @@ export default function SelectBox({
   defaultSelected,
   onChange,
   listing,
-  rentTimeDisabled = false,
+  rentTimeDisabled,
 }: SelectBoxProps) {
   const [adults, setAdults] = useState(defaultSelected.adults);
   const [rentTime, setRentTime] = useState(defaultSelected.rentTime);
@@ -81,7 +82,7 @@ export default function SelectBox({
               />
             </div>
 
-            {!rentTimeDisabled && ( // Solo mostrar si no está deshabilitado rentTime
+            {!rentTimeDisabled ? (
               <div className="flex items-center justify-between">
                 <h5 className="text-base font-bold text-gray-dark">
                   Rent time
@@ -137,6 +138,8 @@ export default function SelectBox({
                   />
                 </div>
               </div>
+            ) : (
+              <h2>{listing.triptime}</h2>
             )}
             <Listbox.Option className="mt-4" value={0}>
               <Button
