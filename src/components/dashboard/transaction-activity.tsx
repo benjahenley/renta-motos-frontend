@@ -167,18 +167,13 @@ export default function TransactionActivity() {
       <Table
         data={data.map((item) => ({
           ...item,
-          actions: (
-            <DotsDropdown
-              key={item.id}
-              reservationId={item.id}
-              onDeleteSuccess={() => setData(data.filter((d) => d.id !== item.id))}
-            />
-          ),
+          key: item.id,  // Añadir clave única basada en el id
         }))}
         columns={columns}
         variant="minimal"
         className="text-sm"
       />
+
       <div className="mt-8 text-center">
         <Pagination
           current={current}
