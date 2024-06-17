@@ -105,6 +105,15 @@ export const reservationColumn = (
     render: (name: any) => <p className="whitespace-nowrap">{name}</p>,
   },
   {
+    title: <HeaderCell title={'Adults'} />,
+    dataIndex: 'adults',
+    key: 'adults',
+    width: 50,
+    render: (name: any) => (
+      <p className="whitespace-nowrap text-center">{name}</p>
+    ),
+  },
+  {
     title: <HeaderCell title={'Status'} />,
     dataIndex: 'status',
     key: 'status',

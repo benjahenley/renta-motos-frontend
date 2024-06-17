@@ -1,4 +1,5 @@
 import { getToken } from '@/helpers/getToken';
+import { Reservation } from '@/interfaces/reservation';
 
 // api/reservations/getReservationByUserID.ts
 export const getReservationsByUserId = async () => {
@@ -19,7 +20,7 @@ export const getReservationsByUserId = async () => {
       throw new Error(errorData.error || 'An unknown error occurred');
     }
 
-    const signData = await response.json();
+    const signData: Reservation[] = await response.json();
     return signData;
   } catch (error: any) {
     throw new Error(error.message || 'An unknown error occurred');

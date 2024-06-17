@@ -151,7 +151,8 @@ export default function SelectCalendarExcursions() {
     }
 
     if (history.length === 1) {
-      deleteHistoryAndUpdateJetskisReserved();
+      setHistory([]);
+      // deleteHistoryAndUpdateJetskisReserved();
     } else {
       const newHistory: [number[], string | undefined][] = [];
       const adultsPerTimeSlot = new Array(timeSlots.length).fill(0);
@@ -162,7 +163,7 @@ export default function SelectCalendarExcursions() {
       newHistory.push([adultsPerTimeSlot, excursionName]);
       console.log('New History', newHistory);
 
-      updateJetskisReserved(newHistory);
+      // updateJetskisReserved(newHistory);
       setHistory(newHistory);
     }
   };

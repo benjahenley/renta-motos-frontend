@@ -22,7 +22,7 @@ export let timeSlots = [
 
 export const jetskiData = async () => {
   try {
-    const { jetskis } = await getJetskis();
+    const jetskis = await getJetskis();
     const availableJetskis = jetskis.filter(
       (jetski: { available: boolean }) => jetski.available,
     );
@@ -90,7 +90,7 @@ export const findTimezoneIndexes = (
 
   for (let i = 0; i < timeSlots.length; i++) {
     const shiftStartTime = timeSlots[i];
-    if (shiftStartTime >= startTime && shiftStartTime <= endTime) {
+    if (shiftStartTime >= startTime && shiftStartTime < endTime) {
       indexes.push(i);
     }
   }
@@ -106,7 +106,7 @@ export const getJetskisAndExcursionsTemplate = (): [number, string[]][] => {
 };
 
 export const getHistoryTemplate = (): [number, string[]][] => {
-  const template: [number[], string[]][] = [];
+  const template: [number, string[]][] = [];
 
   timeSlots.forEach(() => template.push([0, []]));
   return template;
