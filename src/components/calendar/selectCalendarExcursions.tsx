@@ -39,6 +39,7 @@ export default function SelectCalendarExcursions() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
+        setHistory([]);
         console.log(selection!.date!);
         const { reservations } = await getReservationsByDate(
           formatDateToISOWithoutTime(selection!.date!),

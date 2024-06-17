@@ -79,15 +79,21 @@ export default function BookingForm({
   };
 
   const rentPricesExcursions: Record<any, number> = {
-    margaritas: 180,
+    'isla-margarita': 180,
     'cala-salada': 120,
-    'cala-bassa': 180,
+    'cala-comte': 180,
     'cala-ubarca': 250,
     portixol: 300,
-    esvedra: 300,
+    'isla-es-vedra': 300,
   };
+
   useEffect(() => {
     if (selection.excursion) {
+      console.log(
+        selection.excursionName,
+        rentPricesExcursions[selection.excursionName!],
+        adults,
+      );
       const price = rentPricesExcursions[selection.excursionName!] * adults;
       setCalculatedPrice(price);
     } else {
@@ -102,7 +108,6 @@ export default function BookingForm({
     const newSelection = {
       ...selection,
       adults: data.selected.adults,
-      rentTime: data.selected.rentTime,
       date,
     };
 
@@ -187,6 +192,7 @@ export default function BookingForm({
         control={control}
         render={({ field: { onChange, value } }) => (
           <SelectBox
+            listing={listing}
             defaultSelected={value}
             onChange={({ rentTime, adults }) => {
               setRentTime(rentTime as any);
