@@ -1,5 +1,3 @@
-'use client';
-
 import { reservationData } from 'public/data/orders';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
@@ -10,6 +8,8 @@ import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { getToken } from '@/helpers/getToken';
 import { getAllReservations } from '@/api/reservations/getAllReservations';
+import { deleteReservation } from '@/api/reservations/deleteReservation';
+import DotsDropdown from '@/components/reservation/dots-dropdown';
 import { useRouter } from 'next/navigation';
 
 export default function TransactionActivity() {
@@ -104,9 +104,22 @@ export default function TransactionActivity() {
   );
 
   // handle more button with edit, preview, delete
-  const onMore = useCallback((e: any, row: any) => {
-    console.log(e.target.id);
-  }, []);
+  const onMore = useCallback(
+    async (e: any, row: any) => {
+      if (e.target.id === 'delete') {
+        try {
+          await deleteReservation(row.id);
+          // Remove the deleted row from the data
+          setData((prevData) => prevData.filter((item) => item.id !== row.id));
+        } catch (error) {
+          console.error('Failed to delete reservation:', error);
+        }
+      } else {
+        console.log(e.target.id);
+      }
+    },
+    [data],
+  );
 
   // on header click sort table by ascending or descending order
   const onHeaderClick = useCallback(

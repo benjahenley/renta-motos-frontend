@@ -1,21 +1,34 @@
-'use client';
-
-import { Fragment } from 'react';
+import { deleteReservation } from '@/api/reservations/deleteReservation';
+import { Fragment, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import {
   EllipsisHorizontalIcon,
-  PencilIcon,
-  ViewfinderCircleIcon,
   TrashIcon,
 } from '@heroicons/react/24/solid';
 
 interface MenuItemProps {
   onClick?: (e: any) => void;
+  reservationId: string;
+  onDeleteSuccess: () => void;
 }
 
 const dropdown = ['delete'];
 
-export default function DotsDropdown({ onClick }: MenuItemProps) {
+export default function DotsDropdown({ onClick, reservationId, onDeleteSuccess }: MenuItemProps) {
+  const [loading, setLoading] = useState(false);
+
+  const handleDelete = async (e: any) => {
+    setLoading(true);
+    try {
+      await deleteReservation(reservationId);
+      onDeleteSuccess();
+    } catch (error) {
+      console.error('Failed to delete reservation:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Menu as="div" className="relative inline-block">
@@ -41,13 +54,9 @@ export default function DotsDropdown({ onClick }: MenuItemProps) {
                   as="button"
                   type="button"
                   className="flex w-full items-center gap-3 rounded-md p-2 text-left text-sm capitalize hover:bg-gray-lightest"
-                  onClick={onClick}
+                  onClick={item === 'delete' ? handleDelete : onClick}
                   id={item}
                 >
-                  {/* {item === 'edit' && <PencilIcon className="h-auto w-5" />}
-                  {item === 'preview' && (
-                    <ViewfinderCircleIcon className="h-auto w-5" />
-                  )} */}
                   {item === 'delete' && <TrashIcon className="h-auto w-5" />}
                   {item}
                 </Menu.Item>
