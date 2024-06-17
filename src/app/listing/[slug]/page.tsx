@@ -1,8 +1,11 @@
+'use client';
+
 import { vendorData } from 'public/data/listing-details';
 import RelatedListingBlock from '@/components/listing-details/related-listings/related-listings-block';
 import ListingDetails from '@/components/listing-details/listing-details-block';
 import SubscriptionBlock from '@/components/subscription/subscription-block';
 import GallaryBlock from '@/components/listing-details/gallary-block';
+import { useRouter } from 'next/navigation';
 
 export default function ListingDetailsPage({
   params,
@@ -10,11 +13,22 @@ export default function ListingDetailsPage({
   params: { slug: string };
 }) {
   const { slug } = params;
+  const router = useRouter();
 
   console.log(slug);
 
+  var selectedVendor: any = {};
+
   // Buscar el vendor cuyo slug coincide con el recibido por parámetro
-  const selectedVendor = (vendorData as any)[slug];
+  try {
+    const selectedVendorr = (vendorData as any)[slug];
+    if (!selectedVendorr) {
+      throw new Error('not found');
+    }
+    selectedVendor = selectedVendorr;
+  } catch (e) {
+    router.push('/');
+  }
 
   return (
     <>

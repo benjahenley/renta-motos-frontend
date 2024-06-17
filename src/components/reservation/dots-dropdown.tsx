@@ -3,10 +3,7 @@
 import { deleteReservation } from '@/api/reservations/deleteReservation';
 import { Fragment, useState, useEffect } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import {
-  EllipsisHorizontalIcon,
-  TrashIcon,
-} from '@heroicons/react/24/solid';
+import { EllipsisHorizontalIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 interface MenuItemProps {
   onClick?: (e: any) => void;
@@ -16,7 +13,11 @@ interface MenuItemProps {
 
 const dropdown = ['delete'];
 
-export default function DotsDropdown({ onClick, reservationId, onDeleteSuccess }: MenuItemProps) {
+export default function DotsDropdown({
+  onClick,
+  reservationId,
+  onDeleteSuccess,
+}: MenuItemProps) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

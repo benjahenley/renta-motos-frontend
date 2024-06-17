@@ -264,7 +264,7 @@ export const vendorData = {
     description: "Descubre la serenidad de Cala Salada, una joya escondida en la costa de Ibiza. Con aguas cristalinas y arena dorada, Cala Salada es el lugar perfecto para relajarse y disfrutar de la belleza natural. Navega por las aguas tranquilas y sumérgete en un mundo submarino lleno de vida marina. Pasea por los senderos que rodean la cala y disfruta de vistas panorámicas impresionantes. La calma y la tranquilidad de Cala Salada te harán sentir como si estuvieras en un paraíso privado, lejos del bullicio de la vida cotidiana."
   },
 
-  "cala-daubarca": {
+  "cala-ubarca": {
     slug: "cala-daubarca",
     price: 250,
     triptime: "1h 30min",

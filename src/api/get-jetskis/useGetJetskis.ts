@@ -1,3 +1,5 @@
+import { getToken } from '@/helpers/getToken';
+
 export interface Jetski {
   id: string;
   name: string;
@@ -24,15 +26,18 @@ export const getJetskis = async (): Promise<Jetski[]> => {
   }
 };
 
-export const updateJetskiStatus = async (id: string): Promise<Jetski> => {
-  const url = `${process.env.NEXT_PUBLIC_URL_API_SERVER}/jetski`;
+export const updateJetskiStatus = async (jetskiId: string): Promise<Jetski> => {
+  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetski';
+
   try {
+    const token = getToken();
     const response = await fetch(url, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ jetskiId: id }),
+      body: JSON.stringify({ jetskiId }),
     });
 
     if (!response.ok) {

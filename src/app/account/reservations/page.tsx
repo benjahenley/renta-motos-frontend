@@ -16,24 +16,24 @@ import { extractTime } from '@/helpers/extract-time';
 import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
 import { getReservationsByUserId } from '@/api/reservations/getReservationsByUserId';
 
-async function getData(token: string, start: number, offset: number) {
+async function getData(start: number, offset: number) {
   const data = await getReservationsByUserId();
-  const reservations = data.orders.flatMap(
-    (order: any) =>
-      order.reservations
+  const reservations = data.flatMap(
+    (reservation: any) =>
+      reservation
         .map((item: any) => {
           if (!item) {
             return null;
           }
 
-          const endTime = item.endTime ? extractTime(item.endTime) : 'N/A';
+          const endTime = item.endTime ? extractTime(item.endTisme) : 'N/A';
           const startTime = item.startTime
             ? extractTime(item.startTime)
             : 'N/A';
 
           return {
             id: item.id,
-            date: formatDateToISOWithoutTime(new Date(item.date)),
+            date: formatDateToISOWithoutTime(item.date),
             name: item.userFullName,
             status: item.status,
             endTime,
@@ -66,7 +66,7 @@ export default function reservationsPage() {
       } catch (e: any) {
         console.log(e.message);
       } finally {
-        const reservations = await getData(token, 0, 10);
+        const reservations = await getData(0, 10);
         setData(reservations);
         setLoading(false);
       }
@@ -86,7 +86,7 @@ export default function reservationsPage() {
       } else {
         let start = (current - 1) * 10;
         let offset = current * 10;
-        const newData = await getData(token, start, offset);
+        const newData = await getData(start, offset);
         setData(newData);
       }
     };
@@ -97,7 +97,7 @@ export default function reservationsPage() {
     const fetchData = async () => {
       let start = (current - 1) * 10;
       let offset = current * 10;
-      const fetchedData = await getData(token, start, offset);
+      const fetchedData = await getData(start, offset);
       setData(fetchedData);
     };
     fetchData();

@@ -7,6 +7,7 @@ export const deleteReservation = async (id: string) => {
     const response = await fetch(url, {
       method: 'DELETE',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });
