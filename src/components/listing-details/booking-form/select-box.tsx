@@ -28,7 +28,7 @@ export default function SelectBox({
   defaultSelected,
   onChange,
   listing,
-  rentTimeDisabled = false,
+  rentTimeDisabled,
 }: SelectBoxProps) {
   const [adults, setAdults] = useState(defaultSelected.adults);
   const [rentTime, setRentTime] = useState(defaultSelected.rentTime);

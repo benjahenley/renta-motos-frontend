@@ -2,28 +2,27 @@ import React, { useEffect, useState } from 'react';
 import Carrito from '@/components/payment/carrito';
 import { useRouter } from 'next/navigation';
 import { PaypalButton } from '../paypal/paypalButton';
-import { getOrder } from '@/api/order/getOrder';
 import { getToken } from '@/helpers/getToken';
 import { useModal } from '../modals/context';
+import { getReservationById } from '@/api/reservations/getReservationsById';
+import { Reservation } from '@/interfaces/reservation';
 
 type Props = {
-  orderId: string;
+  reservationId: string;
 };
 
-type Order = {
-  price: number;
-};
-
-export default function PaymentBlock({ orderId }: Props) {
+export default function PaymentBlock({ reservationId }: Props) {
   const router = useRouter();
-  const [order, setOrder] = useState<Order | null>(null);
+  const [reservation, setReservation] = useState<Reservation>();
   const { openModal } = useModal();
 
+  console.log(reservationId);
+
   useEffect(() => {
-    if (!orderId) {
+    if (!reservationId) {
       router.push('/');
     } else {
-      const apiCallTheOrder = async (orderId: string) => {
+      const apiCallTheOrder = async (reservationId: string) => {
         const token = getToken();
 
         if (!token) {
@@ -31,35 +30,38 @@ export default function PaymentBlock({ orderId }: Props) {
         }
 
         try {
-          const order = await getOrder(token, orderId);
+          const reservationData = await getReservationById(
+            token,
+            reservationId,
+          );
 
-          setOrder(order);
+          setReservation(reservationData);
         } catch (error) {
           console.error('Error fetching order:', error);
           router.push('/');
         }
       };
 
-      apiCallTheOrder(orderId);
+      apiCallTheOrder(reservationId);
     }
-  }, [orderId, router]);
+  }, [reservation, router]);
 
   return (
     <>
-      {!order ? (
+      {!reservation ? (
         <div className="text-center">'LOADING'</div>
       ) : (
         <div className="container px-5 mt-5 max-w-[1280px] md:flex md:justify-between pb-10 md:mt-7 xl:mt-12 3xl:!px-0">
           <div className="md:w-[48%] m-auto">
-            <Carrito order={order} />
+            <Carrito order={reservation} />
             <p className="text-red-500 text-center mt-2 ">
               ** Please note reservations are non-refundable, the rest of the
               rent fee must be payed on reservation day **
             </p>
             <div className="mt-20">
               <PaypalButton
-                orderId={orderId}
-                amount={order.price * 0.3}
+                orderId={reservationId}
+                amount={reservation.price * 0.3}
               ></PaypalButton>
             </div>
           </div>

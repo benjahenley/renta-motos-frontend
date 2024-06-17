@@ -8,7 +8,7 @@ export type Selection = {
   excursionName?: string | undefined;
 };
 
-export const selectionAtom = atomWithStorage<Partial<Selection | {}>>(
+export const selectionAtom = atomWithStorage<Partial<Selection>>(
   'selection',
   {},
 );
