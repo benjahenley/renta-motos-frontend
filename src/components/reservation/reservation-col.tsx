@@ -31,6 +31,7 @@ export const reservationColumn = (
   onChange: (row: any) => any,
   onMore: (e: any, row: any) => any,
   onHeaderClick: (value: string) => any,
+  onDeleteSuccess: (id: string) => any,   // Añadido onDeleteSuccess
 ) => [
   {
     title: (
@@ -127,7 +128,8 @@ export const reservationColumn = (
     width: 50,
     render: (value: any, row: any) => (
       <div className="flex items-center gap-2">
-        <DotsDropdown key={row.key} onClick={(e: any) => onMore(e, row)} />
+        <DotsDropdown key={row.key} reservationId={row.id} onDeleteSuccess={() => onDeleteSuccess(row.id)}  // Ajustado para pasar el id
+          onClick={(e: any) => onMore(e, row)} />
       </div>
     ),
   },
