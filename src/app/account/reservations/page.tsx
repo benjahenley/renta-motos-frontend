@@ -16,8 +16,10 @@ import { extractTime } from '@/helpers/extract-time';
 import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
 import { getReservationsByUserId } from '@/api/reservations/getReservationsByUserId';
 
+
 async function getData(start: number, offset: number) {
   const data = await getReservationsByUserId();
+  console.log(data)
   const reservations = data.flatMap(
     (reservation: any) =>
       reservation
@@ -26,7 +28,7 @@ async function getData(start: number, offset: number) {
             return null;
           }
 
-          const endTime = item.endTime ? extractTime(item.endTisme) : 'N/A';
+          const endTime = item.endTime ? extractTime(item.endTime) : 'N/A';
           const startTime = item.startTime
             ? extractTime(item.startTime)
             : 'N/A';

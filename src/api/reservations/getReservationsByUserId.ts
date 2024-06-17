@@ -1,8 +1,7 @@
 import { getToken } from '@/helpers/getToken';
 import { Reservation } from '@/interfaces/reservation';
 
-// api/reservations/getReservationByUserID.ts
-export const getReservationsByUserId = async () => {
+export const getReservationsByUserId = async (): Promise<Reservation[]> => {
   const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservations/user';
 
   try {
@@ -21,7 +20,7 @@ export const getReservationsByUserId = async () => {
     }
 
     const signData: Reservation[] = await response.json();
-    return signData;
+    return Array.isArray(signData) ? signData : [];
   } catch (error: any) {
     throw new Error(error.message || 'An unknown error occurred');
   }
