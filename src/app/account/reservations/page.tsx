@@ -18,34 +18,28 @@ import { getReservationsByUserId } from '@/api/reservations/getReservationsByUse
 
 async function getData(start: number, offset: number) {
   const data = await getReservationsByUserId();
-  const reservations = data.flatMap(
-    (reservation: any) =>
-      reservation
-        .map((item: any) => {
-          if (!item) {
-            return null;
-          }
+  console.log(data);
 
-          const endTime = item.endTime ? extractTime(item.endTisme) : 'N/A';
-          const startTime = item.startTime
-            ? extractTime(item.startTime)
-            : 'N/A';
+  data
+    .map((item: any) => {
+      if (!item) {
+        return null;
+      }
 
-          return {
-            id: item.id,
-            date: formatDateToISOWithoutTime(item.date),
-            name: item.userFullName,
-            status: item.status,
-            endTime,
-            startTime,
-            jetskiId: item.jetskiId,
-            checked: false,
-          };
-        })
-        .filter(Boolean), // Filtrar elementos nulos
-  );
+      return {
+        id: item.id,
+        date: formatDateToISOWithoutTime(item.date),
+        name: item.userFullName,
+        status: item.status,
+        endTime: item.endTime,
+        startTime: item.startTime,
+        jetskiId: item.jetskiId,
+        checked: false,
+      };
+    })
+    .filter(Boolean);
 
-  const filteredData = reservations.slice(start, offset);
+  const filteredData = data.slice(start, offset);
   return filteredData;
 }
 
