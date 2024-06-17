@@ -17,7 +17,7 @@ export default function SignIn({ className }: { className?: string }) {
           </p>
         </div>
         <SigninForm />
-        <SocialLogin />
+        {/* <SocialLogin /> */}
       </div>
     </div>
   );
