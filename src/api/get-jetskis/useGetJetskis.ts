@@ -32,7 +32,7 @@ export const updateJetskiStatus = async (jetskiId: string): Promise<Jetski> => {
   try {
     const token = getToken();
     const response = await fetch(url, {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
