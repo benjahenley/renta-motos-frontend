@@ -42,7 +42,7 @@ export default function TransactionActivity() {
         let start = (current - 1) * 10;
         let offset = current * 10;
         const newData = await getData(start, offset);
-        console.log({ newData });
+
         setData(newData);
       }
     };

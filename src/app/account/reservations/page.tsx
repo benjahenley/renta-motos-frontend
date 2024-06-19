@@ -23,8 +23,6 @@ async function getData(start: number, offset: number) {
         return null;
       }
 
-      console.log(item);
-
       return {
         id: item.id,
         date: formatDateToISOWithoutTime(item.date),
@@ -38,8 +36,6 @@ async function getData(start: number, offset: number) {
       };
     })
     .filter(Boolean);
-
-  console.log(data);
 
   const filteredData = data.slice(start, offset);
   return filteredData;
@@ -124,7 +120,7 @@ export default function reservationsPage() {
   );
 
   const onMore = useCallback((e: any, row: any) => {
-    console.log(e.target.id);
+    // console.log(e.target.id);
   }, []);
 
   const onHeaderClick = useCallback(

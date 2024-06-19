@@ -11,6 +11,7 @@ export const getJetskis = async (): Promise<Jetski[]> => {
   const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetskis';
   try {
     const response = await fetch(url, {
+      cache: 'no-store',
       method: 'GET',
     });
 
@@ -28,10 +29,12 @@ export const getJetskis = async (): Promise<Jetski[]> => {
 
 export const updateJetskiStatus = async (jetskiId: string): Promise<Jetski> => {
   const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetski';
+  console.log('llega');
 
   try {
     const token = getToken();
     const response = await fetch(url, {
+      cache: 'no-store',
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

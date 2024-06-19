@@ -34,8 +34,6 @@ export default function PaymentBlock({ reservationId }: Props) {
             reservationId,
           );
 
-          console.log(reservationData);
-
           setReservation(reservationData);
         } catch (error) {
           console.error('Error fetching order:', error);

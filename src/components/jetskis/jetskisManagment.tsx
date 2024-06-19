@@ -17,7 +17,6 @@ const SimpleTable = ({
   data: Jetski[];
   handleToggleMaintenance: (id: string) => void;
 }) => {
-  console.log(data);
   return (
     <div className="rc-table-container extratable__container">
       <div className="rc-table-content">
@@ -61,7 +60,9 @@ const JetskiManagement: React.FC = () => {
 
   useEffect(() => {
     const filterData = () => {
-      let filteredData = Array.isArray(jetskis) ? jetskis : [];
+      console.log({ jetskis });
+      let filteredData = [...jetskis];
+
       if (searchFilter) {
         filteredData = filteredData.filter((jetski) =>
           jetski.name.toLowerCase().includes(searchFilter.toLowerCase()),
@@ -75,12 +76,14 @@ const JetskiManagement: React.FC = () => {
     filterData();
   }, [jetskis, searchFilter, current]);
 
+  useEffect(() => {
+    console.log(displayData);
+  }, [displayData]);
+
   const handleToggleMaintenance = async (id: string) => {
     try {
       await toggleStatus(id);
-      // Después de actualizar el estado, necesitas volver a obtener los datos de jetskis para reflejar los cambios en la UI.
-      const updatedJetskis = await getJetskis();
-      setDisplayData(updatedJetskis);
+      console.log('helloo');
     } catch (error) {
       console.error('Failed to update jetski status', error);
     }
