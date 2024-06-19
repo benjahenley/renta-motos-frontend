@@ -14,8 +14,11 @@ type QueryStringType = {
   returnDate: string;
 };
 
-export default function FindTripForm() {
-  // const { t } = useTranslation('common');
+interface FindTripFormProps {
+  destinationRef: React.RefObject<HTMLDivElement>;
+}
+
+export default function FindTripForm({ destinationRef }: FindTripFormProps) {
   const router = useRouter();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -37,10 +40,7 @@ export default function FindTripForm() {
   const handleFormSubmit = (e: any) => {
     e.preventDefault();
 
-    // Supongamos que tienes un slug específico
     const specificSlug = 'listing/listing-1';
-
-    // Construye la URL con el slug
     const slugUrl = `${specificSlug}`;
 
     let queryString = '';
@@ -50,8 +50,11 @@ export default function FindTripForm() {
       returnDate: format(endDate, 'yyyy-MM-dd'),
     };
     queryString = makeQueryString(queryObj);
-    // router.push(`${Routes.public.explore}?${queryString}`);
     router.push(slugUrl);
+  };
+
+  const scrollToDestinations = () => {
+    destinationRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -62,8 +65,7 @@ export default function FindTripForm() {
     >
       <div className="mb-3 sm:mb-0 flex-grow">
         <span className="mb-2 hidden font-satisfy text-xl leading-7 text-gray-dark sm:block 4xl:text-[28px] 4xl:leading-[44px]">
-        Enjoy your ride in a unique way
-        {/* {t('searchform1')} */}
+          Enjoy your ride in a unique way
         </span>
         <Text
           tag="h1"
@@ -72,12 +74,11 @@ export default function FindTripForm() {
           Experience <br className="hidden sm:block" />
           our aquatic bikes
         </Text>
-
       </div>
 
       <div className="mt-auto flex flex-col justify-end">
-      <Text className="mb-5 text-center leading-6 !text-secondary sm:block sm:text-left 3xl:leading-8 4xl:mb-6 4xl:text-lg">
-        Don't miss the oportunity to travel and discovering, go check our equipment and do your reservation!
+        <Text className="mb-5 text-center leading-6 !text-secondary sm:block sm:text-left 3xl:leading-8 4xl:mb-6 4xl:text-lg">
+          Don't miss the opportunity to travel and discover, go check our equipment and make your reservation!
         </Text>
         <Button
           type="submit"
@@ -85,7 +86,17 @@ export default function FindTripForm() {
           rounded="lg"
           size="xl"
         >
-          Go check availability
+          Free with license
+        </Button>
+        <br/>
+        <Button
+          type="button"
+          className="w-full  !py-[14px] text-sm !font-bold uppercase leading-6 md:!py-[17px] md:text-base lg:!rounded-xl 3xl:!py-[22px]"
+          rounded="lg"
+          size="xl"
+          onClick={scrollToDestinations}
+        >
+          No license
         </Button>
       </div>
     </form>

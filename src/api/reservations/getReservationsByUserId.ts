@@ -21,7 +21,7 @@ export const getReservationsByUserId = async () => {
     }
 
     const signData: Reservation[] = await response.json();
-    return signData;
+    return Array.isArray(signData) ? signData : [];
   } catch (error: any) {
     throw new Error(error.message || 'An unknown error occurred');
   }

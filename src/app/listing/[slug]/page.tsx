@@ -1,11 +1,15 @@
 'use client';
 
+
+import { useEffect } from 'react';
+import { useAtom } from 'jotai';
 import { vendorData } from 'public/data/listing-details';
 import RelatedListingBlock from '@/components/listing-details/related-listings/related-listings-block';
 import ListingDetails from '@/components/listing-details/listing-details-block';
 import SubscriptionBlock from '@/components/subscription/subscription-block';
 import GallaryBlock from '@/components/listing-details/gallary-block';
 import { useRouter } from 'next/navigation';
+import { slugAtom } from '@/atoms/slug';
 
 export default function ListingDetailsPage({
   params,
@@ -15,6 +19,12 @@ export default function ListingDetailsPage({
   const { slug } = params;
   const slugMinusculas = slug.toLocaleLowerCase();
   const router = useRouter();
+  const [, setSlug] = useAtom(slugAtom);
+
+  useEffect(() => {
+    // Almacenar el slug en el átomo
+    setSlug(slug);
+  }, [slug, setSlug]);
 
   var selectedVendor: any = {};
 

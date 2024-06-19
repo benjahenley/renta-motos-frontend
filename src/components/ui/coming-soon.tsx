@@ -5,6 +5,7 @@ import HelpForm from '@/components/ui/form-fields/helpForm';
 import Text from '@/components/ui/typography/text';
 
 export default function ComingSoon() {
+ 
   return (
     <div className="fixed inset-0 grid grid-cols-1 items-center justify-center md:grid-cols-2">
       <div className="px-4 sm:px-6 2xl:px-7 3xl:px-8 4xl:px-16">
