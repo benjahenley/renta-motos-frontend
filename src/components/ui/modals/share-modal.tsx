@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Text from '@/components/ui/typography/text';
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import {
@@ -50,19 +51,27 @@ const list = [
 export default function ShareModal() {
   const { closeModal } = useModal();
   const [copied, setCopied] = useState(false);
-  const [state, setState] = useState(
-    'https://www.figma.com/file/NlfVhYygR9mAQasa'
-  );
+  const router = useRouter();
+  const [slug, setSlug] = useState('');
+
+  useEffect(() => {
+    // Extraer el slug de la URL actual
+    const path = router.asPath;
+    const parts = path.split('/');
+    const slugFromUrl = parts[parts.length - 1];
+    setSlug(slugFromUrl);
+  }, [router.asPath]);
+
+  const shareUrl = `${window.location.origin}/${slug}`;
 
   useEffect(() => {
     if (copied) {
-      navigator.clipboard.writeText(state);
+      navigator.clipboard.writeText(shareUrl);
       setTimeout(() => {
-        setCopied(!copied);
+        setCopied(false);
       }, 1000);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [copied]);
+  }, [copied, shareUrl]);
 
   return (
     <div className="relative z-50 mx-auto w-full max-w-full overflow-hidden rounded-xl bg-white p-4 xs:w-[480px] sm:w-[520px] sm:p-6 lg:p-8">
@@ -91,7 +100,7 @@ export default function ShareModal() {
             >
               {item.icon}
             </a>
-            <p className="mt-4   text-xs font-normal text-gray-dark sm:text-sm">
+            <p className="mt-4 text-xs font-normal text-gray-dark sm:text-sm">
               {item.text}
             </p>
           </div>
@@ -101,13 +110,13 @@ export default function ShareModal() {
         Or share with link
       </Text>
       <div className="mt-4 flex w-full items-center justify-between gap-4 rounded-lg bg-gray-lightest p-2 sm:px-5 sm:py-4 md:mt-7">
-        <p className="w-3/4 overflow-clip text-ellipsis   text-sm font-normal text-gray">
-          {state}
+        <p className="w-3/4 overflow-clip text-ellipsis text-sm font-normal text-gray">
+          {shareUrl}
         </p>
         <ActionIcon
           size="sm"
           variant="text"
-          onClick={() => setCopied(!copied)}
+          onClick={() => setCopied(true)}
           className="focus:!ring-0"
           title="copy link"
         >

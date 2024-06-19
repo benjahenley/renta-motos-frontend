@@ -1,144 +1,9 @@
-// export const vendorData = {
-//   price: 215,
-//   gallary: [
-//     "/images/top-boats/1.jpeg",
-//     "/images/top-boats/2.jpeg",
-//     "/images/top-boats/3.jpeg",
-//     "/images/top-boats/4.jpeg",
-//     "/images/top-boats/5.jpeg",
-//     "/images/top-boats/6.jpeg",
-//     "/images/top-boats/7.jpeg",
-//     "/images/top-boats/8.jpeg",
-//     "/images/top-boats/9.jpeg",
-//     "/images/top-boats/10.jpeg",
-//     "/images/top-boats/11.jpeg",
-//     "/images/top-boats/12.jpeg",
-//   ],
-//   vendor: {
-//     name: 'Antonio Orellana',
-//     img: 'https://randomuser.me/api/portraits/men/11.jpg',
-//     coverImage: "/images/listing-details/cover-image.png",
-//     memberSince: 'Jan 2014',
-//     languages: ['English', 'Italian'],
-//     responseRate: 85,
-//     responseTime: 'Within an hour',
-//     location: 'Ibiza, España',
-//     boatName: 'VX Cruiser HO',
-//     boatGuests: 12,
-//     boatCabins: 3,
-//     boatBathrooms: 2,
-//     totalReview: 35,
-//     username: "@frankiehelene",
-//     instagramUserName: "dontbesovasya",
-//     twitterUserName: "@dontbesovasya",
-//   },
-//   description:
-//     "La VX Cruiser HO: nuestro modelo VX Cruiser de calidad premium. La combinación de un motor progresivo y potente, el revolucionario sistema de control RiDE y un sinfín de ventajas adicionales se combinan para dar lugar a este impresionante ejemplo de rendimiento y estilo con un bajo consumo. Aunque son muchas las características técnicas y prácticas que han contribuido a hacer de los modelos VX nuestras embarcaciones más deseadas, su gran versatilidad ha sido determinante para ganarse la  delidad del público. En pocas palabras, la VX Cruiser HO es el modelo de gama alta por excelencia en este sector, y no hay otra embarcación que pueda ofrecer una experiencia sobre el agua tan lujosa y potente a un precio tan asequible.",
-//   equipment: [
-//     {
-//       img: '/images/listing-details/pilot.svg',
-//       name: 'Automatic Pilot',
-//     },
-//     {
-//       img: '/images/listing-details/shower.svg',
-//       name: 'Deck Shower',
-//     },
-//     {
-//       img: '/images/listing-details/motor.svg',
-//       name: 'Outboard motor',
-//     },
-//     {
-//       img: '/images/listing-details/hot-water.svg',
-//       name: 'Hot Water',
-//     },
-//     {
-//       img: '/images/listing-details/gps.svg',
-//       name: 'GPS',
-//     },
-//     {
-//       img: '/images/listing-details/cockpit-table.svg',
-//       name: 'Cockpit Table',
-//     },
-//     {
-//       img: '/images/listing-details/wifi.svg',
-//       name: 'Wi Fi',
-//     },
-//     {
-//       img: '/images/listing-details/tv.svg',
-//       name: 'TV',
-//     },
-//     {
-//       img: '/images/listing-details/share.svg',
-//       name: 'Cockpit Table',
-//     },
-//     {
-//       img: '/images/listing-details/map.svg',
-//       name: 'Guides & maps',
-//     },
-//     {
-//       img: '/images/listing-details/speakers.svg',
-//       name: 'Cockpit speakers',
-//     },
-//     {
-//       img: '/images/listing-details/bathing-ladder.svg',
-//       name: 'Bathing Ladder',
-//     },
-//   ],
-//   specifications: [
-//     {
-//       name: ' Tipo de motor',
-//       details: '4 cilindros;1.8 Liter High Output;4 tiempos;DOHC;4 válvulas',
-//     },
-//     {
-//       name: 'Cilindrada',
-//       details: '1,812cc',
-//     },
-//     {
-//       name: 'Diámetro x carrera',
-//       details: '86.0 mm x 78.0 mm',
-//     },
-//     {
-//       name: 'Relación de compresión',
-//       details: ' 11.0 : 1',
-//     },
-//     {
-//       name: 'Tipo de bomba',
-//       details: '155 mm Axial Flow',
-//     },
-//     {
-//       name: 'Combustible',
-//       details: 'Gasolina normal sin plomo',
-//     },
-//     {
-//       name: 'Fuel supply system',
-//       details: 'Inyección electrónica de combustible',
-//     },
-//     {
-//       name: 'Capacidad de combustible',
-//       details: ' 70.0litros',
-//     },
-//     {
-//       name: ' Cap. depósito aceite',
-//       details: '5.3litros',
-//     },
-//     {
-//       name: ' Capacidad de carga',
-//       details: ' 93.2litros',
-//     },
-//     {
-//       name: 'Capacidad de pasajeros',
-//       details: '1-3 personas',
-//     },
-//     {
-//       name: 'Peso en seco (kg)',
-//       details: '348kg',
-//     }
-//   ],
-// };
+
 export const vendorData = {
   "listing-1": {
     slug: "listing-1",
     price: 310,
+    name: "VX Cruiser HO Jet Ski",
     gallary: [
       "/images/top-boats/7.jpeg",
       "/images/top-boats/2.jpeg",
@@ -240,6 +105,7 @@ export const vendorData = {
   "portixol": {
     slug: "portixol",
     price: 300,
+    name: "Portixol",
     triptime: '2h',
     gallary: [
       "/images/destinations/portixol.jpg",
@@ -255,6 +121,7 @@ export const vendorData = {
   "cala-salada": {
     slug: "cala-salada",
     price: 120,
+    name: "Cala Salada",
     triptime: "30min",
     gallary: [
       "/images/destinations/carasalada.jpg",
@@ -267,6 +134,7 @@ export const vendorData = {
   "cala-ubarca": {
     slug: "cala-daubarca",
     price: 250,
+    name: "Cala Urbaca",
     triptime: "1h 30min",
     gallary: [
       "/images/destinations/calaubarca.jpg",
@@ -279,6 +147,7 @@ export const vendorData = {
   "isla-es-vedra": {
     slug: "isla-es-vedra",
     price: 300,
+    name: "Isla Esvedra",
     triptime: "2h",
     gallary: [
       "/images/destinations/esvedra.jpg",
@@ -290,6 +159,7 @@ export const vendorData = {
 
   "isla-margarita": {
     slug: "isla-margarita",
+    name: "Isla Margarita",
     price: 180,
     triptime: "1h",
     gallary: [
@@ -303,6 +173,7 @@ export const vendorData = {
   "cala-comte": {
     slug: "cala-comte",
     price: 180,
+    name: "Cala Comte",
     triptime: "1h",
     gallary: [
       "/images/destinations/calacomte.jpg",

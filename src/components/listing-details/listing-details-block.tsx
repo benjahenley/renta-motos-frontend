@@ -53,7 +53,7 @@ export default function ListingDetails({
     <>
       <div className="flex justify-between gap-5 lg:gap-8 xl:gap-12 4xl:gap-16">
         <div className="w-full">
-          <ListingDetailsHeroBlock vendor={vendor.vendor} />
+          <ListingDetailsHeroBlock vendor={vendor} />
           <DescriptionBlock description={vendor.description} />
           {/* <EquipmentBlock equipment={vendor.equipment} /> */}
           {/* <SpecificationBlock specifications={vendor.specifications} /> */}

@@ -26,14 +26,14 @@ function ShareIcons() {
       >
         <ShareIcon className="h-auto w-5" />
       </Button>
-      <Button
+      {/* <Button
         className="!border-none !bg-gray-lightest !p-4 text-gray-dark hover:!bg-gray-dark hover:text-white"
         size="sm"
         variant="outline"
         rounded="pill"
       >
         <HeartIcon className="h-auto w-5" />
-      </Button>
+      </Button> */}
     </div>
   );
 }
@@ -79,7 +79,7 @@ export default function ListingDetailsHeroBlock({
           tag="h2"
           className="mt-2 !text-2xl uppercase !leading-7 md:!text-[26px] md:!leading-10 2xl:!text-[28px] 4xl:!text-3xl"
         >
-          {/* {vendor.boatName} */}
+          {vendor.name}
         </Text>
         {/* <div className="mt-3 flex items-center gap-2 leading-4 text-gray-dark md:mt-4">
           <p>{vendor.boatGuests} guests</p>
@@ -90,8 +90,8 @@ export default function ListingDetailsHeroBlock({
         </div> */}
       </div>
       <div className="relative">
-        <ShareMenu />
-        <ShareIcons />
+        {/* <ShareMenu /> */}
+        {/* <ShareIcons /> */}
       </div>
     </div>
   );
