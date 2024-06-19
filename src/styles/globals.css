@@ -674,4 +674,8 @@ th.rc-table-cell {
   .tr2:hover {
 	background-color: rgba(210, 210, 210, 0.136);
   }
+
+  .destinationtext {
+	font-size: x-large;
+  }
   

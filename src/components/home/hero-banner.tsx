@@ -1,11 +1,13 @@
-'use client';
-
 import Image from 'next/image';
 import FindTripForm from '@/components/home/search-form/search-form';
 
-export default function HeroBanner() {
+interface HeroBannerProps {
+  destinationRef: React.RefObject<HTMLDivElement>;
+}
+
+export default function HeroBanner({ destinationRef }: HeroBannerProps) {
   return (
-    <div className="relative flex min-h-[760px]  items-end justify-center px-4 pb-28 pt-48 before:absolute before:left-0 before:top-0 before:z-[1] before:block before:h-1/4 before:w-full before:bg-gradient-to-b before:from-black/60 sm:flex-none sm:justify-start sm:px-0 sm:pb-20 sm:pl-6 sm:pt-[120px] md:pl-16 3xl:pb-[132px] 3xl:pt-[142px] 4xl:pl-[200px]">
+    <div className="relative flex min-h-[760px] items-end justify-center px-4 pb-28 pt-48 before:absolute before:left-0 before:top-0 before:z-[1] before:block before:h-1/4 before:w-full before:bg-gradient-to-b before:from-black/60 sm:flex-none sm:justify-start sm:px-0 sm:pb-20 sm:pl-6 sm:pt-[120px] md:pl-16 3xl:pb-[132px] 3xl:pt-[142px] 4xl:pl-[200px]">
       <Image
         src="/images/banner/4.jpeg"
         alt="Home banner 1"
@@ -13,7 +15,7 @@ export default function HeroBanner() {
         priority
         className="aspect-[2/1] h-full bg-gray-lighter object-cover"
       />
-      <FindTripForm />
+      <FindTripForm destinationRef={destinationRef} />
     </div>
   );
 }

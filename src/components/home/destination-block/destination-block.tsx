@@ -10,6 +10,8 @@ export default function DestinationBlock() {
   const { state } = useTimeout();
 
   return (
+    <>
+    <h3 className="my-16 pl-4 text-3xl lg:pt-10 sm:pl-6 lg:mt-16 sm:text-5xl text-center font-satisfy font-bold">"Experience magical places with our guidance"</h3>
     <Section
       title="Top destinations for your rides"
       description="Feel free to chose what suits for you."
@@ -18,6 +20,6 @@ export default function DestinationBlock() {
     >
       {!state && <BlockLoader />}
       {state && <DestinationCarousel data={destinations} />}
-    </Section>
+    </Section></>
   );
 }

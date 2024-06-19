@@ -53,9 +53,15 @@ export default function SelectBox({
                   open && 'border-gray-dark ring-[1px] ring-gray-900/20',
                 )}
               >
-                <span className="block">
-                  {adults} <span className="ml-2">Guests</span>
-                </span>
+                {!rentTimeDisabled ?
+                  <span className="block">
+                    {rentTime} <span className="ml-2">Rent time</span>
+
+                  </span> :
+                  <span className="block">
+                    {adults} <span className="ml-2">Guests</span>
+                  </span>}
+
                 <span
                   className={clsx(
                     'transition-transform duration-200',
@@ -97,7 +103,7 @@ export default function SelectBox({
                     labelClassName="!text-sm xl:!text-base"
                     inputClassName={clsx(
                       rentTime === 'fullDay' &&
-                        '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
+                      '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
                     )}
                   />
                   <Radio
@@ -109,7 +115,7 @@ export default function SelectBox({
                     labelClassName="!text-sm xl:!text-base"
                     inputClassName={clsx(
                       rentTime === '1h' &&
-                        '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
+                      '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
                     )}
                   />
                   <Radio
@@ -121,7 +127,7 @@ export default function SelectBox({
                     labelClassName="!text-sm xl:!text-base"
                     inputClassName={clsx(
                       rentTime === '2h' &&
-                        '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
+                      '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
                     )}
                   />
                   <Radio
@@ -133,7 +139,7 @@ export default function SelectBox({
                     labelClassName="!text-sm xl:!text-base"
                     inputClassName={clsx(
                       rentTime === '4h' &&
-                        '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
+                      '!border-gray-lightest focus:!ring-1 focus:!ring-offset-0 focus:!ring-gray-dark ring-1 !ring-gray-dark',
                     )}
                   />
                 </div>
