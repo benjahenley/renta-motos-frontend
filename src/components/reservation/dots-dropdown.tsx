@@ -1,9 +1,15 @@
 'use client';
 
-import { deleteReservation } from '@/api/reservations/deleteReservation';
+import {
+  cancelReservation,
+  deleteReservation,
+} from '@/api/reservations/deleteReservation';
 import { Fragment, useState, useEffect } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { EllipsisHorizontalIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { revalidatePath } from 'next/cache';
+import { Routes } from '@/config/routes';
+import { useRouter } from 'next/navigation';
 
 interface MenuItemProps {
   onClick?: (e: any) => void;
@@ -11,7 +17,7 @@ interface MenuItemProps {
   onDeleteSuccess: () => void;
 }
 
-const dropdown = ['delete'];
+const dropdown = ['Cancel'];
 
 export default function DotsDropdown({
   onClick,
@@ -19,16 +25,14 @@ export default function DotsDropdown({
   onDeleteSuccess,
 }: MenuItemProps) {
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    console.log('Received reservationId in DotsDropdown:', reservationId); // Verifica que se reciba correctamente
-  }, [reservationId]);
+  const router = useRouter();
 
   const handleDelete = async (e: any) => {
     setLoading(true);
-    console.log('Deleting reservation with ID:', reservationId); // Verifica que el ID se use correctamente
+    console.log('Cancelling reservation with ID:', reservationId); // Verifica que el ID se use correctamente
     try {
-      await deleteReservation(reservationId);
+      await cancelReservation(reservationId);
+
       onDeleteSuccess();
     } catch (error) {
       console.error('Failed to delete reservation:', error);
@@ -58,13 +62,13 @@ export default function DotsDropdown({
             <div className="rounded-lg p-2">
               {dropdown.map((item) => (
                 <Menu.Item
-                  key={`reservation-${item}`}  // Añadir clave única basada en el item
+                  key={`reservation-${item}`} // Añadir clave única basada en el item
                   as="button"
                   type="button"
                   className="flex w-full items-center gap-3 rounded-md p-2 text-left text-sm capitalize hover:bg-gray-lightest"
                   onClick={(e) => {
                     console.log('Clicked on item:', item);
-                    if (item === 'delete') {
+                    if (item === 'Cancel') {
                       handleDelete(e);
                     } else if (onClick) {
                       onClick(e);
@@ -72,7 +76,7 @@ export default function DotsDropdown({
                   }}
                   id={item}
                 >
-                  {item === 'delete' && <TrashIcon className="h-auto w-5" />}
+                  {item === 'Cancel' && <TrashIcon className="h-auto w-5" />}
                   {item}
                 </Menu.Item>
               ))}

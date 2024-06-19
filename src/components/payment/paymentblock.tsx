@@ -6,6 +6,7 @@ import { getToken } from '@/helpers/getToken';
 import { useModal } from '../modals/context';
 import { getReservationById } from '@/api/reservations/getReservationsById';
 import { Reservation } from '@/interfaces/reservation';
+import { Routes } from '@/config/routes';
 
 type Props = {
   reservationId: string;
@@ -15,8 +16,6 @@ export default function PaymentBlock({ reservationId }: Props) {
   const router = useRouter();
   const [reservation, setReservation] = useState<Reservation>();
   const { openModal } = useModal();
-
-  console.log(reservationId);
 
   useEffect(() => {
     if (!reservationId) {
@@ -35,16 +34,18 @@ export default function PaymentBlock({ reservationId }: Props) {
             reservationId,
           );
 
+          console.log(reservationData);
+
           setReservation(reservationData);
         } catch (error) {
           console.error('Error fetching order:', error);
-          router.push('/');
+          router.push(Routes.private.reservations);
         }
       };
 
       apiCallTheOrder(reservationId);
     }
-  }, [reservation, router]);
+  }, [reservationId, router]);
 
   return (
     <>
@@ -60,7 +61,7 @@ export default function PaymentBlock({ reservationId }: Props) {
             </p>
             <div className="mt-20">
               <PaypalButton
-                orderId={reservationId}
+                reservationId={reservationId}
                 amount={reservation.price * 0.3}
               ></PaypalButton>
             </div>

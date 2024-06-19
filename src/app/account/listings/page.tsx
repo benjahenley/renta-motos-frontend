@@ -9,6 +9,7 @@ import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { getAllReservations } from '@/api/reservations/getAllReservations';
+import { useRouter } from 'next/navigation';
 
 async function getData(start: number, offset: number) {
   const data = await getAllReservations();
@@ -22,6 +23,7 @@ export default function LIstingPage() {
   const [data, setData] = useState<any[]>([]);
   const [searchfilter, setSearchFilter] = useState('');
   const [current, setCurrent] = useState(1);
+  const router = useRouter();
 
   // filter data in table
   useEffect(() => {
@@ -98,6 +100,12 @@ export default function LIstingPage() {
     console.log(e.target.id);
   }, []);
 
+  const onDeleteSuccess = (id: string) => {
+    // handle success, such as showing a success message or updating state
+    setData((prevData) => prevData.filter((item) => item.id !== id));
+    router.refresh();
+  };
+
   // on header click sort table by ascending or descending order
   const onHeaderClick = useCallback(
     (value: string) => ({
@@ -127,6 +135,7 @@ export default function LIstingPage() {
         onChange,
         onMore,
         onHeaderClick,
+        onDeleteSuccess,
       ),
     [order, column, onSelectAll, onChange, onMore, onHeaderClick],
   );

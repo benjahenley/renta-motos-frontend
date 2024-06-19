@@ -17,6 +17,7 @@ const SimpleTable = ({
   data: Jetski[];
   handleToggleMaintenance: (id: string) => void;
 }) => {
+  console.log(data);
   return (
     <div className="rc-table-container extratable__container">
       <div className="rc-table-content">
@@ -29,8 +30,8 @@ const SimpleTable = ({
             </tr>
           </thead>
           <tbody>
-            {data.map((jetski) => (
-              <tr className="tr" key={jetski.id}>
+            {data.map((jetski, index) => (
+              <tr className="tr" key={index}>
                 <td className="td px-4 py-2">{jetski.name}</td>
                 <td className="td px-4 py-2">
                   {jetski.available ? 'available' : 'maintenance'}

@@ -22,7 +22,6 @@ export default function MobileNav() {
   const { openModal } = useModal();
   const [drawerSate, setDrawerState] = useAtom(drawerStateAtom);
 
-
   const handleNavigationClick = async () => {
     try {
       const isAdminUser = await isAdmin();
@@ -52,7 +51,7 @@ export default function MobileNav() {
         </Link>
       </div> */}
       <div className="flex items-center justify-center">
-      <button
+        <button
           onClick={() => {
             if (isAuthorized) {
               handleNavigationClick();

@@ -15,15 +15,20 @@ import {
 import { setTransactionId } from '@/api/transaction/setTransactionId';
 import { getToken } from '@/helpers/getToken';
 import { paypalCheckPayment } from '@/api/payments/paypal-check-payments';
+import { Routes } from '@/config/routes';
+import { useRouter } from 'next/navigation';
+import { changeReservationStatusToApproved } from '@/api/reservations/changeStatusToApproved';
 
 interface PaypalButtonInterface {
-  orderId: string;
+  reservationId: string;
   amount: number;
 }
+
 export const PaypalButton: React.FC<PaypalButtonInterface> = ({
-  orderId,
+  reservationId,
   amount,
 }) => {
+  const router = useRouter();
   const [{ isPending }] = usePayPalScriptReducer();
   const roundedAmount = Math.round(amount * 100) / 100;
 
@@ -32,10 +37,10 @@ export const PaypalButton: React.FC<PaypalButtonInterface> = ({
     actions: CreateOrderActions,
   ): Promise<string> => {
     try {
-      const transactionId = await actions.order.create({
+      const orderId = await actions.order.create({
         purchase_units: [
           {
-            invoice_id: orderId,
+            invoice_id: reservationId,
             amount: {
               value: `${roundedAmount}`,
             },
@@ -43,30 +48,48 @@ export const PaypalButton: React.FC<PaypalButtonInterface> = ({
         ],
       });
 
+      if (!orderId) {
+        throw new Error('Expected an order id to be passed');
+      }
+
       const token = getToken();
 
       if (!token) {
-        throw new Error('token expired, please sign in again');
+        throw new Error('Token expired, please sign in again');
       }
-      console.log(transactionId);
 
-      const { ok } = await setTransactionId(orderId, token, transactionId);
+      const { ok } = await setTransactionId(reservationId, token, orderId);
 
       if (!ok) {
-        throw new Error('No se pudo actualizar la orden');
+        throw new Error('Failed to update the order');
       }
 
-      return transactionId;
+      return orderId;
     } catch (e: any) {
+      alert(e.message);
+      console.error('Create Order Error:', e.message);
+      router.push(Routes.private.reservations);
       throw new Error(e.message);
     }
   };
 
   const onApprove = async (data: OnApproveData, actions: OnApproveActions) => {
-    const details = await actions.order?.capture();
-    if (!details) return;
+    try {
+      const details = await actions.order?.capture();
+      if (!details) throw new Error('Capture details are missing');
 
-    await paypalCheckPayment(details.id!);
+      const { status } = await paypalCheckPayment(details.id!);
+      if (status === 'COMPLETED') {
+        console.log('order has been completed');
+
+        await changeReservationStatusToApproved(reservationId);
+
+        router.push(Routes.private.reservations);
+      }
+    } catch (e: any) {
+      console.error('OnApprove Error:', e.message);
+      alert(e.message);
+    }
   };
 
   const styles: PayPalButtonsComponentProps['style'] = {

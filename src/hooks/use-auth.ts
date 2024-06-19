@@ -5,6 +5,7 @@ import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { getToken } from '@/helpers/getToken';
 import { checkRole } from '@/api/user/isAuthorized';
+import { useModal } from '@/components/modals/context';
 
 const isLoggedIn =
   typeof window !== 'undefined'
@@ -18,6 +19,7 @@ const authorizationAtom = atomWithStorage('isAuthorized', Boolean(isLoggedIn));
 export default function useAuth() {
   const [isAuthorized, setAuthorized] = useAtom(authorizationAtom);
   const [user, setUser] = useAtom(userAtom);
+  const { openModal } = useModal();
 
   const authorize = (user: UserInfo) => {
     setAuthorized(true);
@@ -32,6 +34,9 @@ export default function useAuth() {
   const isAdmin = async () => {
     try {
       const token = getToken();
+      if (!token) {
+        openModal('SIGN_IN');
+      }
       const isAdminUser = await checkRole(token);
       return isAdminUser;
     } catch (error) {

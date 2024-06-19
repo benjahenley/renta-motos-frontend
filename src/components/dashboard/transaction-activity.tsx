@@ -1,3 +1,5 @@
+'use client';
+
 import { reservationData } from 'public/data/orders';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
@@ -7,8 +9,8 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { getToken } from '@/helpers/getToken';
-import { getAllReservations } from '@/api/reservations/getAllReservations'
-import { deleteReservation } from '@/api/reservations/deleteReservation';
+import { getAllReservations } from '@/api/reservations/getAllReservations';
+import { cancelReservation } from '@/api/reservations/deleteReservation';
 import DotsDropdown from '../reservation/dots-dropdown';
 import { useRouter } from 'next/navigation';
 
@@ -77,7 +79,7 @@ export default function TransactionActivity() {
         setData(fArr);
       }
     },
-    [data]
+    [data],
   );
 
   // single select checkbox function
@@ -91,7 +93,7 @@ export default function TransactionActivity() {
       });
       setData(cArr);
     },
-    [data]
+    [data],
   );
 
   // handle more button with edit, preview, delete
@@ -99,8 +101,9 @@ export default function TransactionActivity() {
     async (e: any, row: any) => {
       if (e.target.id === 'delete') {
         try {
-          await deleteReservation(row.id);
+          await cancelReservation(row.id);
           setData((prevData) => prevData.filter((item) => item.id !== row.id));
+          router.refresh();
         } catch (error) {
           console.error('Failed to delete reservation:', error);
         }
@@ -108,14 +111,14 @@ export default function TransactionActivity() {
         console.log(e.target.id);
       }
     },
-    [data]
+    [data],
   );
 
   const onDeleteSuccess = (id: string) => {
     // handle success, such as showing a success message or updating state
     setData((prevData) => prevData.filter((item) => item.id !== id));
+    router.refresh();
   };
-
 
   // on header click sort table by ascending or descending order
   const onHeaderClick = useCallback(
@@ -130,7 +133,7 @@ export default function TransactionActivity() {
         }
       },
     }),
-    [data, order]
+    [data, order],
   );
 
   // gets the columns of table
@@ -143,9 +146,9 @@ export default function TransactionActivity() {
         onChange,
         onMore,
         onHeaderClick,
-        onDeleteSuccess,  // Añadido onDeleteSuccess
+        onDeleteSuccess, // Añadido onDeleteSuccess
       ),
-    [order, column, onSelectAll, onChange, onMore, onHeaderClick, ]
+    [order, column, onSelectAll, onChange, onMore, onHeaderClick],
   );
 
   return (
@@ -167,7 +170,7 @@ export default function TransactionActivity() {
       <Table
         data={data.map((item) => ({
           ...item,
-          key: item.id,  // Añadir clave única basada en el id
+          key: item.id,
         }))}
         columns={columns}
         variant="minimal"

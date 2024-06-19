@@ -7,9 +7,6 @@ import PaymentBlock from '@/components/payment/paymentblock';
 import { useRouter } from 'next/router';
 
 export default function PaymentPage({ params }: { params: { id: string } }) {
-  // const router = useRouter();
-  // const { id } = router.query;
-  console.log(params);
   return (
     <>
       <ListingDetailsHeader />

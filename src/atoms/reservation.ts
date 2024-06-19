@@ -5,7 +5,7 @@ export type Selection = {
   adults: number;
   rentTime: '30min' | '1h' | '1h 30' | '2h' | '4h' | 'fullDay';
   excursion: boolean;
-  excursionName?: string | undefined;
+  excursionName: string;
 };
 
 export const selectionAtom = atomWithStorage<Partial<Selection>>(

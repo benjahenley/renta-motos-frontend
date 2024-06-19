@@ -43,12 +43,6 @@ export default function ListingDetails({
       const excursionName = slug;
       const rentTime = vendor.triptime;
 
-      console.log('Setting excursion data:', {
-        excursion,
-        excursionName,
-        rentTime,
-      });
-
       setSelection({ excursion, excursionName, rentTime });
     };
 

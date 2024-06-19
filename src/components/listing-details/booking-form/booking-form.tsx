@@ -89,11 +89,6 @@ export default function BookingForm({
 
   useEffect(() => {
     if (selection.excursion) {
-      console.log(
-        selection.excursionName,
-        rentPricesExcursions[selection.excursionName!],
-        adults,
-      );
       const price = rentPricesExcursions[selection.excursionName!] * adults;
       setCalculatedPrice(price);
     } else {
@@ -105,15 +100,27 @@ export default function BookingForm({
   async function handleBooking(data: any) {
     const date = new Date(data.startDate).toISOString();
 
-    const newSelection = {
-      ...selection,
-      adults: data.selected.adults,
-      date,
-    };
+    if (selection.excursion) {
+      const newSelection = {
+        ...selection,
+        adults: data.selected.adults,
+        date,
+      };
 
-    setSelection(newSelection);
+      console.log('SELECTION:', newSelection);
 
-    console.log('SELECTION:', newSelection);
+      setSelection(newSelection);
+    } else {
+      const newSelection = {
+        ...selection,
+        rentTime,
+        adults: data.selected.adults,
+        date,
+      };
+      console.log('SELECTION:', newSelection);
+
+      setSelection(newSelection);
+    }
 
     try {
       const token = getToken();

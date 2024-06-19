@@ -3,11 +3,10 @@
 import DotsDropdown from '@/components/reservation/dots-dropdown';
 import Checkbox from '@/components/ui/form-fields/checkbox';
 import HeaderCell from '@/components/ui/table/header-cell';
-import Avatar from '@/components/ui/avatar';
 import Badge from '@/components/ui/badge';
 
 export enum STATUS {
-  Received = 'received',
+  Received = 'approved',
   Pending = 'pending',
   Cancelled = 'cancelled',
 }
@@ -31,7 +30,7 @@ export const reservationColumn = (
   onChange: (row: any) => any,
   onMore: (e: any, row: any) => any,
   onHeaderClick: (value: string) => any,
-  onDeleteSuccess: (id: string) => any,   // Añadido onDeleteSuccess
+  onDeleteSuccess: (id: string) => any, // Añadido onDeleteSuccess
 ) => [
   {
     title: (
@@ -103,7 +102,18 @@ export const reservationColumn = (
     dataIndex: 'userFullName',
     key: 'userFullName',
     width: 200,
-    render: (name: any) => <p className="whitespace-nowrap">{name}</p>,
+    render: (userFullName: any) => (
+      <p className="whitespace-nowrap">{userFullName}</p>
+    ),
+  },
+  {
+    title: <HeaderCell title={'Excursion'} />,
+    dataIndex: 'excursionName',
+    key: 'excursionName',
+    width: 200,
+    render: (excursionName: any) => (
+      <p className="whitespace-nowrap">{excursionName}</p>
+    ),
   },
   {
     title: <HeaderCell title={'Adults'} />,
@@ -137,8 +147,12 @@ export const reservationColumn = (
     width: 50,
     render: (value: any, row: any) => (
       <div className="flex items-center gap-2">
-        <DotsDropdown key={row.key} reservationId={row.id} onDeleteSuccess={() => onDeleteSuccess(row.id)}  // Ajustado para pasar el id
-          onClick={(e: any) => onMore(e, row)} />
+        <DotsDropdown
+          key={row.key}
+          reservationId={row.id}
+          onDeleteSuccess={() => onDeleteSuccess(row.id)} // Ajustado para pasar el id
+          onClick={(e: any) => onMore(e, row)}
+        />
       </div>
     ),
   },

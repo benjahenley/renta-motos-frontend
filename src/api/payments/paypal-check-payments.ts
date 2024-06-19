@@ -4,7 +4,7 @@ import { PaypalOrderStatusResponse } from '@/interfaces/paypal';
 
 export const paypalCheckPayment = async (paypalTransactionId: string) => {
   const authToken = await getPaypalBearerToken();
-  console.log({ authToken });
+
   if (!authToken) {
     return {
       ok: false,
@@ -23,6 +23,7 @@ export const paypalCheckPayment = async (paypalTransactionId: string) => {
   const { status, purchase_units } = resp;
   // const {} = purchase_units[0]
   console.log(status, purchase_units);
+  return { status, purchase_units };
 };
 
 const getPaypalBearerToken = async (): Promise<string | null> => {
@@ -80,9 +81,4 @@ const verifyPayPalPayment = async (
     console.log(e);
     return null;
   }
-
-  fetch(paypalOrderUrl, requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
 };

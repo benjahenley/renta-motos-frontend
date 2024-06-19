@@ -1,6 +1,5 @@
 'use client';
 
-import { reservationData } from 'public/data/orders';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { reservationColumn } from '@/components/reservation/reservation-col';
@@ -12,19 +11,19 @@ import { checkRole } from '@/api/user/isAuthorized';
 import { getToken } from '@/helpers/getToken';
 import LoadingScreen from '@/components/loading-screen';
 import { useRouter } from 'next/navigation';
-import { extractTime } from '@/helpers/extract-time';
 import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
 import { getReservationsByUserId } from '@/api/reservations/getReservationsByUserId';
 
 async function getData(start: number, offset: number) {
   const data = await getReservationsByUserId();
-  console.log(data);
 
   data
     .map((item: any) => {
       if (!item) {
         return null;
       }
+
+      console.log(item);
 
       return {
         id: item.id,
@@ -33,11 +32,14 @@ async function getData(start: number, offset: number) {
         status: item.status,
         endTime: item.endTime,
         startTime: item.startTime,
-        jetskiId: item.jetskiId,
+        userFullName: item.userFullName,
+        excursionName: item.excursionName,
         checked: false,
       };
     })
     .filter(Boolean);
+
+  console.log(data);
 
   const filteredData = data.slice(start, offset);
   return filteredData;
@@ -143,6 +145,12 @@ export default function reservationsPage() {
     [data],
   );
 
+  const onDeleteSuccess = (id: string) => {
+    // handle success, such as showing a success message or updating state
+    setData((prevData) => prevData.filter((item) => item.id !== id));
+    router.refresh();
+  };
+
   // gets the columns of table
   const columns: any = useMemo(
     () =>
@@ -153,6 +161,7 @@ export default function reservationsPage() {
         onChange,
         onMore,
         onHeaderClick,
+        onDeleteSuccess,
       ),
     [order, column, onSelectAll, onChange, onMore, onHeaderClick],
   );
