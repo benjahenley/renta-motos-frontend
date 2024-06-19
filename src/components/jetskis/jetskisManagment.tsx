@@ -32,9 +32,9 @@ const SimpleTable = ({
           </thead>
           <tbody>
             {data.map((jetski, index) => (
-              <tr className="tr" key={index}>
-                <td className="td px-4 py-2">{jetski.name}</td>
-                <td className="td px-4 py-2">
+              <tr className="tr2" key={index}>
+                <td className="td2 px-4 py-2">{jetski.name}</td>
+                <td className="td2 px-4 py-2">
                   {jetski.available ? 'available' : 'maintenance'}
                 </td>
                 <td className="td2 px-4 py-2">

@@ -635,38 +635,43 @@ th.rc-table-cell {
 .tr:hover{
 	 background-color: rgba(210, 210, 210, 0.136);
 }
-.extratable2{
+.extratable2 {
 	border-collapse: collapse;
 	border: none !important;
-	&__container{
-		overflow-x: auto;
+	&__container {
+	  overflow-x: auto;
 	}
-
-	&__th{
-		border: none;
+  
+	&__th {
+	  border: none;
 	}
-	}
-	.thead2{
-		height: 3.5rem;
-		color: rgb(17, 17, 17);
-		text-align: left;
-		--tw-bg-opacity: 1;
-		text-transform: uppercase !important;
-		background-color: rgba(204, 204, 204, 0.31);
-	};
-
-.tth2{
+  }
+  
+  .thead2 {
+	height: 3.5rem;
+	color: rgb(17, 17, 17);
+	text-align: center; /* Centrar horizontalmente */
+	--tw-bg-opacity: 1;
+	text-transform: uppercase !important;
+	background-color: rgba(204, 204, 204, 0.31);
+  }
+  
+  .tth2 {
 	border: none !important;
-}
-
-.td2{
+	text-align: center; /* Centrar horizontalmente */
+  }
+  
+  .td2 {
 	border-bottom: 3px solid rgba(210, 210, 210, 0.136);
-}
-
-.tr2{
-	text-align: left;
+	text-align: center; /* Centrar horizontalmente */
+	vertical-align: middle; /* Centrar verticalmente */
+  }
+  
+  .tr2 {
+	text-align: center; /* Centrar horizontalmente */
 	transition: background-color 0.1s ease;
-}
-.tr2:hover{
-	 background-color: rgba(210, 210, 210, 0.136);
-}
+  }
+  .tr2:hover {
+	background-color: rgba(210, 210, 210, 0.136);
+  }
+  
