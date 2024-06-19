@@ -20,32 +20,31 @@ import { getToken } from '@/helpers/getToken';
 import { addMinutesToTime } from '@/helpers/extract-time';
 import { createReservation } from '@/api/reservations/createReservation';
 import { Routes } from '@/config/routes';
+import { getAvailableJetskis } from '@/api/get-jetskis/getAvailableJetskis';
 
 export default function SelectCalendarExcursions() {
   const { openModal, closeModal } = useModal();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const selection = useAtomValue<Partial<Selection>>(selectionAtom);
-  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [reservations, setReservations] = useState<Reservation[] | null>(null);
   const [history, setHistory] = useState<[number[], string | undefined][]>([]);
+  const [jetskisAvailable, setJetskisAvailable] = useState<string[]>([]);
   const [jetskisReserved, setJetskisReserved] = useState(
     getJetskisAndExcursionsTemplate(),
   );
 
-  if (!selection) {
-    return <div>loading...</div>;
-  }
-
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        setHistory([]);
-        console.log(selection!.date!);
         const { reservations } = await getReservationsByDate(
           formatDateToISOWithoutTime(selection!.date!),
         );
 
+        const jetskis = await getAvailableJetskis();
+
         setReservations(reservations);
+        setJetskisAvailable(jetskis);
         processReservations(reservations);
       } catch (error) {
         console.error('Error fetching items:', error);
@@ -56,62 +55,26 @@ export default function SelectCalendarExcursions() {
   }, [selection]);
 
   const processReservations = (reservations: Reservation[]) => {
-    const updates: [number[], string | undefined][] = [];
+    const newJetskisReserved = getJetskisAndExcursionsTemplate();
 
-    reservations.forEach((reservation) => {
-      const { startTime, endTime, excursion, excursionName, adults } =
-        reservation;
-      const rows = findTimezoneIndexes(startTime, endTime);
-      const adultsPerTimeSlot = getAdultsPerTimeSlot(rows, adults);
+    reservations.forEach(
+      ({ startTime, endTime, excursionName, adults, status }) => {
+        if (status !== 'cancelled') {
+          const rows = findTimezoneIndexes(startTime, endTime);
+          const adultsPerTimeSlot = getAdultsPerTimeSlot(rows, adults);
 
-      updates.push([adultsPerTimeSlot, excursion ? excursionName : undefined]);
-    });
-
-    updateJetskisReserved(updates);
-  };
-
-  const updateJetskisReserved = (
-    reservations: [number[], string | undefined][],
-  ) => {
-    setJetskisReserved((prev) => {
-      const newJetskisReserved = [...prev];
-
-      reservations.forEach(([adultsPerTimeSlot, excursionName]) => {
-        for (let i = 0; i < newJetskisReserved.length; i++) {
-          if (newJetskisReserved[i][0] + adultsPerTimeSlot[i] <= 4) {
-            newJetskisReserved[i][0] += adultsPerTimeSlot[i];
-          }
-
-          if (excursionName && newJetskisReserved[i][1].length < 2) {
-            newJetskisReserved[i][1].push(excursionName);
-          }
+          adultsPerTimeSlot.forEach((adults, i) => {
+            newJetskisReserved[i][0] += adults;
+            if (excursionName !== 'listing-1' && adults > 0) {
+              newJetskisReserved[i][1].push(excursionName);
+            }
+          });
         }
-      });
+      },
+    );
 
-      return newJetskisReserved;
-    });
-  };
-
-  const deleteHistoryAndUpdateJetskisReserved = () => {
-    const oldHistory = [...history];
-    const newState = [...jetskisReserved];
-
-    for (let i = 0; i < jetskisReserved.length; i++) {
-      newState[i][0] -= oldHistory[0][0][i];
-
-      if (selection.excursion) {
-        const excIndex = newState[i][1].findIndex((item) => {
-          return item === oldHistory[0][1]![i];
-        });
-
-        if (excIndex !== -1) {
-          newState[i][1].splice(excIndex, 1);
-        }
-      }
-    }
-
-    setJetskisReserved(newState);
-    setHistory([]);
+    console.log(newJetskisReserved);
+    setJetskisReserved(newJetskisReserved);
   };
 
   const handleCellClick = (row: number) => {
@@ -120,7 +83,8 @@ export default function SelectCalendarExcursions() {
     const roof = row + cellsToSelect;
 
     if (history.length === 1) {
-      deleteHistoryAndUpdateJetskisReserved();
+      // deleteHistoryAndUpdateJetskisReserved();
+      setHistory([]);
     }
 
     if (roof > timeSlots.length) {
@@ -164,8 +128,6 @@ export default function SelectCalendarExcursions() {
         adultsPerTimeSlot[r] = adults!;
       });
       newHistory.push([adultsPerTimeSlot, excursionName]);
-      console.log('New History', newHistory);
-
       // updateJetskisReserved(newHistory);
       setHistory(newHistory);
     }
@@ -174,13 +136,13 @@ export default function SelectCalendarExcursions() {
   const cellDisplay = (row: number) => {
     const reservedJetskis = jetskisReserved[row][0];
     const excursionsBooked = jetskisReserved[row][1];
-    const { excursionName, excursion, adults } = selection!;
+    const { excursion, adults } = selection!;
 
     let classes = 'cursor-pointer';
 
     if (history[0] && history[0][0][row] > 0) {
       classes = 'bg-green-500 cursor-pointer';
-    } else if (reservedJetskis + adults! > 4) {
+    } else if (reservedJetskis + adults! > jetskisAvailable.length) {
       classes = 'bg-gray-300 cursor-not-allowed';
     } else if (excursion && excursionsBooked.length >= 2) {
       classes = 'bg-gray-300 cursor-not-allowed';
@@ -299,62 +261,4 @@ export default function SelectCalendarExcursions() {
       )}
     </div>
   );
-}
-
-async function handleSubmit(e: any) {
-  e.preventDefault();
-  // setLoading(true);
-  // try {
-  //
-  // setLoading(false);
-  // return;
-  // }
-  // const reservationsArray: any[] = [];
-  // history.forEach((matrix) => {
-  // let timeSlotIndexes: number[] = [];
-  // let jetskiIndex = 0;
-  // for (let rowIndex = 0; rowIndex < matrix.length; rowIndex++) {
-  // for (let colIndex = 0; colIndex < jetskiIds?.length!; colIndex++) {
-  // if (matrix[rowIndex][colIndex] === 1) {
-  // timeSlotIndexes!.push(rowIndex);
-  // jetskiIndex = colIndex;
-  // }
-  // }
-  // }
-  // const date = formatDateToISOWithoutTime(selection.startDate!);
-  // let jetskiId = jetskiIds![jetskiIndex];
-  // let startTimeData = timeSlots[timeSlotIndexes[0]];
-  // let endTimeData =
-  // timeSlots[timeSlotIndexes[timeSlotIndexes.length - 1]];
-  // let endTimePlusHalfAnHour = addMinutesToTime(endTimeData, 30);
-  // let startTime = new Date(
-  // ${date}T${startTimeData}:00.000Z,
-  // ).toISOString();
-  // let endTime = new Date(
-  // ${date}T${endTimePlusHalfAnHour}:00.000Z,
-  // ).toISOString();
-  // reservationsArray.push({
-  // date,
-  // startTime,
-  // endTime,
-  // jetskiId,
-  // excursion: selection.excursion,
-  // excursionName: selection.excursionName,
-  // });
-  // });
-  // const orderData = {
-  // adults: reservationsArray.length,
-  // reservations: reservationsArray,
-  // };
-  // const { orderId } = await createOrder(token, orderData);
-  // if (!orderId) {
-  // throw new Error('Error creating reservation');
-  // }
-  // router.push(${Routes.public.payment}/${orderId});
-  // } catch (e: any) {
-  // console.log(e.message);
-  // alert(e.message);
-  // } finally {
-  // setLoading(false); // Reset loading state
-  // }
 }

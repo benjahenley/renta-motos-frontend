@@ -12,7 +12,6 @@ interface GallaryBlockProps {
 
 export default function GallaryBlock({ images }: GallaryBlockProps) {
   const [drawerSate, setDrawerState] = useAtom(drawerStateAtom);
-  console.log(images);
 
   function handleClick() {
     setDrawerState({

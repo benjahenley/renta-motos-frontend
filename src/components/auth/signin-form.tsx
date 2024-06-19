@@ -103,11 +103,11 @@ export default function SigninForm() {
           Create an account
         </Link>
       </p>
-      {/* <div className="relative mb-8 mt-7 text-center before:absolute before:left-0 before:top-1/2 before:h-[1px] before:w-full before:bg-gray-200">
-        <span className="relative z-10 m-auto inline-flex bg-white px-5">
+      {/* <div className="relative mb-8 mt-7 text-center before:absolute before:left-0 before:top-1/2 before:h-[1px] before:w-full before:bg-gray-200"> */}
+      {/* <span className="relative z-10 m-auto inline-flex bg-white px-5">
           Or
-        </span>
-      </div> */}
+        </span> */}
+      {/* </div> */}
     </form>
   );
 }

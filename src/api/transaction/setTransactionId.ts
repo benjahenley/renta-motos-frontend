@@ -1,7 +1,7 @@
 'use server';
 
 export const setTransactionId = async (
-  orderId: string,
+  reservationId: string,
   token: string,
   transactionId: string,
 ) => {
@@ -13,7 +13,7 @@ export const setTransactionId = async (
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ orderId, transactionId }),
+      body: JSON.stringify({ reservationId, transactionId }),
     });
 
     if (!response.ok) {
@@ -22,6 +22,7 @@ export const setTransactionId = async (
     }
 
     const res = await response.json();
+    console.log('res?');
 
     return { ok: true };
   } catch (error: any) {

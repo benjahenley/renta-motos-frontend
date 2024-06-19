@@ -69,7 +69,6 @@ export type VendorTypes = {
   }[];
 };
 
-
 // export type VendorTypes = {
 //   name: string;
 //   img: string;
@@ -86,7 +85,6 @@ export type VendorTypes = {
 // };
 
 export type VendorWithSlug = VendorTypes & { slug: string };
-
 
 export type EquipmentsTypes = {
   img: string;
