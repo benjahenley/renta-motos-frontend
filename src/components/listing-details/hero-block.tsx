@@ -91,7 +91,7 @@ export default function ListingDetailsHeroBlock({
       </div>
       <div className="relative">
         {/* <ShareMenu /> */}
-        {/* <ShareIcons /> */}
+        <ShareIcons />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import DashboardHeader from '@/components/header/dashboard';
 import MobileNav from '@/components/ui/mobile-nav';
 import Footer from '@/components/footer/footer';
+import ControlledOpenSpeedDial from '@/components/ui/drawers/speedDial';
 
 export default function UserLayout({ children }: React.PropsWithChildren<{}>) {
   const router = useRouter();
@@ -26,6 +27,8 @@ export default function UserLayout({ children }: React.PropsWithChildren<{}>) {
       <main className="flex-grow">{children}</main>
       <Footer className="hidden md:block" />
       <MobileNav />
+      <ControlledOpenSpeedDial/>
+
     </>
   );
 }
