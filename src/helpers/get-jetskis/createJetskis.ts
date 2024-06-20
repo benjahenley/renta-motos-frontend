@@ -1,3 +1,5 @@
+'use client';
+
 import { getToken } from '@/helpers/getToken';
 
 export interface Jetski {
@@ -7,39 +9,24 @@ export interface Jetski {
   reservations: string[];
 }
 
-export const getJetskis = async (): Promise<Jetski[]> => {
-  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetskis';
-  try {
-    const response = await fetch(url, {
-      cache: 'no-store',
-      method: 'GET',
-    });
+interface NewJetski {
+  name: string;
+  available: boolean;
+  reservations: string[];
+}
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'An unknown error occurred');
-    }
-
-    const data: Jetski[] = await response.json();
-    return data;
-  } catch (error: any) {
-    throw new Error(error.message || 'An unknown error occurred');
-  }
-};
-
-export const updateJetskiStatus = async (jetskiId: string): Promise<Jetski> => {
+export const createJetski = async (jetski: NewJetski): Promise<Jetski> => {
   const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetski';
 
   try {
     const token = getToken();
     const response = await fetch(url, {
-      cache: 'no-store',
-      method: 'PATCH',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ jetskiId }),
+      body: JSON.stringify(jetski),
     });
 
     if (!response.ok) {

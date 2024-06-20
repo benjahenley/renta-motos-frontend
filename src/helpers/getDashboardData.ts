@@ -1,6 +1,6 @@
 // helpers/getDashboardData.ts
 
-import { getAllReservations } from '@/api/reservations/getAllReservations';
+import { getAllReservations } from '@/helpers/reservations/getAllReservations';
 
 export async function getDashboardData() {
   const reservations = await getAllReservations();

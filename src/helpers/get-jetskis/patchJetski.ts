@@ -1,30 +1,20 @@
+'use client';
+
 import { getToken } from '@/helpers/getToken';
 
-export interface Jetski {
-  id: string;
-  name: string;
-  available: boolean;
-  reservations: string[];
-}
-
-interface NewJetski {
-  name: string;
-  available: boolean;
-  reservations: string[];
-}
-
-export const createJetski = async (jetski: NewJetski): Promise<Jetski> => {
+export const updateJetskiStatus = async (jetskiId: string): Promise<Jetski> => {
   const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetski';
+  console.log({ url });
 
   try {
     const token = getToken();
     const response = await fetch(url, {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(jetski),
+      body: JSON.stringify({ jetskiId }),
     });
 
     if (!response.ok) {

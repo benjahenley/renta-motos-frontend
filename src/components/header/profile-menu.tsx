@@ -52,7 +52,7 @@ function MenuItem({ text, link }: MenuItemProps) {
           href={link || ''}
           className={clsx(
             'block rounded-sm px-5 py-2 text-base font-normal capitalize text-gray-dark',
-            active && 'bg-gray-lightest'
+            active && 'bg-gray-lightest',
           )}
         >
           {text}
@@ -86,13 +86,13 @@ export default function ProfileMenu({ className }: { className?: string }) {
         as="div"
         className={clsx(
           'relative h-9 w-9 rounded-full bg-white shadow-card sm:h-10 sm:w-10 2xl:h-12 2xl:w-12 2xl:border 2xl:border-gray-lighter 2xl:p-[3px]',
-          className
+          className,
         )}
       >
         <Menu.Button className="relative h-full w-full rounded-full bg-white">
           <Avatar
             className="cursor-pointer"
-            src={user?.avatar}
+            src={user?.avatar ?? ''}
             rounded="full"
             size="100%"
           />
@@ -107,11 +107,9 @@ export default function ProfileMenu({ className }: { className?: string }) {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-lighter rounded-md bg-white py-2 shadow-card focus:outline-none">
-            <div className="pb-3 pl-5">
-              {user.displayName}
-            </div>
+            <div className="pb-3 pl-5">{user.displayName}</div>
             <div className="pt-1">
-              {menu.bottom.map((item) => (
+              {menu.bottom.map((item) =>
                 item.text === 'Dashboard' ? (
                   <Menu.Item key={item.text}>
                     {({ active }) => (
@@ -119,7 +117,7 @@ export default function ProfileMenu({ className }: { className?: string }) {
                         onClick={handleDashboardClick}
                         className={clsx(
                           'block w-full rounded-sm px-5 py-2 text-left text-base font-normal text-gray-dark',
-                          active && 'bg-gray-lightest'
+                          active && 'bg-gray-lightest',
                         )}
                       >
                         {item.text}
@@ -128,8 +126,8 @@ export default function ProfileMenu({ className }: { className?: string }) {
                   </Menu.Item>
                 ) : (
                   <MenuItem key={item.text} text={item.text} link={item.path} />
-                )
-              ))}
+                ),
+              )}
               <Menu.Item
                 className="block w-full rounded-sm px-5 py-2 text-left text-base font-normal text-gray-dark hover:bg-gray-lightest"
                 as="button"

@@ -18,6 +18,7 @@ interface UserInfo {
   photoURL: string | null;
   providerId: string;
   phoneNumber: string | null;
+  avatar: string;
 }
 
 interface UserMetadata {

@@ -8,7 +8,7 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import { getAllReservations } from '@/api/reservations/getAllReservations';
+import { getAllReservations } from '@/helpers/reservations/getAllReservations';
 import { useRouter } from 'next/navigation';
 
 async function getData(start: number, offset: number) {

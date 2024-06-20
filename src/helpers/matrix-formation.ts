@@ -1,5 +1,8 @@
-import { getJetskis } from '@/api/get-jetskis/useGetJetskis';
+'use client';
+
 import { extractTime } from './extract-time';
+import { getJetskis } from './get-jetskis/getJetskis';
+import { getToken } from './getToken';
 
 export let timeSlots = [
   '10:00',
@@ -22,7 +25,8 @@ export let timeSlots = [
 
 export const jetskiData = async () => {
   try {
-    const jetskis = await getJetskis();
+    const token = getToken();
+    const jetskis = await getJetskis(token);
     const availableJetskis = jetskis.filter(
       (jetski: { available: boolean }) => jetski.available,
     );

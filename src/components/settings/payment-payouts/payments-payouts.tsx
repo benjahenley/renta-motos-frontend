@@ -9,7 +9,6 @@ import { VisaIcon } from '@/components/icons/payment-methods/visa';
 import Checkbox from '@/components/ui/form-fields/checkbox';
 import Text from '@/components/ui/typography/text';
 import Button from '@/components/ui/button';
-import PaypalButton from '@/components/paypal/paypalButton';
 
 const paymentMethods = [
   // {

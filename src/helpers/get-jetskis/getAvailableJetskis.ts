@@ -1,3 +1,5 @@
+'use server';
+
 export const getAvailableJetskis = async (): Promise<string[]> => {
   const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetskis/available';
   try {

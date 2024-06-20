@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { PaypalButton } from '../paypal/paypalButton';
 import { getToken } from '@/helpers/getToken';
 import { useModal } from '../modals/context';
-import { getReservationById } from '@/api/reservations/getReservationsById';
+import { getReservationById } from '@/helpers/reservations/getReservationsById';
 import { Reservation } from '@/interfaces/reservation';
 import { Routes } from '@/config/routes';
 

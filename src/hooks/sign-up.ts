@@ -1,4 +1,4 @@
-import { signUpApi } from '@/api/sign-up/useSignUp';
+import { signUpApi } from '@/helpers/sign-up/useSignUp';
 import { auth } from '@/lib/firebase';
 import {
   User,

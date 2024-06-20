@@ -1,27 +1,19 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import useJetskis from '@/hooks/use-jetskis';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Button from '@/components/ui/button';
 import Input from '@/components/ui/form-fields/input'; // Importa el componente Input
-import {
-  Jetski,
-  getJetskis,
-  updateJetskiStatus,
-} from '@/api/get-jetskis/useGetJetskis';
-import { createJetski } from '@/api/get-jetskis/createJetskis';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'; // Asegúrate de importar el ícono
 
-const SimpleTable = ({
-  data,
-  handleToggleMaintenance,
-}: {
-  data: Jetski[];
-  handleToggleMaintenance: (id: string) => void;
-}) => {
+import { createJetski } from '@/helpers/get-jetskis/createJetskis';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'; // Asegúrate de importar el ícono
+import { JetskiItem } from './jetskiItem';
+import { getJetskis } from '@/helpers/get-jetskis/getJetskis';
+import { getToken } from '@/helpers/getToken';
+
+const SimpleTable = ({ data }: { data: Jetski[] }) => {
   return (
     <div className="rc-table-container extratable2__container">
       <div className="rc-table-content">
@@ -35,19 +27,7 @@ const SimpleTable = ({
           </thead>
           <tbody>
             {data.map((jetski, index) => (
-              <tr className="tr2" key={index}>
-                <td className="td2 px-4 py-2">{jetski.name}</td>
-                <td className="td2 px-4 py-2">
-                  {jetski.available ? 'available' : 'maintenance'}
-                </td>
-                <td className="td2 px-4 py-2">
-                  <Button onClick={() => handleToggleMaintenance(jetski.id)}>
-                    {jetski.available
-                      ? 'Disable for Maintenance'
-                      : 'Enable for Rental'}
-                  </Button>
-                </td>
-              </tr>
+              <JetskiItem jetski={jetski} key={index}></JetskiItem>
             ))}
           </tbody>
         </table>
@@ -58,7 +38,7 @@ const SimpleTable = ({
 
 const JetskiManagement: React.FC = () => {
   // const { jetskis, loading, error, toggleStatus } = useJetskis();
-  const [jetskis, setJetskis] = useState<Jetski[]>([]);
+  const [jetskis, setJetskis] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [current, setCurrent] = useState(1);
   const [searchFilter, setSearchFilter] = useState('');
@@ -67,10 +47,16 @@ const JetskiManagement: React.FC = () => {
   const [addError, setAddError] = useState<string | null>(null);
 
   const getAllJetskis = async () => {
-    const newJetskis = await getJetskis();
-    setJetskis(newJetskis);
-    setDisplayData(newJetskis);
-    setLoading(false);
+    setLoading(true);
+    try {
+      const token = getToken();
+      const newJetskis = await getJetskis(token);
+      setJetskis(newJetskis);
+    } catch (error) {
+      console.error('Failed to fetch jetskis', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -79,7 +65,7 @@ const JetskiManagement: React.FC = () => {
 
   useEffect(() => {
     const filterData = () => {
-      let filteredData = jetskis;
+      let filteredData = [...jetskis];
 
       if (searchFilter) {
         filteredData = filteredData.filter((jetski) =>
@@ -94,28 +80,15 @@ const JetskiManagement: React.FC = () => {
     filterData();
   }, [jetskis, searchFilter, current]);
 
-  useEffect(() => {
-    console.log(displayData);
-  }, [displayData]);
-
-  const handleToggleMaintenance = async (id: string) => {
-    try {
-      await updateJetskiStatus(id);
-      const updatedJetskis = getAllJetskis();
-    } catch (error) {
-      console.error('Failed to update jetski status', error);
-    }
-  };
-
   const handleAddJetski = async () => {
     try {
-      const newJetski = await createJetski({
+      await createJetski({
         name: jetskiName,
         available: true,
         reservations: [],
       });
-      const updatedJetskis = await getJetskis();
-      setDisplayData(updatedJetskis);
+      const updatedJetskis = await getAllJetskis();
+
       setJetskiName('');
       setAddError(null);
     } catch (error: any) {
@@ -154,10 +127,7 @@ const JetskiManagement: React.FC = () => {
         {addError && <p className="text-red-500">{addError}</p>}
       </div>
 
-      <SimpleTable
-        data={displayData}
-        handleToggleMaintenance={handleToggleMaintenance}
-      />
+      <SimpleTable data={displayData} />
       <div className="mt-8 text-center">
         <Pagination
           current={current}

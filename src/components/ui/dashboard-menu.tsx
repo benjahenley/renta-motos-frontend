@@ -8,9 +8,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Routes } from '@/config/routes';
 import { Dialog, Transition } from '@headlessui/react';
 import { getToken } from '@/helpers/getToken';
-import { checkRole } from '@/api/user/isAuthorized';
+import { checkRole } from '@/helpers/user/isAuthorized';
 import useAuth from '@/hooks/use-auth';
-
 
 const menuDataAdmin = [
   {
@@ -21,7 +20,6 @@ const menuDataAdmin = [
     text: 'Jetskis',
     path: Routes.private.jetskys,
   },
-
 ];
 
 const menuDataUser = [
@@ -38,16 +36,15 @@ export default function DashboardMenu() {
   const [isAdmin, setIsAdmin] = useState(false);
   const { user, unauthorize } = useAuth();
 
-  
   useEffect(() => {
     async function checkUserRole() {
       try {
         const token = getToken();
         const role = await checkRole(token);
         setIsAdmin(true);
-        } catch (e: any) {
-          console.log(e.message);
-          setIsAdmin(false);
+      } catch (e: any) {
+        console.log(e.message);
+        setIsAdmin(false);
       }
     }
 
@@ -70,7 +67,7 @@ export default function DashboardMenu() {
                 href={item.path}
                 className={clsx(
                   'inline-block text-base font-normal capitalize text-gray-dark',
-                  pathname === item.path && '!font-bold'
+                  pathname === item.path && '!font-bold',
                 )}
               >
                 {item.text}
@@ -96,7 +93,10 @@ export default function DashboardMenu() {
         </button>
 
         <Transition show={isOpen} as={React.Fragment}>
-          <Dialog onClose={closeModal} className="fixed inset-0 z-50 overflow-y-auto">
+          <Dialog
+            onClose={closeModal}
+            className="fixed inset-0 z-50 overflow-y-auto"
+          >
             <div className="min-h-screen px-4 text-center">
               <Transition.Child
                 as={React.Fragment}
@@ -110,7 +110,10 @@ export default function DashboardMenu() {
                 <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
               </Transition.Child>
 
-              <span className="inline-block h-screen align-middle" aria-hidden="true">
+              <span
+                className="inline-block h-screen align-middle"
+                aria-hidden="true"
+              >
                 &#8203;
               </span>
 
@@ -142,11 +145,11 @@ export default function DashboardMenu() {
                     ))}
                   </div>
                   <button
-                className="block w-full rounded-sm px-4 py-2 text-left text-base font-normal text-gray-dark hover:bg-gray-lightest"
-               
-                onClick={() => unauthorize()}
-              >Log out
-              </button>
+                    className="block w-full rounded-sm px-4 py-2 text-left text-base font-normal text-gray-dark hover:bg-gray-lightest"
+                    onClick={() => unauthorize()}
+                  >
+                    Log out
+                  </button>
                 </div>
               </Transition.Child>
             </div>

@@ -48,7 +48,7 @@ export default function CategoryFilter() {
 
   // updates query
   useEffect(() => {
-    const checkedItems = [];
+    const checkedItems: any = [];
     for (const item of selected) {
       if (item.checked) checkedItems.push(item.label);
     }

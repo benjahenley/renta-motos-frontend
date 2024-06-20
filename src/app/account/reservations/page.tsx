@@ -7,12 +7,12 @@ import Input from '@/components/ui/form-fields/input';
 import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
-import { checkRole } from '@/api/user/isAuthorized';
+import { checkRole } from '@/helpers/user/isAuthorized';
 import { getToken } from '@/helpers/getToken';
 import LoadingScreen from '@/components/loading-screen';
 import { useRouter } from 'next/navigation';
 import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
-import { getReservationsByUserId } from '@/api/reservations/getReservationsByUserId';
+import { getReservationsByUserId } from '@/helpers/reservations/getReservationsByUserId';
 
 async function getData(start: number, offset: number) {
   const data = await getReservationsByUserId();
@@ -72,7 +72,9 @@ export default function reservationsPage() {
       if (searchfilter) {
         setData((prevData) =>
           prevData.filter((item) =>
-            item.excursionName.toLowerCase().includes(searchfilter.toLowerCase()),
+            item.excursionName
+              .toLowerCase()
+              .includes(searchfilter.toLowerCase()),
           ),
         );
       } else {

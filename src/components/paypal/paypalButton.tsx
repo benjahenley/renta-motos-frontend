@@ -17,7 +17,7 @@ import { getToken } from '@/helpers/getToken';
 import { paypalCheckPayment } from '@/api/payments/paypal-check-payments';
 import { Routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
-import { changeReservationStatusToApproved } from '@/api/reservations/changeStatusToApproved';
+import { changeReservationStatusToApproved } from '@/helpers/reservations/changeStatusToApproved';
 
 interface PaypalButtonInterface {
   reservationId: string;
@@ -76,11 +76,11 @@ export const PaypalButton: React.FC<PaypalButtonInterface> = ({
   const onApprove = async (data: OnApproveData, actions: OnApproveActions) => {
     try {
       const details = await actions.order?.capture();
-      console.log("Hola gorditaaaa")
+      console.log('Hola gorditaaaa');
       if (!details) throw new Error('Capture details are missing');
-      
+
       const { status } = await paypalCheckPayment(details.id!);
-      console.log(status)
+      console.log(status);
       if (status === 'COMPLETED') {
         console.log('order has been completed');
 

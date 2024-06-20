@@ -9,8 +9,8 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
 import { getToken } from '@/helpers/getToken';
-import { getAllReservations } from '@/api/reservations/getAllReservations';
-import { cancelReservation } from '@/api/reservations/deleteReservation';
+import { getAllReservations } from '@/helpers/reservations/getAllReservations';
+import { cancelReservation } from '@/helpers/reservations/deleteReservation';
 import DotsDropdown from '../reservation/dots-dropdown';
 import { useRouter } from 'next/navigation';
 

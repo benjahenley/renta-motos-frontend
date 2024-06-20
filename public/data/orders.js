@@ -1,4 +1,4 @@
-import { getAllReservations } from "@/api/reservations/getAllReservations";
+import { getAllReservations } from "@/helpers/reservations/getAllReservations";
 
 export async function reservationData(){
   const reservations =  await getAllReservations();

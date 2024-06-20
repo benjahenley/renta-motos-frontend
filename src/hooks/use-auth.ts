@@ -4,7 +4,7 @@ import { UserInfo } from 'firebase/auth';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { getToken } from '@/helpers/getToken';
-import { checkRole } from '@/api/user/isAuthorized';
+import { checkRole } from '@/helpers/user/isAuthorized';
 import { useModal } from '@/components/modals/context';
 
 const isLoggedIn =
@@ -41,7 +41,6 @@ export default function useAuth() {
       return isAdminUser;
     } catch (error) {
       console.error(error);
-      // throw new Error('User is not authorized');
     }
   };
 

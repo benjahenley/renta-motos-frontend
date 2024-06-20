@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
 import { Selection, selectionAtom } from '@/atoms/reservation';
 import Button from '@/components/ui/button';
-import { getReservationsByDate } from '@/api/reservations/getReservationsByDate';
+import { getReservationsByDate } from '@/helpers/reservations/getReservationsByDate';
 import { useModal } from '../modals/context';
 import { useRouter } from 'next/navigation';
 import {
@@ -18,9 +18,9 @@ import { Reservation } from '@/interfaces/reservation';
 import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
 import { getToken } from '@/helpers/getToken';
 import { addMinutesToTime } from '@/helpers/extract-time';
-import { createReservation } from '@/api/reservations/createReservation';
+import { createReservation } from '@/helpers/reservations/createReservation';
 import { Routes } from '@/config/routes';
-import { getAvailableJetskis } from '@/api/get-jetskis/getAvailableJetskis';
+import { getAvailableJetskis } from '@/helpers/get-jetskis/getAvailableJetskis';
 
 export default function SelectCalendarExcursions() {
   const { openModal, closeModal } = useModal();

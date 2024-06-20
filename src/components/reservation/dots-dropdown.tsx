@@ -3,7 +3,7 @@
 import {
   cancelReservation,
   deleteReservation,
-} from '@/api/reservations/deleteReservation';
+} from '@/helpers/reservations/deleteReservation';
 import { Fragment, useState, useEffect } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { EllipsisHorizontalIcon, TrashIcon } from '@heroicons/react/24/solid';
