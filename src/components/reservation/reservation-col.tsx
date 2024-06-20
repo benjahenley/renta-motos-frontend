@@ -30,35 +30,35 @@ export const reservationColumn = (
   onHeaderClick: (value: string) => any,
   onDeleteSuccess: (id: string) => any, // Añadido onDeleteSuccess
 ) => [
-  {
-    title: (
-      <HeaderCell
-        title={
-          <Checkbox
-            variant="outline"
-            inputClassName="!bg-white focus:!ring-0"
-            onChange={(e) => onSelectAll(e.target.checked)}
-            iconClassName="bg-gray-dark rounded cursor-pointer"
-          />
-        }
-        className="lg:pl-5"
-      />
-    ),
-    dataIndex: 'checked',
-    key: 'checked',
-    width: 50,
-    render: (checked: boolean, row: any) => (
-      <div className="inline-flex cursor-pointer lg:pl-5">
-        <Checkbox
-          variant="outline"
-          checked={row.checked}
-          onChange={() => onChange(row)}
-          inputClassName="!bg-white focus:!ring-0"
-          iconClassName="bg-gray-dark rounded cursor-pointer"
-        />
-      </div>
-    ),
-  },
+  // {
+  //   title: (
+  //     <HeaderCell
+  //       title={
+  //         <Checkbox
+  //           variant="outline"
+  //           inputClassName="!bg-white focus:!ring-0"
+  //           onChange={(e) => onSelectAll(e.target.checked)}
+  //           iconClassName="bg-gray-dark rounded cursor-pointer"
+  //         />
+  //       }
+  //       className="lg:pl-5"
+  //     />
+  //   ),
+  //   dataIndex: 'checked',
+  //   key: 'checked',
+  //   width: 50,
+  //   render: (checked: boolean, row: any) => (
+  //     <div className="inline-flex cursor-pointer lg:pl-5">
+  //       <Checkbox
+  //         variant="outline"
+  //         checked={row.checked}
+  //         onChange={() => onChange(row)}
+  //         inputClassName="!bg-white focus:!ring-0"
+  //         iconClassName="bg-gray-dark rounded cursor-pointer"
+  //       />
+  //     </div>
+  //   ),
+  // },
   {
     title: <HeaderCell title={'ID'} />,
     dataIndex: 'id',

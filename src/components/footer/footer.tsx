@@ -42,7 +42,7 @@ export default function Footer({ className }: { className?: string }) {
               All rights reserved
             </p>
           </div>
-          <nav className="order-1 border-b border-gray-lighter pb-4 md:order-none md:border-b-0 md:pb-0">
+          {/* <nav className="order-1 border-b border-gray-lighter pb-4 md:order-none md:border-b-0 md:pb-0">
             <ul className="flex flex-wrap items-center justify-center md:justify-end">
               {menuItems.map((item) => (
                 <li
@@ -58,7 +58,7 @@ export default function Footer({ className }: { className?: string }) {
                 </li>
               ))}
             </ul>
-          </nav>
+          </nav> */}
         </div>
       </div>
     </footer>

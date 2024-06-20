@@ -72,7 +72,7 @@ export default function reservationsPage() {
       if (searchfilter) {
         setData((prevData) =>
           prevData.filter((item) =>
-            item.name.toLowerCase().includes(searchfilter.toLowerCase()),
+            item.excursionName.toLowerCase().includes(searchfilter.toLowerCase()),
           ),
         );
       } else {
