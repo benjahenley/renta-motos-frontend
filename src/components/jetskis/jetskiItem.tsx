@@ -26,15 +26,16 @@ export const JetskiItem = ({ jetski }: Props) => {
   }, [jetski.available]);
 
   const handleClick = async () => {
-    const res = await updateJetskiStatus(jetski.id);
+    // const res = await updateJetskiStatus(jetski.id);
 
-    if (!res) {
-      setErr(true);
-      setErrMsg('No se pudo actualizar');
-    }
+    // if (!res) {
+    //   setErr(true);
+    //   setErrMsg('No se pudo actualizar');
+    // }
 
-    console.log(res);
+    // console.log(res);
     // return router.refresh();
+    router.push('/');
     window.location.reload();
   };
 

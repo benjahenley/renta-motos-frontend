@@ -45,7 +45,7 @@ export const PaypalButton: React.FC<PaypalButtonInterface> = ({
           {
             invoice_id: reservationId,
             amount: {
-              currency_code: 'Euro',
+              currency_code: 'EUR',
               value: `${roundedAmount}`,
             },
           },
