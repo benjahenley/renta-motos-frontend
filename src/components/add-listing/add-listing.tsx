@@ -5,25 +5,23 @@ import { atom, useAtomValue } from 'jotai';
 import dynamic from 'next/dynamic';
 
 const CreateListing = dynamic(
-  () => import('@/components/add-listing/steps/create-listing')
+  () => import('@/components/add-listing/steps/create-listing'),
 );
 const BoatInfo = dynamic(
-  () => import('@/components/add-listing/steps/boat-info')
+  () => import('@/components/add-listing/steps/boat-info'),
 );
 const AddBoatPhotos = dynamic(
-  () => import('@/components/add-listing/steps/upload-photos')
+  () => import('@/components/add-listing/steps/upload-photos'),
 );
 const AddLocation = dynamic(
-  () => import('@/components/add-listing/steps/add-location')
+  () => import('@/components/add-listing/steps/add-location'),
 );
-const AddEquipment = dynamic(
-  () => import('@/components/add-listing/steps/add-equipment')
-);
+
 const AddSpecification = dynamic(
-  () => import('@/components/add-listing/steps/add-specification')
+  () => import('@/components/add-listing/steps/add-specification'),
 );
 const StepsEnd = dynamic(
-  () => import('@/components/add-listing/steps/steps-end')
+  () => import('@/components/add-listing/steps/steps-end'),
 );
 
 export const stepAtom = atom(1);

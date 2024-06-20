@@ -12,12 +12,14 @@ import {
   OnApproveData,
   OnApproveActions,
 } from '@paypal/paypal-js';
-import { setTransactionId } from '@/api/transaction/setTransactionId';
+
 import { getToken } from '@/helpers/getToken';
-import { paypalCheckPayment } from '@/api/payments/paypal-check-payments';
+
 import { Routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
 import { changeReservationStatusToApproved } from '@/helpers/reservations/changeStatusToApproved';
+import { setTransactionId } from '@/helpers/transaction/setTransactionId';
+import { paypalCheckPayment } from '@/helpers/payments/paypal-check-payments';
 
 interface PaypalButtonInterface {
   reservationId: string;
@@ -38,10 +40,12 @@ export const PaypalButton: React.FC<PaypalButtonInterface> = ({
   ): Promise<string> => {
     try {
       const orderId = await actions.order.create({
+        intent: 'CAPTURE',
         purchase_units: [
           {
             invoice_id: reservationId,
             amount: {
+              currency_code: 'Euro',
               value: `${roundedAmount}`,
             },
           },
