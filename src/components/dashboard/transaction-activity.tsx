@@ -8,7 +8,6 @@ import Input from '@/components/ui/form-fields/input';
 import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Table from '@/components/ui/table';
-import { getToken } from '@/helpers/getToken';
 import { getAllReservations } from '@/helpers/reservations/getAllReservations';
 import { cancelReservation } from '@/helpers/reservations/deleteReservation';
 import DotsDropdown from '../reservation/dots-dropdown';

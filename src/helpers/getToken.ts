@@ -1,3 +1,5 @@
+'use client';
+
 export function getToken() {
   const loggedUserString = localStorage.getItem('loggedUser');
 

@@ -78,7 +78,8 @@ export default function FindTripForm({ destinationRef }: FindTripFormProps) {
 
       <div className="mt-auto flex flex-col justify-end">
         <Text className="mb-5 text-center leading-6 !text-secondary sm:block sm:text-left 3xl:leading-8 4xl:mb-6 4xl:text-lg">
-          Don't miss the opportunity to travel and discover, go check our equipment and make your reservation!
+          Dont miss the opportunity to travel and discover, go check our
+          equipment and make your reservation!
         </Text>
         <Button
           type="submit"
@@ -88,7 +89,7 @@ export default function FindTripForm({ destinationRef }: FindTripFormProps) {
         >
           Free with license
         </Button>
-        <br/>
+        <br />
         <Button
           type="button"
           className="w-full  !py-[14px] text-sm !font-bold uppercase leading-6 md:!py-[17px] md:text-base lg:!rounded-xl 3xl:!py-[22px]"

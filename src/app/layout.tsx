@@ -18,11 +18,17 @@ const satisfy = Satisfy({
   variable: '--font-satisfy',
 });
 
+// Move viewport to generateViewport
+export const generateViewport = () => {
+  return {
+    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+  };
+};
+
 export const metadata: Metadata = {
   title: 'Ibijet Rent',
   description: 'Find your boat with the best experience.',
   icons: ['/images/probando.svg'],
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
 };
 
 export default function RootLayout({ children }: React.PropsWithChildren<{}>) {

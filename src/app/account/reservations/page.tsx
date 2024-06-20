@@ -41,7 +41,7 @@ async function getData(start: number, offset: number) {
   return filteredData;
 }
 
-export default function reservationsPage() {
+export default function ReservationsPage() {
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState<string>('desc');
   const [column, setColumn] = useState<string>('');
@@ -49,11 +49,11 @@ export default function reservationsPage() {
   const [searchfilter, setSearchFilter] = useState('');
   const [current, setCurrent] = useState(1);
   const router = useRouter();
-  const token = getToken();
 
   useEffect(() => {
     async function checkUserRole() {
       try {
+        const token = getToken();
         await checkRole(token);
       } catch (e: any) {
         console.log(e.message);
@@ -65,7 +65,7 @@ export default function reservationsPage() {
     }
 
     checkUserRole();
-  }, [router, token]);
+  }, [router]);
 
   useEffect(() => {
     const filterData = async () => {
@@ -85,7 +85,7 @@ export default function reservationsPage() {
       }
     };
     filterData();
-  }, [searchfilter, token, current]);
+  }, [searchfilter, current]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,7 +95,7 @@ export default function reservationsPage() {
       setData(fetchedData);
     };
     fetchData();
-  }, [current, token]);
+  }, [current]);
 
   const onSelectAll = useCallback(
     (checked: boolean) => {
