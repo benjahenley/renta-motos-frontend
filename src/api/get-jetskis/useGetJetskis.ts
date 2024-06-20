@@ -29,7 +29,6 @@ export const getJetskis = async (): Promise<Jetski[]> => {
 
 export const updateJetskiStatus = async (jetskiId: string): Promise<Jetski> => {
   const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetski';
-  console.log('llega');
 
   try {
     const token = getToken();

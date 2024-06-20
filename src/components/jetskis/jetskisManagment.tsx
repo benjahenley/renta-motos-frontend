@@ -7,7 +7,11 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Button from '@/components/ui/button';
 import Input from '@/components/ui/form-fields/input'; // Importa el componente Input
-import { Jetski, getJetskis } from '@/api/get-jetskis/useGetJetskis';
+import {
+  Jetski,
+  getJetskis,
+  updateJetskiStatus,
+} from '@/api/get-jetskis/useGetJetskis';
 import { createJetski } from '@/api/get-jetskis/createJetskis';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'; // Asegúrate de importar el ícono
 
@@ -53,17 +57,29 @@ const SimpleTable = ({
 };
 
 const JetskiManagement: React.FC = () => {
-  const { jetskis, loading, error, toggleStatus } = useJetskis();
+  // const { jetskis, loading, error, toggleStatus } = useJetskis();
+  const [jetskis, setJetskis] = useState<Jetski[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [current, setCurrent] = useState(1);
   const [searchFilter, setSearchFilter] = useState('');
   const [displayData, setDisplayData] = useState<Jetski[]>([]);
   const [jetskiName, setJetskiName] = useState('');
   const [addError, setAddError] = useState<string | null>(null);
 
+  const getAllJetskis = async () => {
+    const newJetskis = await getJetskis();
+    setJetskis(newJetskis);
+    setDisplayData(newJetskis);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getAllJetskis();
+  }, []);
+
   useEffect(() => {
     const filterData = () => {
-      console.log({ jetskis });
-      let filteredData = [...jetskis];
+      let filteredData = jetskis;
 
       if (searchFilter) {
         filteredData = filteredData.filter((jetski) =>
@@ -84,9 +100,8 @@ const JetskiManagement: React.FC = () => {
 
   const handleToggleMaintenance = async (id: string) => {
     try {
-      await toggleStatus(id);
-      const updatedJetskis = await getJetskis();
-      setDisplayData(updatedJetskis);
+      await updateJetskiStatus(id);
+      const updatedJetskis = getAllJetskis();
     } catch (error) {
       console.error('Failed to update jetski status', error);
     }
