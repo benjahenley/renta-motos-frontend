@@ -16,12 +16,34 @@ import { drawerStateAtom } from '@/components/drawers/view';
 import ActionIcon from '@/components/ui/action-icon';
 import { Routes } from '@/config/routes';
 import Logo from '@/components/ui/logo';
+import { WhatsappIcon } from '@/components/icons/whatsapp-icon';
+import { InstaIcon } from '@/components/icons/instagram-icon';
+import { FBIcon } from '@/components/icons/fb-icon';
+
 
 const menu = [
   {
     name: 'home',
     icon: <HomeIcon className="h-auto w-5" />,
     path: Routes.public.home,
+  },
+  {
+    name: 'Whatsapp',
+    icon: <WhatsappIcon className="h-auto w-5" />,
+    path: 'https://wa.me/34612498228',
+    color: '#03B603',
+  },
+  {
+    icon: <InstaIcon className="h-auto w-5" />,
+    path: 'https://www.instagram.com/ibijetrent/',
+    color: '#6A0AB5',
+    name: 'Instagram',
+  },
+  {
+    icon: <FBIcon className="h-auto w-5" />,
+    path: 'https://www.facebook.com/ibijetrent?mibextid=LQQJ4d',
+    color: '#2DA3DE',
+    name: 'Facebook',
   },
   // {
   //   name: 'explore',

@@ -29,7 +29,7 @@ const list = [
     icon: <WhatsappIcon className="h-6 w-6" />,
     path: 'https://wa.me/34612498228',
     color: '#03B603',
-    name: 'Whatsaap',
+    name: 'Whatsapp',
   },
 //   {
 //     icon: <TelegramIcon className="h-6 w-6" />,
@@ -62,13 +62,13 @@ export default function ControlledOpenSpeedDial() {
   };
 
   return (
-    <Box sx={{ position: 'fixed', bottom: 16, right: 16, zIndex: 1000 }}>
+    <Box className='hidden xl:block' sx={{ position: 'fixed', bottom: 16, right: 16, zIndex: 1000 }}>
       <SpeedDial
         ariaLabel="SpeedDial controlled open example"
         sx={{ 
           position: 'fixed', 
-          bottom: 16, 
-          right: 16, 
+          bottom: 32, 
+          right: 32, 
           '& .MuiFab-primary': {
             backgroundColor: 'black',
             color: 'white',

@@ -5,6 +5,7 @@ import emailjs from '@emailjs/browser';
 import clsx from 'clsx';
 import Input from '@/components/ui/form-fields/input';
 import Button from '@/components/ui/button';
+import ActionAlerts from '@/components/ui/alerts/alerts'; // Ajusta la ruta según sea necesario
 
 interface HelpFormProps {
   className?: string;
@@ -16,6 +17,7 @@ export default function HelpForm({ className }: HelpFormProps) {
     email: '',
   });
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState<{ type: 'success' | 'warning' | 'error' | 'info'; message: string } | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,8 +27,24 @@ export default function HelpForm({ className }: HelpFormProps) {
     }));
   };
 
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!form.email) {
+      setAlert({ type: 'error', message: 'Email is required.' });
+      return;
+    }
+
+    if (!validateEmail(form.email)) {
+      setAlert({ type: 'error', message: 'Invalid email format.' });
+      return;
+    }
+
     setLoading(true);
 
     emailjs
@@ -41,8 +59,7 @@ export default function HelpForm({ className }: HelpFormProps) {
       .then(
         () => {
           setLoading(false);
-          alert('Thank you. We will get back to you as soon as possible.');
-
+          setAlert({ type: 'success', message: 'Thank you. We will get back to you as soon as possible.' });
           setForm({
             email: '',
           });
@@ -50,19 +67,28 @@ export default function HelpForm({ className }: HelpFormProps) {
         (error) => {
           setLoading(false);
           console.error(error);
-
-          alert('Ahh, something went wrong. Please try again.');
+          setAlert({ type: 'error', message: 'Ahh, something went wrong. Please try again.' });
         }
       );
   };
 
   return (
+   <>
     <form
       ref={formRef}
       noValidate
       onSubmit={handleSubmit}
       className={clsx('relative', className)}
-    >
+      >
+      {alert && (
+        <div >
+          <ActionAlerts 
+          type={alert.type}
+          message={alert.message}
+          onClose={() => setAlert(null)}
+        />
+        </div>
+      )}
       <div className="relative">
         <Input
           name="email"
@@ -85,6 +111,6 @@ export default function HelpForm({ className }: HelpFormProps) {
           {loading ? 'Sending...' : 'Contact us'}
         </Button>
       </div>
-    </form>
+    </form></>
   );
 }

@@ -9,6 +9,10 @@ const menuItems = [
     label: 'Home',
     path: Routes.public.home,
   },
+  {
+    label: 'Help',
+    path: Routes.public.help,
+  },
   // {
   //   label: 'Explore',
   //   path: Routes.public.explore,
@@ -17,10 +21,6 @@ const menuItems = [
   //   label: 'Pricing',
   //   path: Routes.public.pricing,
   // },
-  {
-    label: 'Help',
-    path: Routes.public.help,
-  },
 ];
 
 export default function Footer({ className }: { className?: string }) {

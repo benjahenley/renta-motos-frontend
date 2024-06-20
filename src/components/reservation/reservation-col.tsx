@@ -1,5 +1,3 @@
-'use client';
-
 import DotsDropdown from '@/components/reservation/dots-dropdown';
 import Checkbox from '@/components/ui/form-fields/checkbox';
 import HeaderCell from '@/components/ui/table/header-cell';
@@ -150,6 +148,7 @@ export const reservationColumn = (
         <DotsDropdown
           key={row.key}
           reservationId={row.id}
+          status={row.status} // Pasar el estado de la reserva
           onDeleteSuccess={() => onDeleteSuccess(row.id)} // Ajustado para pasar el id
           onClick={(e: any) => onMore(e, row)}
         />

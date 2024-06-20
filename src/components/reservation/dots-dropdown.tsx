@@ -7,21 +7,21 @@ import {
 import { Fragment, useState, useEffect } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { EllipsisHorizontalIcon, TrashIcon } from '@heroicons/react/24/solid';
-import { revalidatePath } from 'next/cache';
 import { Routes } from '@/config/routes';
 import { useRouter } from 'next/navigation';
+import { SailBoatIcon } from '../icons/sail-boat';
 
 interface MenuItemProps {
   onClick?: (e: any) => void;
   reservationId: string;
+  status: string; // Añadido estado
   onDeleteSuccess: () => void;
 }
-
-const dropdown = ['Cancel'];
 
 export default function DotsDropdown({
   onClick,
   reservationId,
+  status,
   onDeleteSuccess,
 }: MenuItemProps) {
   const [loading, setLoading] = useState(false);
@@ -41,6 +41,10 @@ export default function DotsDropdown({
     }
   };
 
+  const handlePayOrder = () => {
+    router.push(Routes.public.payment(reservationId));
+  };
+
   return (
     <>
       <Menu as="div" className="relative inline-block">
@@ -58,28 +62,30 @@ export default function DotsDropdown({
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 top-full z-10 min-w-[160px] rounded-lg bg-white shadow-lg xl:mt-2 xl:min-w-[192px]">
+          <Menu.Items className="absolute right-0 bottom-full z-10 min-w-[160px] rounded-lg bg-white shadow-lg xl:mb-2 xl:min-w-[192px]">
             <div className="rounded-lg p-2">
-              {dropdown.map((item) => (
+              {status === 'pending' && (
                 <Menu.Item
-                  key={`reservation-${item}`} // Añadir clave única basada en el item
                   as="button"
                   type="button"
                   className="flex w-full items-center gap-3 rounded-md p-2 text-left text-sm capitalize hover:bg-gray-lightest"
-                  onClick={(e) => {
-                    console.log('Clicked on item:', item);
-                    if (item === 'Cancel') {
-                      handleDelete(e);
-                    } else if (onClick) {
-                      onClick(e);
-                    }
-                  }}
-                  id={item}
+                  onClick={handlePayOrder}
+                  id="Pay Order"
                 >
-                  {item === 'Cancel' && <TrashIcon className="h-auto w-5" />}
-                  {item}
+                  <SailBoatIcon className="h-auto w-5" />
+                  Pay Order
                 </Menu.Item>
-              ))}
+              )}
+              <Menu.Item
+                as="button"
+                type="button"
+                className="flex w-full items-center gap-3 rounded-md p-2 text-left text-sm capitalize hover:bg-gray-lightest"
+                onClick={handleDelete}
+                id="Cancel"
+              >
+                <TrashIcon className="h-auto w-5" />
+                Cancel
+              </Menu.Item>
             </div>
           </Menu.Items>
         </Transition>
