@@ -1,19 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useAtom } from 'jotai';
 import Text from '@/components/ui/typography/text';
-import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import {
-  ChatBubbleOvalLeftIcon,
-  DocumentDuplicateIcon,
-} from '@heroicons/react/24/outline';
+import { CheckCircleIcon, XMarkIcon, ChatBubbleOvalLeftIcon, DocumentDuplicateIcon } from '@heroicons/react/24/solid';
 import { TwitterOutlineIcon } from '@/components/icons/twitter-outline-icon';
 import { TelegramIcon } from '@/components/icons/telegram-icon';
 import { WhatsappIcon } from '@/components/icons/whatsapp-icon';
 import { EmailIcon } from '@/components/icons/email-icon';
 import { useModal } from '@/components/modals/context';
 import ActionIcon from '@/components/ui/action-icon';
+import { slugAtom } from '@/atoms/slug';
 
 const list = [
   {
@@ -51,18 +48,8 @@ const list = [
 export default function ShareModal() {
   const { closeModal } = useModal();
   const [copied, setCopied] = useState(false);
-  const router = useRouter();
-  const [slug, setSlug] = useState('');
-
-  useEffect(() => {
-    // Extraer el slug de la URL actual
-    const path = router.asPath;
-    const parts = path.split('/');
-    const slugFromUrl = parts[parts.length - 1];
-    setSlug(slugFromUrl);
-  }, [router.asPath]);
-
-  const shareUrl = `${window.location.origin}/${slug}`;
+  const [slug] = useAtom(slugAtom);
+  const shareUrl = slug ? `https://yourwebsite.com/${slug}` : '';
 
   useEffect(() => {
     if (copied) {
