@@ -33,6 +33,21 @@ export default function GallaryBlock({ images }: GallaryBlockProps) {
           className="relative row-start-1 row-end-3 h-full cursor-pointer"
           onClick={handleClick}
         >
+          {images![0]! && (
+            <Image
+              src={images[0]}
+              alt="pic"
+              fill
+              priority
+              sizes="(min-width: 320) 100vw, 100vw"
+              className="object-cover"
+            />
+          )}
+        </div>
+        <div
+          className="relative hidden h-full cursor-pointer md:block"
+          onClick={handleClick}
+        >
           {images![1]! && (
             <Image
               src={images[1]}
@@ -48,24 +63,9 @@ export default function GallaryBlock({ images }: GallaryBlockProps) {
           className="relative hidden h-full cursor-pointer md:block"
           onClick={handleClick}
         >
-          {images[2] && (
+          {images![2]! && (
             <Image
               src={images[2]}
-              alt="pic"
-              fill
-              priority
-              sizes="(min-width: 320) 100vw, 100vw"
-              className="object-cover"
-            />
-          )}
-        </div>
-        <div
-          className="relative hidden h-full cursor-pointer md:block"
-          onClick={handleClick}
-        >
-          {images[3] && (
-            <Image
-              src={images[3]}
               alt="pic"
               fill
               priority

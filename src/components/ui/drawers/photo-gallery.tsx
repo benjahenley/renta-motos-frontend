@@ -28,7 +28,7 @@ export default function PhotoGallery({ gallary }: PhotoGalleryProps) {
   }
 
   return (
-    <div className="min-h-full w-full bg-white mt-20 sm:mt-36">
+    <div className="min-h-full w-full bg-white">
       <div className="container-fluid sticky top-0 z-10 flex h-14 w-full items-center bg-white shadow-sm md:h-20">
         <div className="flex w-full items-center justify-between">
           <ActionIcon
@@ -65,7 +65,7 @@ export default function PhotoGallery({ gallary }: PhotoGalleryProps) {
               <div
                 className="group relative mb-2 cursor-pointer overflow-hidden rounded-md transition-all duration-300 md:rounded-xl lg:mb-3"
                 key={`gallery-img-${index}`}
-                // onClick={() => openGallery('MODAL_GALLERY', index)}
+                onClick={() => openGallery('MODAL_GALLERY', index)}
               >
                 <Image
                   src={item}

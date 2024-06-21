@@ -1,8 +1,9 @@
 'use client';
-import { useVendor } from '../vendorContext';
-import Image from 'next/image';
+
+import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -18,22 +19,17 @@ import { useGallery } from '@/components/gallery/context';
 import ActionIcon from '@/components/ui/action-icon';
 import { fromOpacity } from '@/config/constants';
 import Button from '@/components/ui/button';
+import { selectedVendorAtom } from '@/atoms/selectedVendor';
 
 interface GalleryCarouselTypes {
   initialSlide?: number;
 }
 
-export default function GalleryCarousel({
-  initialSlide,
-}: GalleryCarouselTypes) {
+export default function GalleryCarousel({ initialSlide }: GalleryCarouselTypes) {
   const { closeGallery } = useGallery();
   const [state, setState] = useState(initialSlide);
-  const { selectedVendor } = useVendor()
+  const [selectedVendor] = useAtom(selectedVendorAtom);
 
-  // Verifica que selectedVendor no sea null
-  if (!selectedVendor) {
-    return null; // O puedes mostrar algún componente de carga o un mensaje de error aquí
-  }
 
   return (
     <AnimatePresence>
@@ -41,7 +37,7 @@ export default function GalleryCarousel({
         initial={fromOpacity().from}
         animate={fromOpacity().to}
         exit={fromOpacity().from}
-        className="h-full w-full bg-black"
+        className="h-full w-full  bg-black"
       >
         <div className="ml-auto flex w-1/2 items-center justify-between px-4 py-5 md:pl-0 md:pr-8 2xl:py-8">
           <div className="-translate-x-1/2 font-semibold text-white xl:text-xl">
@@ -80,7 +76,7 @@ export default function GalleryCarousel({
             }}
             className="w-full"
           >
-            {selectedVendor.gallary.map((item) => (
+            {selectedVendor.gallary.map((item: any) => (
               <SwiperSlide key={item}>
                 <div className="relative h-[300px] w-full bg-white py-2 md:h-[400px] lg:h-[500px] 3xl:h-[650px]">
                   <Image

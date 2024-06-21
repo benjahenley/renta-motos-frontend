@@ -7,7 +7,7 @@ export type GALLERY_VIEW = 'MODAL_GALLERY';
 const galleryAtom = atom({
   open: false,
   view: 'MODAL_GALLERY',
-  initialSlide: 1,
+  initialSlide: 0,
 });
 
 export function useGallery() {
