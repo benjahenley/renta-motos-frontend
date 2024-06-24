@@ -63,25 +63,25 @@ export class User {
     }
   }
 
-  static async checkRole(uid: string) {
-    const userSnapshot = await collection
-      .where('uid', '==', uid)
-      .limit(1)
-      .get();
+  // static async checkRole(uid: string) {
+  //   const userSnapshot = await collection
+  //     .where('uid', '==', uid)
+  //     .limit(1)
+  //     .get();
 
-    if (userSnapshot.empty) {
-      throw new Error('No user exists with that ID');
-    }
+  //   if (userSnapshot.empty) {
+  //     throw new Error('No user exists with that ID');
+  //   }
 
-    const userData = userSnapshot.docs[0].data();
+  //   const userData = userSnapshot.docs[0].data();
 
-    if (userData.role === 'admin') {
-      console.log('User is verified as Admin');
-      return true;
-    } else {
-      throw new Error('User is not allowed to access this site');
-    }
-  }
+  //   if (userData.role === 'admin') {
+  //     console.log('User is verified as Admin');
+  //     return true;
+  //   } else {
+  //     throw new Error('User is not allowed to access this site');
+  //   }
+  // }
 
   static async updateUser(userId: string, data: any) {
     const userRef = new User(userId);

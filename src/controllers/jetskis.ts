@@ -16,8 +16,6 @@ export async function getAllJetskis() {
     data.push({ id: doc.id, ...doc.data() });
   });
 
-  console.log(jetskisSnap.docs, jetskisSnap, data);
-
   return data;
 }
 
