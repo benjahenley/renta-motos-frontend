@@ -60,6 +60,7 @@ export type VendorTypes = {
     twitterUserName: string;
   };
   description: string;
+  description2: string;
   equipment: {
     img: string;
     name: string;
