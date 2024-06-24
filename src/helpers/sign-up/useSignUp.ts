@@ -1,5 +1,5 @@
 export const signUpApi = async (data: object) => {
-  const url = process.env.URL_API_SERVER + '/sign-up';
+  const url = '/api/sign-up';
 
   try {
     const response = await fetch(url, {

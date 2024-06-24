@@ -1,11 +1,9 @@
-'use server';
-
 export const setTransactionId = async (
   reservationId: string,
   token: string,
   transactionId: string,
 ) => {
-  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/transaction';
+  const url = '/api/transaction';
 
   try {
     const response = await fetch(url, {

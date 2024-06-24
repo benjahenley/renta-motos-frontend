@@ -1,7 +1,7 @@
 import { getToken } from '@/helpers/getToken';
 
 export const deleteReservation = async (id: string) => {
-  const url = `${process.env.NEXT_PUBLIC_URL_API_SERVER}/reservation?id=${id}`;
+  const url = `/api/reservation?id=${id}`;
   try {
     const token = getToken();
     const response = await fetch(url, {
@@ -24,7 +24,7 @@ export const deleteReservation = async (id: string) => {
 };
 
 export const cancelReservation = async (id: string) => {
-  const url = `${process.env.NEXT_PUBLIC_URL_API_SERVER}/reservation/${id}`;
+  const url = `/api/reservation/${id}`;
   try {
     const token = getToken();
     const response = await fetch(url, {

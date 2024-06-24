@@ -1,5 +1,3 @@
-'use server';
-
 import { PaypalOrderStatusResponse } from '@/interfaces/paypal';
 
 export const paypalCheckPayment = async (paypalTransactionId: string) => {
@@ -28,8 +26,8 @@ export const paypalCheckPayment = async (paypalTransactionId: string) => {
 
 const getPaypalBearerToken = async (): Promise<string | null> => {
   const PAYPAL_CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-  const PAYPAL_SECRET = process.env.PAYPAL_SECRET;
-  const oauth2Url = process.env.PAYPAL_OAUTH_URL ?? '';
+  const PAYPAL_SECRET = process.env.NEXT_PUBLIC_PAYPAL_SECRET;
+  const oauth2Url = process.env.NEXT_PUBLIC_PAYPAL_OAUTH_URL ?? '';
 
   const base64Token = Buffer.from(
     `${PAYPAL_CLIENT_ID}:${PAYPAL_SECRET}`,
@@ -63,7 +61,7 @@ const verifyPayPalPayment = async (
   paypalTransactionId: string,
   bearerToken: string,
 ): Promise<PaypalOrderStatusResponse | null> => {
-  const paypalOrderUrl = `${process.env.PAYPAL_ORDERS_URL}/${paypalTransactionId}`;
+  const paypalOrderUrl = `${process.env.NEXT_PUBLIC_PAYPAL_ORDERS_URL}/${paypalTransactionId}`;
   const myHeaders = new Headers();
   myHeaders.append('Authorization', `Bearer ${bearerToken}`);
 

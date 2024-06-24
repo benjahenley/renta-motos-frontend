@@ -3,7 +3,7 @@ import { Reservation } from '@/interfaces/reservation';
 
 // api/reservations/getReservationByUserID.ts
 export const getReservationsByUserId = async () => {
-  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservations/user';
+  const url = '/api/reservations/user';
 
   try {
     const token = getToken();

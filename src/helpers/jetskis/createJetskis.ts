@@ -16,7 +16,7 @@ interface NewJetski {
 }
 
 export const createJetski = async (jetski: NewJetski): Promise<Jetski> => {
-  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetski';
+  const url = '/api/jetski';
 
   try {
     const token = getToken();

@@ -1,18 +1,14 @@
 'use client';
 
 import Button from '@/components/ui/button';
-import { updateJetskiStatus } from '@/helpers/get-jetskis/patchJetski';
+import { getToken } from '@/helpers/getToken';
+import { updateJetskiStatus } from '@/helpers/jetskis/updateJetski';
+import { Jetski } from '@/interfaces/jetski';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-type Jetski = {
-  id: string;
-  name: string;
-  available: boolean;
-};
-
 type Props = {
-  jetski: any;
+  jetski: Jetski;
 };
 
 export const JetskiItem = ({ jetski }: Props) => {
@@ -26,17 +22,16 @@ export const JetskiItem = ({ jetski }: Props) => {
   }, [jetski.available]);
 
   const handleClick = async () => {
-    // const res = await updateJetskiStatus(jetski.id);
+    const token = getToken();
+    const res = await updateJetskiStatus(jetski.id, token);
+    setAvailable(!available);
 
-    // if (!res) {
-    //   setErr(true);
-    //   setErrMsg('No se pudo actualizar');
-    // }
+    if (!res) {
+      setErr(true);
+      setErrMsg('No se pudo actualizar');
+    }
 
-    // console.log(res);
-    // return router.refresh();
-    router.push('/');
-    window.location.reload();
+    console.log(res);
   };
 
   return (

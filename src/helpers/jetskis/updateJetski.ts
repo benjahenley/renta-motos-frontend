@@ -1,13 +1,13 @@
-'use client';
-
 import { getToken } from '@/helpers/getToken';
+import { Jetski } from '@/interfaces/jetski';
 
-export const updateJetskiStatus = async (jetskiId: string): Promise<Jetski> => {
-  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetski';
-  console.log({ url });
+export const updateJetskiStatus = async (
+  jetskiId: string,
+  token: string,
+): Promise<Jetski> => {
+  const url = '/api/jetski';
 
   try {
-    const token = getToken();
     const response = await fetch(url, {
       method: 'PATCH',
       headers: {

@@ -1,5 +1,5 @@
 export const checkRole = async (token: string) => {
-  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/user';
+  const url = '/api/user';
 
   try {
     const response = await fetch(url, {

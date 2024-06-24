@@ -6,12 +6,11 @@ import Pagination from '@/components/ui/pagination';
 import Text from '@/components/ui/typography/text';
 import Button from '@/components/ui/button';
 import Input from '@/components/ui/form-fields/input'; // Importa el componente Input
-
-import { createJetski } from '@/helpers/get-jetskis/createJetskis';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'; // Asegúrate de importar el ícono
 import { JetskiItem } from './jetskiItem';
-import { getJetskis } from '@/helpers/get-jetskis/getJetskis';
 import { getToken } from '@/helpers/getToken';
+import { getJetskis } from '@/helpers/jetskis/getJetskis';
+import { createNewJetski } from '@/controllers/jetskis';
+import { Jetski } from '@/interfaces/jetski';
 
 const SimpleTable = ({ data }: { data: Jetski[] }) => {
   return (
@@ -51,6 +50,7 @@ const JetskiManagement: React.FC = () => {
     try {
       const token = getToken();
       const newJetskis = await getJetskis(token);
+      console.log({ newJetskis });
       setJetskis(newJetskis);
     } catch (error) {
       console.error('Failed to fetch jetskis', error);
@@ -82,12 +82,9 @@ const JetskiManagement: React.FC = () => {
 
   const handleAddJetski = async () => {
     try {
-      await createJetski({
-        name: jetskiName,
-        available: true,
-        reservations: [],
-      });
-      const updatedJetskis = await getAllJetskis();
+      const token = getToken();
+      await createNewJetski(jetskiName);
+      await getAllJetskis();
 
       setJetskiName('');
       setAddError(null);

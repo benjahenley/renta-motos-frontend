@@ -1,5 +1,5 @@
 export const createReservation = async (token: string, data: any) => {
-  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservation';
+  const url = '/api/reservation';
 
   try {
     const response = await fetch(url, {

@@ -1,8 +1,7 @@
 import { getToken } from '@/helpers/getToken';
 
 export async function changeReservationStatusToApproved(reservationId: string) {
-  const url =
-    process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservation/' + reservationId;
+  const url = '/api/reservation/' + reservationId;
 
   try {
     const token = getToken();

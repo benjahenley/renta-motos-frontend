@@ -1,7 +1,6 @@
-'use server';
+export const fetchReservationsByDate = async (date: string) => {
+  const url = '/api/reservations?date=' + date;
 
-export const getAvailableJetskis = async (): Promise<string[]> => {
-  const url = process.env.NEXT_PUBLIC_URL_API_SERVER + '/jetskis/available';
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -12,8 +11,8 @@ export const getAvailableJetskis = async (): Promise<string[]> => {
       throw new Error(errorData.error || 'An unknown error occurred');
     }
 
-    const data: string[] = await response.json();
-    return data;
+    const signData = await response.json();
+    return signData;
   } catch (error: any) {
     throw new Error(error.message || 'An unknown error occurred');
   }

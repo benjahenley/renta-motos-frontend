@@ -5,8 +5,7 @@ export const getReservationById = async (
   token: string,
   reservationId: string,
 ) => {
-  const url =
-    process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservation/' + reservationId;
+  const url = '/api/reservation/' + reservationId;
 
   try {
     const response = await fetch(url, {

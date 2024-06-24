@@ -1,8 +1,7 @@
 'use client';
 
-import { extractTime } from './extract-time';
-import { getJetskis } from './get-jetskis/getJetskis';
 import { getToken } from './getToken';
+import { getJetskis } from './jetskis/getJetskis';
 
 export let timeSlots = [
   '10:00',

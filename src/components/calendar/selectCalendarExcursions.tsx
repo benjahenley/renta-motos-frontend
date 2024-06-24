@@ -1,10 +1,10 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
 import { Selection, selectionAtom } from '@/atoms/reservation';
 import Button from '@/components/ui/button';
-import { getReservationsByDate } from '@/helpers/reservations/getReservationsByDate';
 import { useModal } from '../modals/context';
 import { useRouter } from 'next/navigation';
 import {
@@ -19,8 +19,8 @@ import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
 import { getToken } from '@/helpers/getToken';
 import { addMinutesToTime } from '@/helpers/extract-time';
 import { createReservation } from '@/helpers/reservations/createReservation';
-import { Routes } from '@/config/routes';
-import { getAvailableJetskis } from '@/helpers/get-jetskis/getAvailableJetskis';
+import { fetchReservationsByDate } from '@/helpers/reservations/fetchReservationsByDate';
+import { fetchAvailableJetskis } from '@/helpers/jetskis/fetchAvailableJetskis';
 
 export default function SelectCalendarExcursions() {
   const { openModal, closeModal } = useModal();
@@ -37,11 +37,12 @@ export default function SelectCalendarExcursions() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const { reservations } = await getReservationsByDate(
+        const { reservations } = await fetchReservationsByDate(
           formatDateToISOWithoutTime(selection!.date!),
         );
 
-        const jetskis = await getAvailableJetskis();
+        const jetskis = await fetchAvailableJetskis();
+        console.log(jetskis);
 
         setReservations(reservations);
         setJetskisAvailable(jetskis);

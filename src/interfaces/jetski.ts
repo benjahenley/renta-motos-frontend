@@ -1,5 +1,5 @@
-interface Jetski {
-  id: number;
+export interface Jetski {
+  id: string;
   name: string;
-  status: 'available' | 'maintenance';
+  available: boolean;
 }

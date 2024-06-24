@@ -1,6 +1,5 @@
-export const getReservationsByDate = async (date: string) => {
-  const url =
-    process.env.NEXT_PUBLIC_URL_API_SERVER + '/reservations?date=' + date;
+export const fetchAvailableJetskis = async (): Promise<string[]> => {
+  const url = '/api/jetskis/available';
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -11,8 +10,8 @@ export const getReservationsByDate = async (date: string) => {
       throw new Error(errorData.error || 'An unknown error occurred');
     }
 
-    const signData = await response.json();
-    return signData;
+    const data: string[] = await response.json();
+    return data;
   } catch (error: any) {
     throw new Error(error.message || 'An unknown error occurred');
   }
