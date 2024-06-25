@@ -4,6 +4,8 @@ export const vendorData = {
     slug: "listing-1",
     price: 310,
     name: "VX Cruiser HO Jet Ski",
+    triptime: 'you to define',
+    pricestring: '100/250/300/450',
     gallary: [
       "/images/top-boats/uno.jpeg",
       "/images/top-boats/dos.jpeg",
@@ -43,10 +45,6 @@ export const vendorData = {
       {
         img: '/images/listing-details/pilot.svg',
         name: 'Automatic Pilot',
-      },
-      {
-        img: '/images/listing-details/shower.svg',
-        name: 'Deck Shower',
       },
       // Otros equipos...
     ],
@@ -106,6 +104,7 @@ export const vendorData = {
   "portixol": {
     slug: "portixol",
     price: 300,
+    pricestring: '300',
     name: "Portixol",
     triptime: '2h',
     gallary: [
@@ -123,6 +122,7 @@ export const vendorData = {
   "cala-salada": {
     slug: "cala-salada",
     price: 120,
+    pricestring: '120',
     name: "Cala Salada",
     triptime: "30min",
     gallary: [
@@ -137,6 +137,7 @@ export const vendorData = {
   "cala-ubarca": {
     slug: "cala-daubarca",
     price: 250,
+    pricestring: '250',
     name: "Cala Urbaca",
     triptime: "1h 30min",
     gallary: [
@@ -152,6 +153,7 @@ export const vendorData = {
   "isla-es-vedra": {
     slug: "isla-es-vedra",
     price: 300,
+    pricestring: '300',
     name: "Isla Esvedra",
     triptime: "2h",
     gallary: [
@@ -168,6 +170,7 @@ export const vendorData = {
     slug: "isla-margarita",
     name: "Isla Margarita",
     price: 180,
+    pricestring: '180',
     triptime: "1h",
     gallary: [
       "/images/destinations/margaritas.jpg",
@@ -181,6 +184,7 @@ export const vendorData = {
   "cala-comte": {
     slug: "cala-comte",
     price: 180,
+    pricestring: '180',
     name: "Cala Comte",
     triptime: "1h",
     gallary: [

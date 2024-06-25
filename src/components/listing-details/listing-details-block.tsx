@@ -7,7 +7,7 @@ import BookingForm from '@/components/listing-details/booking-form/booking-form'
 import CalenderBlock from '@/components/listing-details/calendar/calender-block';
 import ListingDetailsHeroBlock from '@/components/listing-details/hero-block';
 import DescriptionBlock from '@/components/listing-details/descripton-block';
-// import EquipmentBlock from '@/components/listing-details/equipment-block';
+import EquipmentBlock from '@/components/listing-details/equipment-block';
 import LocationBlock from '@/components/listing-details/location-block';
 // import ReviewBlock from '@/components/listing-details/review-block';
 import VendorBlock from '@/components/listing-details/vendor-block';
@@ -55,7 +55,7 @@ export default function ListingDetails({
         <div className="w-full">
           <ListingDetailsHeroBlock vendor={vendor} />
           <DescriptionBlock vendor={vendor} />
-          {/* <EquipmentBlock equipment={vendor.equipment} /> */}
+          {/* <EquipmentBlock vendor={vendor} /> */}
           {/* <SpecificationBlock specifications={vendor.specifications} /> */}
           {/* <VendorBlock stats={reviewsData.stats} vendor={vendor.vendor} /> */}
           {/* <LocationBlock /> */}

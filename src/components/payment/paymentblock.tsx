@@ -7,6 +7,7 @@ import { useModal } from '../modals/context';
 import { getReservationById } from '@/helpers/reservations/getReservationsById';
 import { Reservation } from '@/interfaces/reservation';
 import { Routes } from '@/config/routes';
+import LoadingScreen from '../loading-screen';
 
 type Props = {
   reservationId: string;
@@ -48,7 +49,7 @@ export default function PaymentBlock({ reservationId }: Props) {
   return (
     <>
       {!reservation ? (
-        <div className="text-center">LOADING</div>
+        <LoadingScreen/>
       ) : (
         <div className="container px-5 mt-5 max-w-[1280px] md:flex md:justify-between pb-10 md:mt-7 xl:mt-12 3xl:!px-0">
           <div className="md:w-[48%] m-auto">
