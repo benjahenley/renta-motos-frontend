@@ -13,6 +13,10 @@ import { createNewJetski } from '@/controllers/jetskis';
 import { Jetski } from '@/interfaces/jetski';
 import LoadingScreen from '../loading-screen';
 import Swal from 'sweetalert2'; // Importa SweetAlert
+import { useRouter } from 'next/navigation';
+import { Routes } from '@/config/routes';
+
+
 
 const SimpleTable = ({ data }: { data: Jetski[] }) => {
   return (
@@ -45,6 +49,7 @@ const JetskiManagement: React.FC = () => {
   const [displayData, setDisplayData] = useState<Jetski[]>([]);
   const [jetskiName, setJetskiName] = useState('');
   const [addError, setAddError] = useState<string | null>(null);
+  const router = useRouter(); // Utiliza el hook useRouter
 
   const getAllJetskis = async () => {
     setLoading(true);
@@ -108,7 +113,10 @@ const JetskiManagement: React.FC = () => {
 
           setJetskiName('');
           setAddError(null);
+          router.push(Routes.private.dashboard); // Redirige al dashboard
         } catch (error: any) {
+          router.push(Routes.private.dashboard); // Redirige al dashboard
+
           // setAddError(error.message);
           console.log(error)
         }
