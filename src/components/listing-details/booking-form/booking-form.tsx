@@ -259,6 +259,7 @@ interface BookingFormProps {
   listing: any;
   slug: string;
   className?: string;
+  onRentTimeChange: (rentime: string) => any;
 }
 
 const rentTimeOptions = ['1h', '2h', '4h', 'fullDay'] as const;
@@ -281,6 +282,7 @@ export default function BookingForm({
   className,
   listing,
   slug,
+  onRentTimeChange,
 }: BookingFormProps) {
   const {
     control,
@@ -439,6 +441,7 @@ export default function BookingForm({
             defaultSelected={value}
             onChange={({ rentTime, adults }) => {
               setRentTime(rentTime as any);
+              onRentTimeChange(rentTime);
               setAdults(adults as any);
               onChange({ rentTime, adults });
             }}

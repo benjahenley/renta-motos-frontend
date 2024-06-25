@@ -16,7 +16,7 @@ import { useModal } from '@/components/modals/context';
 import Button from '@/components/ui/button';
 import { useAtom, useSetAtom } from 'jotai';
 import { selectionAtom } from '@/atoms/reservation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const rentTimeArray: Record<string, string> = {
   'isla-margarita': '1h',
@@ -36,7 +36,10 @@ export default function ListingDetails({
 }) {
   const { openModal } = useModal();
   const setSelection = useSetAtom(selectionAtom);
-
+  const [ rentTime, setRentime ] = useState('')
+  // const handleRentTime =() => {
+  //   setRentime()
+  // }
   useEffect(() => {
     const setSelectionData = () => {
       const excursion = slug !== 'listing-1' ? true : false;
@@ -53,7 +56,7 @@ export default function ListingDetails({
     <>
       <div className="flex justify-between gap-5 lg:gap-8 xl:gap-12 4xl:gap-16">
         <div className="w-full">
-          <ListingDetailsHeroBlock vendor={vendor} />
+          <ListingDetailsHeroBlock rentTime={rentTime}vendor={vendor} />
           <DescriptionBlock vendor={vendor} />
           {/* <EquipmentBlock vendor={vendor} /> */}
           {/* <SpecificationBlock specifications={vendor.specifications} /> */}
@@ -66,6 +69,7 @@ export default function ListingDetails({
         <div className="hidden w-full max-w-sm pb-11 lg:block xl:max-w-md 3xl:max-w-lg">
           <div className="sticky top-32 4xl:top-40">
             <BookingForm
+              onRentTimeChange={(rentTime) => {setRentime(rentTime)}}
               listing={vendor}
               price={vendor.price}
               averageRating={reviewsData.stats.averageRating}

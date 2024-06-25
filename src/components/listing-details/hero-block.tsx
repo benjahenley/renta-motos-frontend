@@ -14,6 +14,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 interface ListingDetailsHeroBlockProps {
   vendor: VendorTypes;
+  rentTime: string;
 }
 
 // share icons
@@ -74,9 +75,11 @@ interface ListingDetailsHeroBlockProps {
 
 export default function ListingDetailsHeroBlock({
   vendor,
+  rentTime,
 }: ListingDetailsHeroBlockProps) {
   const [calculatedPrice] = useAtom(calculatedPriceAtom); // Use the atom here
   const [selection] = useAtom(selectionAtom); // Use the atom to get rentTime
+  
   const rentime = selection.rentTime
   console.log('tu rentime', rentime)
 
@@ -106,7 +109,7 @@ export default function ListingDetailsHeroBlock({
             </div>
             <p className="capitalize leading-6 !text-secondary">
               {/* PIJAAA */}
-              {selection.rentTime} 
+              {rentTime} 
               </p>
           </div>
           <div className="flex items-center">

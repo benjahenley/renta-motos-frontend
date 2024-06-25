@@ -28,14 +28,15 @@ export default function BookingFormModal({ vendor }: { vendor: any }) {
           <XMarkIcon className="h-4 w-4" />
         </ActionIcon>
       </div>
-      <BookingForm
+      {/* <BookingForm
+        // onRentTimeChange={''}
         slug={vendor.slug}
         listing={vendor}
         price={vendor.price}
         averageRating={reviewsData.stats.averageRating}
         totalReviews={reviewsData.stats.totalReview}
         className="mx-auto mt-5 w-full max-w-lg !border-none !shadow-none"
-      />
+      /> */}
     </div>
   );
 }
