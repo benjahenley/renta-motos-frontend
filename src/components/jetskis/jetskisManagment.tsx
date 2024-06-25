@@ -116,6 +116,13 @@ const JetskiManagement: React.FC = () => {
           router.push(Routes.private.dashboard); // Redirige al dashboard
         } catch (error: any) {
           router.push(Routes.private.dashboard); // Redirige al dashboard
+          Swal.fire({
+            title: 'Success!',
+            text: 'Jetski added successfully!',
+            icon: 'success',
+          }).then(() => {
+            router.push(Routes.private.jetskys); // Redirige a jetskys
+          });
 
           // setAddError(error.message);
           console.log(error)
