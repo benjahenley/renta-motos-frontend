@@ -4,7 +4,6 @@ export const vendorData = {
     slug: "listing-1",
     price: 310,
     name: "VX Cruiser HO Jet Ski",
-    triptime: 'you to define',
     pricestring: '100/250/300/450',
     gallary: [
       "/images/top-boats/uno.jpeg",

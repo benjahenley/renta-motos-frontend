@@ -10,7 +10,7 @@ import { useAtom } from 'jotai';
 import { selectionAtom } from '@/atoms/reservation'; 
 import { calculatedPriceAtom } from '@/atoms/price'; 
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import EuroIcon from '@mui/icons-material/Euro';
 
 interface ListingDetailsHeroBlockProps {
   vendor: VendorTypes;
@@ -104,20 +104,20 @@ export default function ListingDetailsHeroBlock({
       <div className="relative flex flex-end">
         <div className="mt-4 grid gap-1 grid-cols-2">
           <div className="flex items-center">
-            <div className="relative mr-1 h-10 w-10">
+            <div className="relative mr-1 pr-1 h-10 w-10">
               <AccessTimeIcon style={{ fontSize: '2.5rem' }} />
             </div>
             <p className="capitalize leading-6 !text-secondary">
-              {/* PIJAAA */}
-              {rentTime} 
+
+              {vendor.triptime? vendor.triptime : rentTime} 
               </p>
           </div>
           <div className="flex items-center">
             <div className="relative mr-1 h-10 w-10">
-              <AttachMoneyIcon style={{ fontSize: '2.5rem' }} />
+              <EuroIcon style={{ fontSize: '2.5rem' }} />
             </div>
             <p className="capitalize leading-6 !text-secondary">
-              ${calculatedPrice}
+              {calculatedPrice}
             </p>
           </div>
         </div>
