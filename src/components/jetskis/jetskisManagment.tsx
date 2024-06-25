@@ -118,7 +118,7 @@ const JetskiManagement: React.FC = () => {
           router.push(Routes.private.dashboard); // Redirige al dashboard
           Swal.fire({
             title: 'Success!',
-            text: 'Jetski added successfully!',
+            text: 'Your Jetski will be added briefly! ',
             icon: 'success',
           }).then(() => {
             router.push(Routes.private.jetskys); // Redirige a jetskys
