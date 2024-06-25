@@ -21,6 +21,7 @@ import { addMinutesToTime } from '@/helpers/extract-time';
 import { createReservation } from '@/helpers/reservations/createReservation';
 import { fetchReservationsByDate } from '@/helpers/reservations/fetchReservationsByDate';
 import { fetchAvailableJetskis } from '@/helpers/jetskis/fetchAvailableJetskis';
+import LoadingScreen from '../loading-screen';
 
 export default function SelectCalendarExcursions() {
   const { openModal, closeModal } = useModal();
@@ -256,9 +257,10 @@ export default function SelectCalendarExcursions() {
         )}
       </div>
       {loading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          Loading...
-        </div>
+        <LoadingScreen/>
+        // <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        //   Loading...
+        // </div>
       )}
     </div>
   );

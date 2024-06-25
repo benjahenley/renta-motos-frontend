@@ -45,7 +45,7 @@ const list = [
 //   },
   {
     icon: <EmailIcon className="h-6 w-6" />,
-    path: 'mailto:benjahenley@hotmail.com',
+    path: 'mailto:Ibijetren2024@gmail.com',
     color: '#B9422A',
     name: 'Email',
   },
