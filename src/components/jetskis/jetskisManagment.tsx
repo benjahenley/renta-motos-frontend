@@ -11,6 +11,12 @@ import { getToken } from '@/helpers/getToken';
 import { getJetskis } from '@/helpers/jetskis/getJetskis';
 import { createNewJetski } from '@/controllers/jetskis';
 import { Jetski } from '@/interfaces/jetski';
+import LoadingScreen from '../loading-screen';
+import Swal from 'sweetalert2'; // Importa SweetAlert
+import { useRouter } from 'next/navigation';
+import { Routes } from '@/config/routes';
+
+
 
 const SimpleTable = ({ data }: { data: Jetski[] }) => {
   return (
@@ -36,14 +42,14 @@ const SimpleTable = ({ data }: { data: Jetski[] }) => {
 };
 
 const JetskiManagement: React.FC = () => {
-  // const { jetskis, loading, error, toggleStatus } = useJetskis();
-  const [jetskis, setJetskis] = useState<any>([]);
+  const [jetskis, setJetskis] = useState<Jetski[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [current, setCurrent] = useState(1);
   const [searchFilter, setSearchFilter] = useState('');
   const [displayData, setDisplayData] = useState<Jetski[]>([]);
   const [jetskiName, setJetskiName] = useState('');
   const [addError, setAddError] = useState<string | null>(null);
+  const router = useRouter(); // Utiliza el hook useRouter
 
   const getAllJetskis = async () => {
     setLoading(true);
@@ -81,20 +87,52 @@ const JetskiManagement: React.FC = () => {
   }, [jetskis, searchFilter, current]);
 
   const handleAddJetski = async () => {
-    try {
-      const token = getToken();
-      await createNewJetski(jetskiName);
-      await getAllJetskis();
-
-      setJetskiName('');
-      setAddError(null);
-    } catch (error: any) {
-      setAddError(error.message);
+    if (!jetskiName) {
+      setAddError('Please enter a name for the jetski.');
+      return;
     }
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to add a jetski?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, add it!',
+      cancelButtonText: 'No, cancel!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const token = getToken();
+          await createNewJetski(jetskiName);
+          const newJetski: Jetski = {
+            id: Date.now().toString(), // Usa un ID temporal único
+            name: jetskiName,
+            available: true, // Define el estado inicial del jetski
+          };
+          setJetskis((prevJetskis) => [...prevJetskis, newJetski]);
+
+          setJetskiName('');
+          setAddError(null);
+          router.push(Routes.private.dashboard); // Redirige al dashboard
+        } catch (error: any) {
+          router.push(Routes.private.dashboard); // Redirige al dashboard
+          Swal.fire({
+            title: 'Success!',
+            text: 'Your Jetski will be added briefly! ',
+            icon: 'success',
+          }).then(() => {
+            router.push(Routes.private.jetskys); // Redirige a jetskys
+          });
+
+          // setAddError(error.message);
+          console.log(error)
+        }
+      }
+    });
   };
 
   return loading ? (
-    <p>Loading...</p>
+    <LoadingScreen />
   ) : (
     <div className="container-fluid mb-12 lg:mb-16">
       <div className="mb-6 mt-8 grid grid-cols-1 items-center gap-3 sm:grid-cols-[1fr_262px] md:mt-10 md:gap-5 lg:mt-12 xl:mt-16 xl:gap-10">
@@ -106,7 +144,6 @@ const JetskiManagement: React.FC = () => {
             type="text"
             variant="outline"
             placeholder="Jetski Name"
-            // startIcon={<MagnifyingGlassIcon className="h-auto w-5" />}
             value={jetskiName}
             onChange={(e) => setJetskiName(e.target.value)}
             inputClassName="pl-2 mr-2"

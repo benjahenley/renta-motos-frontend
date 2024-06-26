@@ -21,11 +21,14 @@ import { addMinutesToTime } from '@/helpers/extract-time';
 import { createReservation } from '@/helpers/reservations/createReservation';
 import { fetchReservationsByDate } from '@/helpers/reservations/fetchReservationsByDate';
 import { fetchAvailableJetskis } from '@/helpers/jetskis/fetchAvailableJetskis';
+import LoadingScreen from '../loading-screen';
+import ReauthRequest from '../errors/reauthRequest';
 
 export default function SelectCalendarExcursions() {
   const { openModal, closeModal } = useModal();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const selection = useAtomValue<Partial<Selection>>(selectionAtom);
   const [reservations, setReservations] = useState<Reservation[] | null>(null);
   const [history, setHistory] = useState<[number[], string | undefined][]>([]);
@@ -49,6 +52,7 @@ export default function SelectCalendarExcursions() {
         processReservations(reservations);
       } catch (error) {
         console.error('Error fetching items:', error);
+        setError('fetch');
       }
     };
 
@@ -186,14 +190,17 @@ export default function SelectCalendarExcursions() {
 
       const { reservationId } = await createReservation(token, data);
       console.log(reservationId);
-      // Routes.public.payment(reservationId))
       router.push(`/payment/${reservationId}`);
     } catch (e: any) {
       console.log(e.message);
-      alert(e.message);
+      setError('auth');
     } finally {
       setLoading(false);
     }
+  }
+
+  if (error === 'auth') {
+    return <ReauthRequest />;
   }
 
   const date = new Date(selection?.date!);
@@ -255,11 +262,8 @@ export default function SelectCalendarExcursions() {
           </>
         )}
       </div>
-      {loading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          Loading...
-        </div>
-      )}
+      {loading && <LoadingScreen />}
     </div>
   );
 }
+

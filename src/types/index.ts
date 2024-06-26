@@ -39,8 +39,10 @@ export type ListingItemTypes = {
 export type VendorTypes = {
   slug: string;
   price: number;
+  pricestring: string;
   name: string;
   gallary: string[];
+  triptime: string;
   vendor: {
     name: string;
     img: string;

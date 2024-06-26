@@ -43,12 +43,12 @@ const list = [
 //     color: '#1DA1F2',
 //     name: 'Twitter',
 //   },
-  {
-    icon: <EmailIcon className="h-6 w-6" />,
-    path: 'mailto:benjahenley@hotmail.com',
-    color: '#B9422A',
-    name: 'Email',
-  },
+  // {
+  //   icon: <EmailIcon className="h-6 w-6" />,
+  //   path: 'mailto:Ibijetren2024@gmail.com',
+  //   color: '#B9422A',
+  //   name: 'Email',
+  // },
 ];
 
 export default function ControlledOpenSpeedDial() {

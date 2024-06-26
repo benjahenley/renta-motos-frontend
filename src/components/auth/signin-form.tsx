@@ -83,8 +83,8 @@ export default function SigninForm() {
         <Checkbox
           size="sm"
           label="Remember Me"
-          labelClassName="ml-2"
-          inputClassName="!text-gray-dark"
+          labelClassName="hidden ml-2"
+          inputClassName="hidden !text-gray-dark"
           {...register('remember')}
         />
         <Link

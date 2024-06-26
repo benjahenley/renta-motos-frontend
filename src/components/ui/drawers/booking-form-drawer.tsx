@@ -10,6 +10,13 @@ import ActionIcon from '@/components/ui/action-icon';
 
 export default function BookingFormModal({ vendor }: { vendor: any }) {
   const [drawerSate, setDrawerState] = useAtom(drawerStateAtom);
+
+  // Define the onRentTimeChange function
+  const onRentTimeChange = (rentime: string) => {
+    console.log('Selected rent time:', rentime);
+    // Perform any additional actions here if necessary
+  };
+
   return (
     <div className="w-full bg-white">
       <div className="container-fluid sticky top-0 z-10 flex h-14 w-full items-center justify-end bg-white shadow-sm">
@@ -29,6 +36,7 @@ export default function BookingFormModal({ vendor }: { vendor: any }) {
         </ActionIcon>
       </div>
       <BookingForm
+        onRentTimeChange={onRentTimeChange} // Pass the function here
         slug={vendor.slug}
         listing={vendor}
         price={vendor.price}
