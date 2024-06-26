@@ -17,6 +17,8 @@ export default function PaymentBlock({ reservationId }: Props) {
   const [reservation, setReservation] = useState<Reservation>();
   const { openModal } = useModal();
 
+  console.log(reservationId, reservation);
+
   useEffect(() => {
     if (!reservationId) {
       router.push('/');
