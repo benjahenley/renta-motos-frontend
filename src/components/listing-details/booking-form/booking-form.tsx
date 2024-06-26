@@ -310,7 +310,7 @@ export default function BookingForm({
   const [minEndDate, setMinEndDate] = useState<Date | null>(null);
 
   const rentPrices: Record<RentTime, number> = {
-    '1h': 100,
+    '1h': 150,
     '2h': 250,
     '4h': 300,
     fullDay: 450,
@@ -392,7 +392,7 @@ export default function BookingForm({
     >
       <div className="flex items-center justify-between gap-3">
         <p className="text-xl font-bold text-gray-dark xl:text-[22px]">
-          ${calculatedPrice} Euro <span className="text-base"></span>
+        € {calculatedPrice} (Euro) <span className="text-base"></span>
         </p>
       </div>
       <div
