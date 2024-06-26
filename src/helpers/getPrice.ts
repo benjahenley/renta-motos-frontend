@@ -42,7 +42,7 @@ export const getPrice = (reservationData: any) => {
     if (durationInHours == 2) {
       unitPrice = 250;
     } else if (durationInHours == 1) {
-      unitPrice = 100;
+      unitPrice = 150;
     } else if (durationInHours == 4) {
       unitPrice = 300;
     } else {
