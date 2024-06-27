@@ -70,14 +70,14 @@ export default function ControlledOpenSpeedDial() {
           bottom: 32, 
           right: 32, 
           '& .MuiFab-primary': {
-            backgroundColor: 'black',
+            backgroundColor: '#03B603',
             color: 'white',
             '&:hover': {
-              backgroundColor: 'black',
+              backgroundColor: '#03B603',
             },
           },
         }}
-        icon={<SpeedDialIcon />}
+        icon={<WhatsappIcon className="h-8 w-8" />}
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}
