@@ -35,7 +35,7 @@ export default function ListingDetailsHeader() {
           {mounted ? (
             <>
               {isAuthorized ? (
-                <ProfileMenu className="hidden md:block" />
+                <ProfileMenu  />
               ) : (
                 <Button
                   size="sm"

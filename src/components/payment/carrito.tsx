@@ -17,17 +17,17 @@ export default function Carrito({ order }: Props) {
             <span className="font-normal">
               {order.adults} Reservation{order.adults > 1 && 's'}
             </span>
-            <span className="font-bold">${order.price}</span>
+            <span className="font-bold">€ {order.price}</span>
           </li>
           <li className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0">
             <span className="font-normal"> 30% Reservation fee **</span>
-            <span className="font-bold">${order.price * 0.3}</span>
+            <span className="font-bold">€ {order.price * 0.3}</span>
           </li>
 
           <li className="flex items-center justify-between py-1.5 text-base capitalize text-gray-dark first:pt-0 last:border-t last:border-gray-lighter last:pb-0">
             <span className="font-normal">total</span>
 
-            <span className="font-bold">${order.price * 0.3}</span>
+            <span className="font-bold">€ {order.price * 0.3}</span>
           </li>
         </ul>
       </div>
