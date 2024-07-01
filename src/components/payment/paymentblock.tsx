@@ -51,7 +51,7 @@ export default function PaymentBlock({ reservationId }: Props) {
   return (
     <>
       {!reservation ? (
-        <LoadingScreen/>
+        <LoadingScreen />
       ) : (
         <div className="container px-5 mt-5 max-w-[1280px] md:flex md:justify-between pb-10 md:mt-7 xl:mt-12 3xl:!px-0">
           <div className="md:w-[48%] m-auto">
