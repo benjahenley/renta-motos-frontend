@@ -80,7 +80,6 @@ export const PaypalButton: React.FC<PaypalButtonInterface> = ({
   const onApprove = async (data: OnApproveData, actions: OnApproveActions) => {
     try {
       const details = await actions.order?.capture();
-      console.log('Hola gorditaaaa');
       if (!details) throw new Error('Capture details are missing');
 
       const { status } = await paypalCheckPayment(details.id!);
