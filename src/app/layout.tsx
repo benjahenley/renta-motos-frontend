@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 import '@/styles/globals.css';
 import React from 'react';
 import clsx from 'clsx';
@@ -34,7 +32,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: React.PropsWithChildren<{}>) {
-  console.log(process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID);
+  // console.log(process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID);
   return (
     <html
       lang="en"
