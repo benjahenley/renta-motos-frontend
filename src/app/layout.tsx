@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import '@/styles/globals.css';
 import React from 'react';
 import clsx from 'clsx';

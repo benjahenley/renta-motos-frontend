@@ -29,7 +29,6 @@ export default function useAuth() {
   const unauthorize = () => {
     setAuthorized(false);
     setUser({});
-
   };
 
   const isAdmin = async () => {
