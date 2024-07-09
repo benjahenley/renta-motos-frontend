@@ -10,6 +10,7 @@ import { Reservation } from '@/interfaces/reservation';
 import { Routes } from '@/config/routes';
 import LoadingScreen from '../loading-screen';
 import CarritoTesting from './carrito-testing';
+import { PaypalButtonTesting } from './paypalButton';
 
 type Props = {
   reservationId: string;
@@ -67,11 +68,11 @@ export default function PaymentBlockTesting({ reservationId }: Props) {
               </div>
             )}
             <div className="mt-20">
-              <PaypalButton
+              <PaypalButtonTesting
                 onError={(err) => setError(err)}
                 reservationId={reservationId}
                 amount={100}
-              ></PaypalButton>
+              ></PaypalButtonTesting>
             </div>
           </div>
 
