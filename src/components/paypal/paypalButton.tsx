@@ -24,9 +24,11 @@ import { paypalCheckPayment } from '@/helpers/payments/paypal-check-payments';
 interface PaypalButtonInterface {
   reservationId: string;
   amount: number;
+  onError: (error: string) => void;
 }
 
 export const PaypalButton: React.FC<PaypalButtonInterface> = ({
+  onError,
   reservationId,
   amount,
 }) => {
@@ -70,10 +72,8 @@ export const PaypalButton: React.FC<PaypalButtonInterface> = ({
 
       return orderId;
     } catch (e: any) {
-      alert(e.message);
-      console.error('Create Order Error:', e.message);
-      router.push(Routes.private.reservations);
-      throw new Error(e.message);
+      onError(e.message);
+      return '';
     }
   };
 
@@ -88,12 +88,13 @@ export const PaypalButton: React.FC<PaypalButtonInterface> = ({
         console.log('order has been completed');
 
         await changeReservationStatusToApproved(reservationId);
-
-        router.push(Routes.private.reservations);
+        return;
+      } else {
+        throw new Error('Status is not completed, error with paypal handling.');
       }
     } catch (e: any) {
-      console.error('OnApprove Error:', e.message);
-      alert(e.message);
+      onError(e.message);
+      return;
     }
   };
 

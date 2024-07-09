@@ -1,3 +1,5 @@
+'use server';
+
 import { PaypalOrderStatusResponse } from '@/interfaces/paypal';
 
 export const paypalCheckPayment = async (paypalTransactionId: string) => {

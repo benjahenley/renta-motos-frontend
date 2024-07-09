@@ -1,14 +1,13 @@
-'use client'
+'use client';
+
 import { useVendor } from '@/components/vendorContext';
 import React, { useState, useContext } from 'react';
 
 import PaymentsPayouts from '@/components/settings/payment-payouts/payments-payouts';
 import AddnewPaymentMethod from '@/components/settings/form/add-new-payment-method';
 
-
 const PaymentForm: React.FC = () => {
   const [amount, setAmount] = useState('');
-
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,10 +17,9 @@ const PaymentForm: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:gap-12">
-    <PaymentsPayouts />
-    <AddnewPaymentMethod />
-  </div>
-  
+      <PaymentsPayouts />
+      <AddnewPaymentMethod />
+    </div>
   );
 };
 

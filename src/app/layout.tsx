@@ -42,6 +42,7 @@ export default function RootLayout({ children }: React.PropsWithChildren<{}>) {
         lato.variable,
       )}
     >
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <head />
       <body className="flex min-h-full flex-col">
         <Providers>{children}</Providers>
