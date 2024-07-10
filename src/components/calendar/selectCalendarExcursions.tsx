@@ -13,6 +13,7 @@ import {
   getJetskisAndExcursionsTemplate,
   timeSlots,
   findTimezoneIndexes,
+  timeSlotsUI,
 } from '@/helpers/matrix-formation';
 import { Reservation } from '@/interfaces/reservation';
 import { formatDateToISOWithoutTime } from '@/helpers/formatDate';
@@ -229,12 +230,16 @@ export default function SelectCalendarExcursions() {
               <table className="extratable min-w-full border-collapse border border-gray-400">
                 <thead className="thead">
                   <tr>
-                    <th className="thh px-4 py-2">Times</th>
-                    <th className="thh px-4 py-2">Select</th>
+                    <th className="thh px-4 py-2" style={{ width: '30%' }}>
+                      Times
+                    </th>
+                    <th className="thh px-4 py-2" style={{ width: '70%' }}>
+                      Select
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {timeSlots.map((slot, rowIndex) => (
+                  {timeSlotsUI.map((slot, rowIndex) => (
                     <tr className="tr" key={rowIndex}>
                       <td className="td px-4 py-2">{slot}</td>
                       <td
@@ -266,4 +271,3 @@ export default function SelectCalendarExcursions() {
     </div>
   );
 }
-
