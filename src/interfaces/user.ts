@@ -60,7 +60,7 @@ export interface UserType {
   tenantId: string | null;
 
   // Additional properties and methods
-  metadata: UserMetadata;
+  data: UserMetadata;
   refreshToken: string;
   providerId: string;
   multiFactor: MultiFactorUser;
