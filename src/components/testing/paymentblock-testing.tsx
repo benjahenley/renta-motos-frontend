@@ -1,5 +1,6 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
-import Carrito from '@/components/payment/carrito';
 import { useRouter } from 'next/navigation';
 import { PaypalButton } from '../paypal/paypalButton';
 import { getToken } from '@/helpers/getToken';
@@ -8,17 +9,18 @@ import { getReservationById } from '@/helpers/reservations/getReservationsById';
 import { Reservation } from '@/interfaces/reservation';
 import { Routes } from '@/config/routes';
 import LoadingScreen from '../loading-screen';
+import CarritoTesting from './carrito-testing';
+import { PaypalButtonTesting } from './paypalButton';
 
 type Props = {
   reservationId: string;
 };
 
-export default function PaymentBlock({ reservationId }: Props) {
+export default function PaymentBlockTesting({ reservationId }: Props) {
   const router = useRouter();
   const [reservation, setReservation] = useState<Reservation>();
   const { openModal } = useModal();
-
-  console.log(reservationId, reservation);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     if (!reservationId) {
@@ -55,16 +57,22 @@ export default function PaymentBlock({ reservationId }: Props) {
       ) : (
         <div className="container px-5 mt-5 max-w-[1280px] md:flex md:justify-between pb-10 md:mt-7 xl:mt-12 3xl:!px-0">
           <div className="md:w-[48%] m-auto">
-            <Carrito order={reservation} />
+            <CarritoTesting order={reservation} />
             <p className="text-red-500 text-center mt-2 ">
               ** Please note reservations are non-refundable, the rest of the
               rent fee must be payed on reservation day **
             </p>
+            {error !== '' && (
+              <div>
+                <p className="text-red-500 text-center mt-2 ">{error}</p>
+              </div>
+            )}
             <div className="mt-20">
-              <PaypalButton
+              <PaypalButtonTesting
+                onError={(err) => setError(err)}
                 reservationId={reservationId}
-                amount={reservation.price * 0.3}
-              ></PaypalButton>
+                amount={100}
+              ></PaypalButtonTesting>
             </div>
           </div>
 

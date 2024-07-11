@@ -24,9 +24,11 @@ import { paypalCheckPayment } from '@/helpers/payments/paypal-check-payments';
 interface PaypalButtonInterface {
   reservationId: string;
   amount: number;
+  onError: (error: string) => void;
 }
 
-export const PaypalButton: React.FC<PaypalButtonInterface> = ({
+export const PaypalButtonTesting: React.FC<PaypalButtonInterface> = ({
+  onError,
   reservationId,
   amount,
 }) => {
@@ -70,7 +72,7 @@ export const PaypalButton: React.FC<PaypalButtonInterface> = ({
 
       return orderId;
     } catch (e: any) {
-      console.log(e.message);
+      onError(e.message);
       return '';
     }
   };
@@ -91,7 +93,7 @@ export const PaypalButton: React.FC<PaypalButtonInterface> = ({
         throw new Error('Status is not completed, error with paypal handling.');
       }
     } catch (e: any) {
-      console.log(e.message);
+      onError(e.message);
       return;
     }
   };
