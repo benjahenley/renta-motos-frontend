@@ -16,9 +16,10 @@ type QueryStringType = {
 
 interface FindTripFormProps {
   destinationRef: React.RefObject<HTMLDivElement>;
+  onClose?: () => void;
 }
 
-export default function FindTripForm({ destinationRef }: FindTripFormProps) {
+export default function FindTripForm({ destinationRef, onClose }: FindTripFormProps) {
   const router = useRouter();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -55,6 +56,7 @@ export default function FindTripForm({ destinationRef }: FindTripFormProps) {
 
   const scrollToDestinations = () => {
     destinationRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (onClose) onClose();
   };
 
   return (

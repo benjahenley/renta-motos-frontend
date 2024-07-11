@@ -16,7 +16,7 @@ export default function HeroBanner({ destinationRef }: HeroBannerProps) {
 
   return (
     <div className="relative flex flex-col sm:flex-row min-h-[760px] items-end justify-center sm:justify-start sm:px-0 pb-28 pt-20 sm:pt-[120px] md:pl-16 3xl:pb-[132px] 3xl:pt-[142px] 4xl:pl-[200px]">
-      <div className="absolute bottom-56 w-full flex flex-col items-center sm:w-full sm:items-start sm:static sm:pl-6">
+      <div className="absolute bottom-72 w-full flex flex-col items-center sm:w-full sm:items-start sm:static sm:pl-6">
         <div className="block sm:hidden mb-4">
           <Button
             type="button"
@@ -32,7 +32,7 @@ export default function HeroBanner({ destinationRef }: HeroBannerProps) {
           <FindTripForm destinationRef={destinationRef} />
         </div>
       </div>
-      <div className="z-[-50] inset-0 sm:hidden">
+      <div className="z-[-50] inset-0 sm:hidden pointer-events-none">
         <video
           src="/video/video.mp4"
           autoPlay
@@ -55,14 +55,14 @@ export default function HeroBanner({ destinationRef }: HeroBannerProps) {
       <Dialog open={isModalOpen} onClose={closeModal} className="relative z-50">
         <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="w-full max-w-md bg-white rounded-lg relative p-6 max-h-[80vh] overflow-auto">
+          <Dialog.Panel className="w-full max-w-md bg-white rounded relative">
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 bg-gray-500 text-white px-4 py-2 rounded"
+              className="absolute top-2 right-2 bg-gray-500 text-white px-4 py-2 rounded"
             >
               Close
             </button>
-            <FindTripForm destinationRef={destinationRef} />
+            <FindTripForm destinationRef={destinationRef} onClose={closeModal} />
           </Dialog.Panel>
         </div>
       </Dialog>
