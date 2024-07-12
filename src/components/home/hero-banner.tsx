@@ -38,6 +38,8 @@ export default function HeroBanner({ destinationRef }: HeroBannerProps) {
           autoPlay
           loop
           muted
+          playsInline
+          preload="auto"
           className="w-full h-full object-cover"
         />
       </div>
