@@ -16,4 +16,21 @@ module.exports = {
 
     return config;
   },
+
+    // Aquí añadimos las redirecciones
+    async redirects() {
+      return [
+        {
+          source: '/:path*',  // Captura todas las rutas
+          has: [
+            {
+              type: 'host',
+              value: 'tusitio.com',  // Versión sin www
+            },
+          ],
+          destination: 'https://ibijetrent.com/:path*',  // Redirige a la versión www
+          permanent: true,  // Redirección 301 (permanente)
+        },
+      ];
+    },
 };
