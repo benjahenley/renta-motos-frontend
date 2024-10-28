@@ -1,0 +1,39 @@
+name: Deploy Next.js App
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' 
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Deploy to VPS with Password
+        env:
+          HOST: 195.179.193.101
+          USERNAME: root
+          PASSWORD: q2*L7QPhOX]6g>cc]oP4
+          REMOTE_DIR: "/path/to/your/app"  
+        run: |
+          sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no $USERNAME@$HOST "mkdir -p $REMOTE_DIR"
+          sshpass -p "$PASSWORD" rsync -avz --exclude='node_modules' ./ $USERNAME@$HOST:$REMOTE_DIR
+          sshpass -p "$PASSWORD" ssh $USERNAME@$HOST "cd $REMOTE_DIR && npm install --production && pm2 restart app-name || pm2 start npm --name app-name -- start"
