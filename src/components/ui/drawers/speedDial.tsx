@@ -27,7 +27,7 @@ const list = [
   },
   {
     icon: <WhatsappIcon className="h-6 w-6" />,
-    path: 'https://wa.me/34612498228',
+    path: 'https://wa.me/34642973276',
     color: '#03B603',
     name: 'Whatsapp',
   },

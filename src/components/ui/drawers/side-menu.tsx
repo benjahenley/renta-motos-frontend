@@ -30,7 +30,7 @@ const menu = [
   {
     name: 'Whatsapp',
     icon: <WhatsappIcon className="h-auto w-5" />,
-    path: 'https://wa.me/34612498228',
+    path: 'https://wa.me/34642973276',
     color: '#03B603',
   },
   {
