@@ -39,10 +39,28 @@ export const generateViewport = () => {
 };
 
 export const metadata: Metadata = {
-  title: 'Ibijet Rent',
+  title: 'Motoboat Ibiza',
   description: 'Find your boat with the best experience.',
-  icons: ['/images/probando.svg'],
+  icons: {
+    icon: '/images/logo.png', // Asegurate que exista en /public/images/logo.png
+  },
+  openGraph: {
+    title: 'Motoboat Ibiza',
+    description: 'Find your boat with the best experience.',
+    url: 'https://motoboatibiza.es/',
+    siteName: 'Motoboat Ibiza',
+    images: [
+      {
+        url: '/images/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Motoboat Ibiza',
+      },
+    ],
+    type: 'website',
+  },
 };
+
 
 export default function RootLayout({ children }: React.PropsWithChildren<{}>) {
   // console.log(process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID);
@@ -55,22 +73,7 @@ export default function RootLayout({ children }: React.PropsWithChildren<{}>) {
         lato.variable,
       )}
     >
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="canonical" href="https://ibijetrent.com/" /> {/* Etiqueta canónica */}
-
-        {/* Etiquetas OpenGraph globales */}
-        <meta property="og:title" content="Ibijet Rent" />
-        <meta property="og:description" content="Find your boat with the best experience." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ibijetrent.com" />
-        <meta property="og:image" content="/images/logito.png" /> {/* Agrega la URL de una imagen representativa */}
-        <meta property="og:site_name" content="Ibijet Rent" />
-        {/* Etiqueta script para Schema.org */}
-         <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-      </Head>
+     
       <body className="flex min-h-full flex-col">
         <Providers>{children}</Providers>
       </body>
